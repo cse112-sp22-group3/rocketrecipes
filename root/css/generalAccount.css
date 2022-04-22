@@ -1,0 +1,142 @@
+@media only screen and (max-width: 700px) {
+  .foodList {
+    justify-content: center;
+    margin-left: 0%;
+    margin-right: 0%;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    padding-top: 0px;
+  }
+
+  .FavoriteFood {
+    width: 100%;
+    margin-left: 0%;
+    margin-right: 0%;
+    margin-top: 0px;
+    padding-bottom: 100px;
+    padding-top: 0px;
+    justify-content: center;
+  }
+
+  main h1 {
+    font-size: 3em;
+  }
+  #myrecipes {
+    margin-bottom: 2%;
+  }
+}
+
+@media only screen and (min-width: 700px) {
+  .foodList {
+    width: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 0px;
+    padding-bottom: 0;
+    padding-top: 0;
+  }
+
+  .FavoriteFood {
+    width: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 0px;
+    padding-bottom: 100px;
+    padding-top: 0px;
+  }
+  #myrecipes {
+    margin-bottom: 2%;
+  }   
+}
+main {
+    margin: 5% 32px 5% 0;
+}
+#myaccount {
+    margin-left: 10%;
+    text-align: left;
+}
+#myrecipes {
+    margin-left: 10%;
+    text-align: left;
+    margin-bottom: 2%;
+}
+span {
+  margin-top: center;
+}
+.foodList h3{
+    text-decoration: underline;
+    margin-bottom:1px;
+}
+.foodList span{
+    display:block;
+    margin-top: 4%;
+    margin-bottom: 4%;
+}
+.foodList p{
+    margin-bottom:1px;
+    display:inline;
+}
+.foodList h4{
+    display: inline;
+    margin-left: 20%;
+}
+
+.foodList div {
+    width: 20%;
+    height: 400px;
+    margin-right: 2%;
+    display: inline-block;
+    overflow: hidden;
+    padding-bottom: auto;
+}
+.foodPic {
+    width: 90%;
+    position: relative;
+}
+#Favorite{
+    text-align: left;
+    margin-left: 10%;
+}
+
+.FavoriteFood h3{
+    text-decoration: underline;
+    margin-bottom:1px;
+}
+.FavoriteFood span{
+    display:block;
+    margin-top: 4%;
+    margin-bottom: 4%;
+}
+.FavoriteFood p{
+    margin-bottom:1px;
+    display:inline;
+}
+.FavoriteFood h4{
+    display: inline;
+    margin-left: 20%;
+}
+.FavoriteFood button{
+    border-radius: 12px;
+    margin-bottom:3px;
+}
+#Create{
+    margin-left: 30%;
+    width: 130px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: pink;
+    font-size: 15px;
+}
+.FavoriteFood div {
+    /*border: 10px red solid;*/
+    width: 20%;
+    height: 400px;
+    margin-right: 2%;
+    display: inline-block;
+    overflow: hidden;
+    padding-bottom: auto;
+}
+.foodPic {
+    width: 90%;
+    position: relative;
+}

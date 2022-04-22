@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/RecipePage.css" class="style" />
+    <link rel="stylesheet" href="../css/global.css" class="style">
+    <script src="../components/custom-navbar.js" type="module"></script>
+    <script src="../components/recipe-card.js" type="module"></script>
+    <script src="../scripts/recipepage.js" type="module"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+    <title>Recipe</title>
+  </head>
+
+  <body>
+    <header>
+      <custom-navbar />
+    </header>
+    <main>
+      <button class="back-button" id="back-button"></button>
+      <div class="recipe-container">
+        <div class="recipe-header">
+          <div class="recipe-header-info">
+            <h1 id="recipe-title"></h1>
+            <!-- Recipe action buttons like edit, delete, fav -->
+            <div class="recipe-button-container">
+              <button class="recipe-button" id="fav-icon" 
+                style="background: url('https://api.iconify.design/ant-design/star-filled.svg?color=%23ffc700&height=48') no-repeat center center / contain;"
+              ></button>
+              <button class="recipe-button" id="editButton"
+                style="background: url('https://api.iconify.design/akar-icons/edit.svg?color=%23c4c4c4&height=48') no-repeat center center / contain;"
+              ></button>
+              <button class="recipe-button" id="deleteButton"
+                style="background: url('https://api.iconify.design/akar-icons/trash-can.svg?color=%23c4c4c4&height=48') no-repeat center center / contain;"
+              ></button>
+              <button class="recipe-button" id="shareButton"
+                style="background: url('https://api.iconify.design/ant-design/share-alt-outlined.svg?color=%23c4c4c4&height=48') no-repeat center center / contain;"
+              ></button>
+              <button class="recipe-button" id="print-solo" onclick="window.print()"
+              ></button>
+              <div id="shareContainer" style="display: none">
+                <a id="twitter-share" href="https://twitter.com/share?url=" class="share twitter"></a>
+                <a id="facebook-share" href="https://www.facebook.com/sharer/sharer.php?u=" class="share facebook"></a>
+                <a id="reddit-share" href="https://reddit.com/submit?url=" class="share reddit"></a>
+                <a id="email-share" href="mailto:?subject=" class="share email"></a>
+                <button class="share print" onclick="window.print()"></button>
+              </div>
+            </div>
+            <!-- Subtitle info: yield, time, etc.. -->
+            <div class="recipe-subtitle">
+              <span class="recipe-subtitle-head">
+                <b>Yield: </b><span class="meta--yield" id="yield"></span>
+              </span>
+              <span class="recipe-subtitle-head">
+                <b>Total time: </b>
+                <time class="meta--total-time" id="time"></time>
+              </span>
+              <span class="recipe-subtitle-head">
+                <label for="servings-input">Servings:</label>
+                <input type="number" placeholder="Scale" class="scale-input" id="servings"  min="1" max="15">
+              </span>
+            </div>
+            <!-- Categories -->
+            <div class="categories" id="categories">
+              Categories: <span class="meta--categories" id="categories"></span>
+            </div>
+            <p class="description" id="description"></p>
+          </div>
+          <img src="" alt="" class="recipe-image" id="recipe-image" />
+        </div>
+        <div class="half-line"></div>
+        <div class="recipe-body">
+          <section class="section--instructions">
+            <h2>Instructions</h2>
+            <ol id="instructions-list"></ol>
+          </section>
+          <section class="section--ingredients">
+            <h2>Ingredients</h2>
+            <ul id="ingredients-list"></ul>
+          </section>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <h3 class="rec">Check out some other recipes</h3>
+      <div class="foodList" id="recommendedRecipeContainer"></div>
+    </footer>
+  </body>
+</html>

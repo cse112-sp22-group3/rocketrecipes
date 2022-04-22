@@ -1,0 +1,87 @@
+/* main */
+*{
+  background-color: #FEF2E6;
+}
+@media only screen and (max-width: 700px) {
+  .midPart h1 {
+    font-size: 4em;
+  }
+
+  .midPart h3 {
+    font-size: 1.2em;
+    margin-right: 0%;
+    margin-top: -20px;
+    margin-bottom: 60px;
+    text-align: left;
+  }
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin:  10% 5%;
+}
+.midPart {
+  display: flex;
+  flex-direction: column;
+  max-width: 1100px;
+  width: 100%;
+}
+.midPart h1 {
+  text-align: center;
+}
+
+/* footer */
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin:  10% 5%;
+}
+.foostPart {
+  margin-top: 3%;
+  text-align: left;
+  margin-bottom: 0px;
+}
+
+.foodList {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 0px;
+  max-width: 1200px;
+  padding-top: 0px;
+}
+.foodList h3 {
+  text-decoration: underline;
+  margin-bottom:1px;
+}
+.foodList span {
+  margin-top: 4%;
+  margin-bottom: 4%;
+}
+.foodList p {
+  margin-bottom:1px;
+  display:inline;
+}
+.foodList h4 {
+  display: inline;
+  margin-left: 20%;
+}
+.foodList button {
+  border-radius: 12px;
+  margin-bottom:3px;
+}
+
+.foodList div {
+  width: 20%;
+  height: 400px;
+  margin-right: 2%;
+  display: inline-block;
+  overflow: hidden;
+  padding-bottom: 30%;
+}

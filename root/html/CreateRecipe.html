@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/CreateRecipe.css" class="style" />
+    <link rel="stylesheet" href="../css/global.css" class="style">
+    <script src="../components/custom-navbar.js" type="module"></script>
+    <script src="../scripts/createRecipe.js" type="module"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+    <title>Create Recipe</title>
+  </head>
+  <body>
+    <header>
+      <custom-navbar page="create"/>
+    </header>
+    <main>
+      <div class="midPart">
+        <h2 id="header">Create your recipe:</h2>
+        <input
+          class="recipeName"
+          type="text"
+          id="name"
+          placeholder="Recipe Name"
+        />
+        <br />
+        <input
+          class="image-upload"
+          id="image"
+          type="text"
+          placeholder="Paste a link to your recipe's picture here"
+        />
+        <textarea
+          class="descrip"
+          type="text"
+          placeholder="Recipe Summary (100 words max)"
+        ></textarea>
+        <br />
+        <h4 class="make">Makes:</h4>
+        <input
+          class="amount"
+          id="serving"
+          type="text"
+          placeholder="Total Amount"
+        />
+        <br class="line-break"/>
+        <h4 class="make2">Time:</h4>
+        <input
+          class="amount"
+          type="text"
+          placeholder="Total time in Minutes"
+          id="time"
+        />
+        <br />
+        <h3>Ingredients:</h3>
+        <div class="ingredSteps">
+        </div>
+
+        <div class="buttons">
+          <button class="recipeButton" id="addIngredient">Add Ingredient</button>
+          <button class="recipeButton" id="deleteIngredient">Delete Ingredient</button>
+        </div>
+
+        <h3 id="instruct">Instructions:</h3>
+        <div class="instructions">
+        </div>
+        <div class="buttons">
+          <button class="recipeButton" id="plus">Add Step</button>
+          <button class="recipeButton" id="Delete">Delete Step</button>
+        </div>
+
+        <form input="checkboxes" class="checkboxes">
+          <label class="container"><input id="cheap" name="Cheap" type="checkbox">Cheap</label>
+          <label class="container"><input id="vegetarian" name="Vegetarian" type="checkbox">Vegetarian</label>
+          <label class="container"><input id="vegan" name="Vegan" type="checkbox">Vegan</label>
+          <label class="container"><input id="glutenFree" name="Gluten Free" type="checkbox">Gluten Free</label>
+          <label class="container"><input id="dairyFree" name="Dairy Free" type="checkbox">Dairy Free</label>
+          <label class="container"><input id="quickEat" name="Quick Eat" type="checkbox">Quick Eat</label>
+          <label class="container"><input id="easy" name="Easy" type="checkbox">Easy</label>
+        </form>
+
+        <div class="create-recipe-button">
+          <button id="Create">Create Recipe</button>
+        </div>
+      </div>
+      
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,39 @@
+name: JSDocs-PR
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  pull_request:
+    branches: [main]
+
+env:
+  GITHUB_PR_NUMBER: ${{github.event.pull_request.number}}
+
+jobs:
+  generate-docs:
+    name: Generating documentation for this PR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.18.1
+
+      - name: Run JSDocs
+        uses: andstor/jsdoc-action@v1
+        with:
+          source_dir: ./root/
+          recurse: true
+          output_dir: ./docs/jsdocs/
+          template: minami
+
+      - name: Publish docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: "docs-pr-${{ env.GITHUB_PR_NUMBER }}"
+          publish_dir: ./docs/jsdocs

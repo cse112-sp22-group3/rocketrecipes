@@ -1,0 +1,68 @@
+@media only screen and (max-width: 700px){
+  main h1{
+      font-size: 3em;
+  }
+}
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin:  32px 5% 10%;
+}
+.midPart {
+  display: flex;
+  flex-direction: column;
+  max-width: 1100px;
+  width: 100%;
+}
+.title{
+  float: left;
+  text-align: left;
+  width: 100%;
+}
+.bar {
+  width: 100%;
+}
+
+/*
+.bar{
+    margin:0 auto;
+    width:700px;
+    height:65px;
+    border-radius:30px;
+    border:1px solid #dcdcdc;
+    
+  }
+  .bar:hover{
+    box-shadow: 1px 1px 8px 1px #dcdcdc;
+  }
+  /*
+  .bar:focus-within{
+    box-shadow: 1px 1px 8px 1px #dcdcdc;
+    outline:none;
+  }
+  
+  .searchbar{
+    height:20px;
+    border:none;
+    width:575px;
+    font-size:16px;
+    outline: none;
+    position: center;
+  }
+  .search{
+    height:25px;
+    width: 25px;
+    position:relative;
+    top:10px;
+    left:10px;
+    border:none;
+    background-color: #ffffff;
+  }
+  .bar button{
+      border:none;
+      outline: none;
+      background-color: #ffffff;
+  }
+  

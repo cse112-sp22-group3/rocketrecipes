@@ -1,0 +1,35 @@
+name: JSDocs-Main
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: [main]
+
+jobs:
+  generate-docs:
+    name: Generating documentation for the main branch
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.18.1
+
+      - name: Run JSDocs
+        uses: andstor/jsdoc-action@v1
+        with:
+          source_dir: ./root/
+          recurse: true
+          output_dir: ./docs/jsdocs/
+          template: minami
+
+      - name: Publish docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/jsdocs

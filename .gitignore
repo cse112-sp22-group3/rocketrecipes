@@ -1,0 +1,8 @@
+node_modules
+.DS_Store
+# Cypress assets
+cypress/videos
+cypress/screenshots
+
+.DS_Store
+.vscode

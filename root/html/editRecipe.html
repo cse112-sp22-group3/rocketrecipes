@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/CreateRecipe.css" class="style" />
+    <script src="../components/custom-navbar.js" type="module"></script>
+    <script src="../scripts/editRecipe.js" type="module"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+    <link rel="stylesheet" href="../css/global.css" class="style">
+    <title>Edit Recipe</title>
+  </head>
+  <body>
+    <header>
+      <custom-navbar />
+    </header>
+    <main>
+      <div class="midPart">
+        <h2 id="header">Edit your recipe:</h2>
+        <input
+          class="recipeName"
+          type="text"
+          id="name"
+          placeholder="Recipe Name"
+        />
+        <br />
+        <input
+          class="image-upload"
+          id="image"
+          type="text"
+          placeholder="Paste a link to your recipe's picture here"
+        />
+        <textarea
+          class="descrip"
+          type="text"
+          placeholder="Recipe Summary (100 words max)"
+        ></textarea>
+        <br />
+        <h4 class="make">Makes:</h4>
+        <input
+          class="amount"
+          id="serving"
+          type="text"
+          placeholder="Total Amount"
+        />
+        <h4 class="make2">Time:</h4>
+        <input
+          class="amount"
+          type="text"
+          placeholder="Total time in Minutes"
+          id="time"
+        />
+        <br />
+        <h3>Ingredients:</h3>
+        <div class="ingredSteps">
+          <!-- <input class="Ingre" type="text" placeholder="Amount" id="amount1" />
+          <input class="unit" type="text" placeholder="Units" id="units1" />
+          <input class="Ingredient" type="text" placeholder="Ingredient 1" id="ing1"/> -->
+        </div>
+
+        <div class="buttons">
+          <button class="recipeButton" id="addIngredient">Add Ingredient</button>
+          <button class="recipeButton" id="deleteIngredient">Delete Ingredient</button>
+        </div>
+        <h3 id="instruct">Instructions:</h3>
+        <div class="instructions">
+          <input class="step" type="text" placeholder="Step 1" id="Step1" />
+          <input class="step" type="text" placeholder="Step 2" id="Step2" />
+          <input class="step" type="text" placeholder="Step 3" id="Step3" />
+          <input class="step" type="text" placeholder="Step 4" id="Step4" />
+          <input class="step" type="text" placeholder="Step 5" id="Step5" />
+        </div>
+        <div class="buttons">
+          <button class="recipeButton" id="plus">Add Step</button>
+          <button class="recipeButton" id="Delete">Delete Step</button>
+        </div>
+
+        <form input="checkboxes" class="checkboxes">
+          <label class="container"><input id="cheap" name="Cheap" type="checkbox">Cheap</label>
+          <label class="container"><input id="vegetarian" name="Vegetarian" type="checkbox">Vegetarian</label>
+          <label class="container"><input id="vegan" name="Vegan" type="checkbox">Vegan</label>
+          <label class="container"><input id="glutenFree" name="Gluten Free" type="checkbox">Gluten Free</label>
+          <label class="container"><input id="dairyFree" name="Dairy Free" type="checkbox">Dairy Free</label>
+          <label class="container"><input id="quickEat" name="Quick Eat" type="checkbox">Quick Eat</label>
+          <label class="container"><input id="easyCook" name="Easy Cook" type="checkbox">Easy Cook</label>
+        </form>
+
+        <div class="create-recipe-button">
+          <button id="edit-button">Edit Recipe</button>
+        </div>
+      </div>
+    </main>
+    <footer>
+    </footer>
+  </body>
+</html>

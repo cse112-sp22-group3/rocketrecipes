@@ -3,7 +3,7 @@
 
 This is Team Rocket's (Team 34) project repository for Rocket Recipes, a web application that allows users to search and create recipes for their own personal culinary escapades. 
 
-Check out our website live [here](https://rocketrecipes.netlify.app/)!
+Check out our website live [here](https://rocket-recipes.com/)!
 
 If you are looking for our Private video, the link is [here](https://www.youtube.com/watch?v=MG4AHLxTytE)!
 

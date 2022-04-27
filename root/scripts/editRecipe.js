@@ -24,7 +24,7 @@ function addStep() {
 function deleteStep() {
   i -= 1;
   if (i < 2) {
-    i = 2;
+    i = 3;
   }
   const stepStr = `Step${i.toString()}`;
   const lastStep = document.getElementById(stepStr);

@@ -4,10 +4,10 @@ const pullRequestId = process.env.GITHUB_PR_NUMBER;
 beforeAll(async () => {
     if(pullRequestId) {
       console.log("PR: " + pullRequestId);
-      rootUrl = `deploy-preview-${pullRequestId}--rocketrecipes.netlify.app`;
+      rootUrl = `deploy-preview-${pullRequestId}--rocketrecipesv2.netlify.app`;
     }
     else if(process.env.GITHUB_REF) {
-      rootUrl = `rocketrecipes.netlify.app`;
+      rootUrl = `rocketrecipesv2.netlify.app`;
     }
     else {
       console.log('not in pr');

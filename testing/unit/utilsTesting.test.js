@@ -21,7 +21,7 @@ beforeAll(() => {
     })
 });
 
-test('fetches recipes', async () => {
+test('assert 0 recipes upon', async () => {
     const recipes = await utilFunctions.getAllRecipes();
     expect(recipes.length).toBeGreaterThan(0);
 });
@@ -151,6 +151,14 @@ test('valid favorited recipe delete works', async () => {
   expect(newFavoritedRecipes.length).toBe(0);
 });
 
+test('assert created recipe is user specific', async () => {
+  const userRecipes = await utilFunctions.getUserRecipes();
+  expect(userRecipes.length).toBe(0);
+  await utilFunctions.createRecipe(exampleRecipe);
+  expect(userRecipes.length).toBe(1);
+  await utilFunctions.deleteRecipe(exampleRecipe.id);
+  expect(newFavoritedRecipes.length).toBe(0);
+});
 // After all tests are done, restore the global fetch function
 // back to the original 
 afterAll(() => {

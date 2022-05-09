@@ -155,7 +155,7 @@ test('assert created recipe is user specific', async () => {
   await utilFunctions.createRecipe(exampleRecipe2);
   expect(userRecipes.length).toBe(1);
   await utilFunctions.deleteRecipe(exampleRecipe2.id);
-  expect(newFavoritedRecipes.length).toBe(1);
+  expect(userRecipes.length).toBe(1);
 });
 // After all tests are done, restore the global fetch function
 // back to the original 

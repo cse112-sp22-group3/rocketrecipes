@@ -153,11 +153,11 @@ test('valid favorited recipe delete works', async () => {
 
 test('assert created recipe is user specific', async () => {
   const userRecipes = await utilFunctions.getUserRecipes();
-  expect(userRecipes.length).toBe(0);
-  await utilFunctions.createRecipe(exampleRecipe);
   expect(userRecipes.length).toBe(1);
+  await utilFunctions.createRecipe(exampleRecipe);
+  expect(userRecipes.length).toBe(2);
   await utilFunctions.deleteRecipe(exampleRecipe.id);
-  expect(newFavoritedRecipes.length).toBe(0);
+  expect(newFavoritedRecipes.length).toBe(1);
 });
 // After all tests are done, restore the global fetch function
 // back to the original 

@@ -145,10 +145,10 @@ test('assert deleteFavoriteRecipe() on valid id succeeds', async () => {
 test('assert getUserRecipes() succeeds', async () => {
   const userRecipes = await utilFunctions.getUserRecipes();
   expect(userRecipes.length).toBe(2);
+
   await utilFunctions.createRecipe(creatingRecipe2);
-  expect(userRecipes.length).toBe(2);
-  await utilFunctions.deleteRecipe('6b386ede98e7a353e085c4883fa2e8b6');
-  expect(userRecipes.length).toBe(2);
+  const newUserRecipes = await utilFunctions.getUserRecipes();
+  expect(newUserRecipes.length).toBe(3);
 });
 // After all tests are done, restore the global fetch function
 // back to the original 

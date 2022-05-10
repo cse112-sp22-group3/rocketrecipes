@@ -53,7 +53,7 @@ test('assert updateRecipe() updates correct recipe', async () => {
 
   for (let i = 0; i < allRecipes.length; i += 1) {
     if (allRecipes[i].id === newRecipe.id) {
-      expect(allRecipes[i]).toBe(newRecipe);
+      expect(allRecipes[i]).toStrictEqual(newRecipe);
     }
   }
 });
@@ -146,7 +146,7 @@ test('assert getUserRecipes() succeeds', async () => {
   const userRecipes = await utilFunctions.getUserRecipes();
   expect(userRecipes.length).toBe(2);
   await utilFunctions.createRecipe(creatingRecipe2);
-  expect(userRecipes.length).toBe(3);
+  expect(userRecipes.length).toBe(2);
   await utilFunctions.deleteRecipe('6b386ede98e7a353e085c4883fa2e8b6');
   expect(userRecipes.length).toBe(2);
 });

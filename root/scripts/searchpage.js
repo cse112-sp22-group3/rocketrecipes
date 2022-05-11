@@ -30,7 +30,7 @@ async function init() {
   const searchQuery = searchParams.get('searchQuery');
   const filterTags = searchParams.get('tags')?.split(',') || [];
 
-  if (searchQuery === null || searchQuery === undefined) {
+  if (searchQuery === null || searchQuery === undefined || searchQuery.length === 0) {
     const searchResultsContainer = document.getElementById('search-results-container');
     searchResultsContainer.style.display = 'flex';
     searchResultsContainer.style.maxWidth = '100%';

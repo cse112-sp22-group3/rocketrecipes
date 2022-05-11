@@ -35,6 +35,9 @@ describe('create own recipe', () => {
         await page.type('#amount3', '1');
         await page.type('#units3', 'tbs');
         await page.type('#ing3', 'Ingredient 3');
+
+        const ingredients = await page.$$('.Ingredient');
+        expect(ingredients.length).toBe(3);
     });
 
     it('should delete recipe ingredients', async () => {
@@ -52,6 +55,9 @@ describe('create own recipe', () => {
 
         await page.click('#plus');
         await page.type('#Step3', 'Step 3');
+
+        const steps = await page.$$('.step');
+        expect(steps.length).toBe(3);
     });
 
     it('should delete recipe instructions', async () => {

@@ -87,22 +87,25 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to search results', async () => {
-        const form = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#search-bar-form"));
-        await form.focus();
-        await form.type('#ss', 'egg');
+        const form = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#ss"));
+        await form.type('deviled eggs');
 
-        const but = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#search-bar-form > button > a"));
+        const but = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#search-bar-form > button"));
         await but.click();
     });
 
     it('navigate to Recipe page', async () => {
         await page.waitForSelector('recipe-card');
-        const card = await page.evaluateHandle( () => document.querySelector("#search-results-container > recipe-card:nth-child(1)").shadowRoot.querySelector("article > div"));
+
+        const recipes = await page.$$('recipe-card');
+        expect(recipes.length).toBe(2);
+
+        const card = await page.evaluateHandle( () => document.querySelector("#search-results-container > recipe-card:nth-child(1)"));
         await card.click();
     });
 
     it('recipe page should be titled the recipe title', async () => {
-        await page.waitForSelector('#recipe-title');
+        await page.waitForSelector('recipe-card');
         const title = await page.evaluate( () => document.querySelector('#recipe-title').textContent);
         await expect(page.title()).resolves.toMatch(title);
     });

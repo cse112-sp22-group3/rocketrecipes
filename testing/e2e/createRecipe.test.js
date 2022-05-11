@@ -66,4 +66,18 @@ describe('create own recipe', () => {
         expect(steps.length).toBe(2);
     });
 
+    it('should create new recipe', async () => {
+        await page.type('#name', 'Recipe Name Example');
+        await page.type('.descrip', 'Example Description');
+        await page.type('#serving', '3');
+        await page.type('#time', '30');
+
+        await page.click('#Create');
+    });
+
+    it('should direct to recipe page', async () => {
+        await page.waitForSelector('recipe-card');
+        await expect(page.title()).resolves.toMatch('Recipe Name Example');
+    });
+
 })

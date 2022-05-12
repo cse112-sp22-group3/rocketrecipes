@@ -8,7 +8,7 @@ class Navbar extends HTMLElement {
     // The shadow root will help us keep everything separated
     this.attachShadow({ mode: 'open' });
 
-    // create styles for navbar
+    // Create styles for navbar
     const style = document.createElement('style');
     style.innerHTML = `
         .navbar-container {
@@ -94,7 +94,7 @@ class Navbar extends HTMLElement {
         
     `;
 
-    // create html for navbar
+    // Create html for navbar
     const navbarContainer = document.createElement('div');
     navbarContainer.innerHTML = `
         <a class="navbar-image" href="./index.html"> 
@@ -116,7 +116,7 @@ class Navbar extends HTMLElement {
     `;
 
     const navbarLinksBody = navbarContainer.querySelector('.mobile-navbar-expanded');
-    navbarLinksBody.style.display = 'none'; // hide mobile navbar links on new page
+    navbarLinksBody.style.display = 'none'; // Hide mobile navbar links on new page
 
     navbarContainer.querySelector('.mobile-navbar-button').addEventListener('click', () => {
       if (navbarLinksBody.style.display === 'none') {

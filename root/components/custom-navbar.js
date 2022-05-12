@@ -13,13 +13,14 @@ class Navbar extends HTMLElement {
     style.innerHTML = `
         .navbar-container {
             background-color: #C2FFD9;
-            position: relative;
+            position: fixed;
             display: flex;
             flex-direciton: row;
             align-items: center;
             width: 100%;
             justify-content: space-between;
-            height: 80px;
+            top: 0;
+            height: 90px;
             font-size: 20px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
             z-index: 1000;
@@ -97,7 +98,7 @@ class Navbar extends HTMLElement {
     const navbarContainer = document.createElement('div');
     navbarContainer.innerHTML = `
         <a class="navbar-image" href="./index.html"> 
-            <img src="../media/teamLogo.png" width="68" height="68" > 
+            <img src="../media/teamLogo.png" width="75" height="75" > 
         </a>
         <div class="navbar-links-container-desktop"> 
             <a class="navbar-text-link" id="search" href="./searchpage.html">Search</a>

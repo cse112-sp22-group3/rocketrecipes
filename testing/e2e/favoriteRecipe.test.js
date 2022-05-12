@@ -21,6 +21,7 @@ describe('favorite a recipe', () => {
     });
 
     it('should navigate to recipe page and favorite recipe', async () => {
+        await page.waitForSelector('recipe-card');
         const card = await page.evaluateHandle( () => document.querySelector("#recommendedRecipeContainer > recipe-card:nth-child(1)"));
         await card.click();
 

@@ -103,10 +103,8 @@ async function fillRecipePage(recipeId) {
     } else {
       i += 1;
     }
-    console.log(recipe.steps.length);
     const stepVal = document.getElementsByClassName('step')[k - 1];
     stepVal.value = recipe.steps[k - 1].step;
-    console.log(stepVal.value);
   }
 
   document.getElementById('cheap').checked = recipe.cheap;

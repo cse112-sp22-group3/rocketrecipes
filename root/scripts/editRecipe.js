@@ -105,6 +105,7 @@ async function fillRecipePage(recipeId) {
     const stepVal = document.getElementsByClassName('step')[k - 1];
     stepVal.value = recipe.steps[k - 1].step;
     console.log(stepVal.value);
+    i = recipe.steps.length + 1;
   }
 
   document.getElementById('cheap').checked = recipe.cheap;

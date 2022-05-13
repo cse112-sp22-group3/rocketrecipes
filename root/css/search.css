@@ -25,6 +25,28 @@ main {
   width: 100%;
 }
 
+div#search-results-page-buttons {
+  display:none;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: auto;
+  height: 100px;
+  grid-template-areas: "previous space next";
+  align-content: end;
+  font-size: 16px;
+}
+
+button#search-page-button-previous {
+  grid-area: previous;
+  height: 50px;
+  /* cursor: pointer; */
+} 
+
+button#search-page-button-next {
+  grid-area: next;
+  height: 50px;
+  cursor: pointer;
+}
+
 /*
 .bar{
     margin:0 auto;

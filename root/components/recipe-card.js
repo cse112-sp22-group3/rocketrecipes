@@ -23,6 +23,11 @@ class RecipeCard extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
 
+  set page(page) {
+    if (!page) return;
+    this.pageNumber = page;
+  }
+
   set data(data) {
     if (!data) return;
 

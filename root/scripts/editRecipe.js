@@ -98,11 +98,13 @@ async function fillRecipePage(recipeId) {
   }
 
   for (let k = 1; k <= recipe.steps.length; k += 1) {
-    /* if (k > 5) {
+    if (k > 5) {
       addStep();
-    } */
+    } 
+    console.log(recipe.steps.length);
     const stepVal = document.getElementsByClassName('step')[k - 1];
     stepVal.value = recipe.steps[k - 1].step;
+    console.log(stepVal.value);
   }
 
   document.getElementById('cheap').checked = recipe.cheap;

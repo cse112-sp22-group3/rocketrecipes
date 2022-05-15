@@ -104,6 +104,7 @@ function fillSearchPage(searchResults) {
 
         const pageButtonPrevious = document.getElementById('search-page-button-previous');
         pageButtonPrevious.style.backgroundColor = '#d3d3d3';
+        pageButtonPrevious.disabled = true;
         pageButtonPrevious.addEventListener('click', () => {
           clickPreviousSearchPage(pageUserIsOn);
         });

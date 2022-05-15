@@ -5,54 +5,75 @@ const resultsPerPage = 15;
 let pageUserIsOn = 1;
 
 function clickNextSearchPage(currentPage) {
-
-
-  
   const currentPageDiv = document.getElementById(`page${currentPage}`);
   const nextPageDiv = document.getElementById(`page${String(parseInt(currentPage, 10) + 1)}`);
-  const nextTwoPageDiv = document.getElementById(`page${String(parseInt(currentPage, 10) + 2)}`);
   // console.log(nextPageDiv);
   if (!currentPageDiv || !nextPageDiv) {
-    console.log('Error, current page does not exist');
+    currentPageDiv.innerHTML = `
+      <p>Sorry, there are no more pages. </p>
+    `;
     return;
   }
   const pageButtonNext = document.getElementById('search-page-button-next');
-  if (!nextTwoPageDiv) {
+  const nextTwoPageDiv = document.getElementById(`page${String(parseInt(currentPage, 10) + 2)}`);
+  currentPageDiv.style.display = 'none';
+  nextPageDiv.style.display = 'flex';
+  pageUserIsOn += 1;
+
+  const pageButtonPrevious = document.getElementById('search-page-button-previous');
+  if (!nextTwoPageDiv) { // there is no next page
     pageButtonNext.style.backgroundColor = '#d3d3d3';
+    pageButtonNext.disabled = true;
   } else {
     pageButtonNext.style.backgroundColor = '#fef2e6';
-    currentPageDiv.style.display = 'none';
-    nextPageDiv.style.display = 'inline';
-    pageUserIsOn += 1;
+    pageButtonNext.disabled = false;
   }
+  if (pageUserIsOn === 1) {
+    pageButtonPrevious.style.backgroundColor = '#d3d3d3';
+    pageButtonPrevious.disabled = true;
+  } else {
+    pageButtonPrevious.style.backgroundColor = '#fef2e6';
+    pageButtonPrevious.disabled = false;
+  }
+  window.scrollTo(0, 0);
 }
 
 function clickPreviousSearchPage(currentPage) {
   const currentPageDiv = document.getElementById(`page${currentPage}`);
   const previousPageDiv = document.getElementById(`page${String(parseInt(currentPage, 10) - 1)}`);
   if (currentPage <= 1 || !currentPageDiv || !previousPageDiv) {
-    console.log('Cannot go to previous page because does not exist');
+    currentPageDiv.innerHTML = `
+      <p>Sorry, there are no more pages. </p>
+    `;
     return;
   }
+  currentPageDiv.style.display = 'none';
+  previousPageDiv.style.display = 'flex';
+  pageUserIsOn -= 1;
+
   const pageButtonPrevious = document.getElementById('search-page-button-previous');
-  if (currentPage === 2) {
+  const pageButtonNext = document.getElementById('search-page-button-next');
+  if (pageUserIsOn === 1) { // no more previous pages
     pageButtonPrevious.style.backgroundColor = '#d3d3d3';
+    pageButtonPrevious.disabled = true;
   } else {
     pageButtonPrevious.style.backgroundColor = '#fef2e6';
-    currentPageDiv.style.display = 'none';
-    previousPageDiv.style.display = 'inline';
-    pageUserIsOn -= 1;
+    pageButtonPrevious.disabled = false;
   }
+  if (currentPageDiv) { // no future pages
+    pageButtonNext.style.backgroundColor = '#fef2e6';
+    pageButtonNext.disabled = false;
+  } else {
+    pageButtonNext.style.backgroundColor = '#d3d3d3';
+    pageButtonNext.disabled = true;
+  }
+  window.scrollTo(0, 0);
 }
 
 // takes the current recipe object and fills the html of the page with
 // the information within it
 function fillSearchPage(searchResults) {
   const searchResultsContainer = document.getElementById('search-results-container');
-  searchResultsContainer.style.display = 'flex';
-  searchResultsContainer.style.maxWidth = '100%';
-  searchResultsContainer.style.justifyContent = 'center';
-  searchResultsContainer.style.flexWrap = 'wrap';
   if (searchResults.length === 0) {
     searchResultsContainer.innerHTML = `
       <p>Sorry, no results were found for your search</p>
@@ -63,6 +84,7 @@ function fillSearchPage(searchResults) {
 
     let currentPageDiv = document.createElement('div');
     currentPageDiv.setAttribute('id', `page${currentPageNumber}`);
+    currentPageDiv.classList.add('search-page-result');
 
     searchResults.forEach((recipe) => {
       const recipeCard = document.createElement('recipe-card');
@@ -88,14 +110,22 @@ function fillSearchPage(searchResults) {
       }
       // move to next page
       if (resultsCounter % resultsPerPage === 0) {
-        // console.log(`done w page ${currentPageNumber}`);
         searchResultsContainer.appendChild(currentPageDiv);
         currentPageNumber += 1;
         currentPageDiv = document.createElement('div');
         currentPageDiv.setAttribute('id', `page${currentPageNumber}`);
+        currentPageDiv.classList.add('search-page-result');
         currentPageDiv.style.display = 'none';
+      } else {
+        searchResultsContainer.appendChild(currentPageDiv);
       }
     });
+
+    // page buttons moved to bottom of container
+    if (resultsCounter >= resultsPerPage) {
+      const pageButtons = document.getElementById('search-results-page-buttons');
+      searchResultsContainer.appendChild(pageButtons);
+    }
   }
 }
 

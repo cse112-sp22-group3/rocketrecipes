@@ -25,6 +25,20 @@ main {
   width: 100%;
 }
 
+div#search-results-container {
+  display: flex;
+  max-width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.search-page-result {
+  display: flex;
+  max-width: 100%;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 div#search-results-page-buttons {
   display:none;
   grid-template-columns: repeat(3, auto);

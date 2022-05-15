@@ -1,4 +1,4 @@
-let rootUrl = 'rocketrecipesv2.netlify.app';
+let rootUrl = '127.0.0.1:5500';
 const pullRequestId = process.env.GITHUB_PR_NUMBER;
 
 beforeAll(async () => {
@@ -34,4 +34,9 @@ beforeAll(async () => {
         const searchBar = await page.evaluate( () => document.querySelector('body > main > div > div.bar'));
         expect.anything(searchBar);
       });
+
+      it('recipe results page should render', async () => {
+        const firstPageResult = await page.evaluate( () => document.getElementById('page1'));
+        expect.anything(firstPageResult);
+      })
 })

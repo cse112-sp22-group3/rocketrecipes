@@ -21,7 +21,7 @@ main {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin:  10% 5%;
+  margin:  8% 5%;
 }
 .midPart {
   display: flex;
@@ -31,6 +31,7 @@ main {
 }
 .midPart h1 {
   text-align: center;
+  color: #F24E67;
 }
 
 /* footer */

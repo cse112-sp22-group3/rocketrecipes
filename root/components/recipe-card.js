@@ -23,6 +23,11 @@ class RecipeCard extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
 
+  set page(page) {
+    if (!page) return;
+    this.pageNumber = page;
+  }
+
   set data(data) {
     if (!data) return;
 
@@ -68,7 +73,7 @@ class RecipeCard extends HTMLElement {
           width: 250px;
           height: 320px;
           box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
-          border-radius: 20px;
+          border-radius: 0px;
           margin: 20px;
           overflow: hidden;
           cursor: pointer;
@@ -79,7 +84,6 @@ class RecipeCard extends HTMLElement {
           height: 180px;
           object-fit: cover;
         }
-
       }
       
       .recipe-card:after {
@@ -102,7 +106,6 @@ class RecipeCard extends HTMLElement {
         overflow-y: auto;
       }
       .recipe-card h3{
-        text-decoration: underline;
         margin-bottom: 4px;
         margin-top: 10px;
         font-size: 16px;
@@ -117,17 +120,20 @@ class RecipeCard extends HTMLElement {
         flex-direction: row;
         flex-wrap: wrap;
         margin-bottom: 20px;
+        justify-content: center
       }
       .tag {
-        border-radius: 12px;
-        border-color: #F9D5A7;
+        border-color: #black;
+        border-width: thin;
+        border: none;
         height: 20px;
         display: flex;
         width: unset;
         margin-right: 5px;
         margin-bottom: 5px;
         cursor: pointer;
-        background-color: #F9D5A7
+        background-color: #FFFFFF;
+        font-family: 'Nunito', sans-serif !important;
       }
     `;
     const titleElement = card.querySelector('h3');

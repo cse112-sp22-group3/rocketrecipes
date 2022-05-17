@@ -47,12 +47,12 @@ function createCheckboxContainer() {
   const checkboxFormContainer = createCheckboxes();
   // create show and hide checkbox buttons and their logic
   const showCheckboxesButton = document.createElement('button');
-  showCheckboxesButton.innerText = 'Show Filters';
+  showCheckboxesButton.innerText = 'SHOW FILTERS';
   showCheckboxesButton.classList.add('button1');
   const filterContainer1 = document.createElement('div');
   const hideCheckboxesButton = document.createElement('button');
   hideCheckboxesButton.style.display = 'none';
-  hideCheckboxesButton.innerText = 'Hide Filters';
+  hideCheckboxesButton.innerText = 'HIDE FILTERS';
   hideCheckboxesButton.classList.add('button1');
 
   showCheckboxesButton.onclick = () => {
@@ -125,11 +125,11 @@ class Searchbar extends HTMLElement {
                 /* position: absolute; */
                 left: 2%;
                 border:none;
-                background-color: #FEF2E6;
-                text-decoration: underline;
-                font-size: 20px;
+                background-color: #DEDEDE;
+                font-size: 12px;
                 margin-left: 8%;
                 cursor: pointer;
+                font-family: 'Nunito', sans-serif !important;
               }
               .checked{
                 display: inline-block;

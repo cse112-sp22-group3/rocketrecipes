@@ -12,7 +12,7 @@ main {
 }
 .midPart {
   position: absolute;
-  top:20px;
+  top:115px;
   display: flex;
   flex-direction: column;
   max-width: 1100px;

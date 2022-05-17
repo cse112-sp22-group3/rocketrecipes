@@ -155,6 +155,7 @@ class Searchbar extends HTMLElement {
                 border-radius:30px;
                 border:1px solid ;
                 background-color: white;
+                overflow:hidden;
             }
             .bar:hover{
                 box-shadow: 1px 1px 8px 1px #dcdcdc;

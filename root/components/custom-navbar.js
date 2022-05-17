@@ -72,7 +72,7 @@ class Navbar extends HTMLElement {
             background: url('https://api.iconify.design/icon-park-outline/hamburger-button.svg?color=%23999&height=48') no-repeat center center / contain;
             margin-right: 10px;
         }
-        @media (max-width: 650px) {
+        @media (max-width: 800px) {
             .navbar-links-container-desktop {
                 display: none;
             }
@@ -81,7 +81,7 @@ class Navbar extends HTMLElement {
             }
             
         }
-        @media (min-width: 651px) {
+        @media (min-width: 801px) {
             .navbar-links-container-desktop {
                 display: flex;
                 align-items: center;

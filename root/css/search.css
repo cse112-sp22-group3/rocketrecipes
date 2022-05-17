@@ -52,13 +52,34 @@ div#search-results-page-buttons {
 button#search-page-button-previous {
   grid-area: previous;
   height: 50px;
+  padding: 5px 15px;
+  outline: none;
+  border: none;
+  color: #1a2735;
+  font-family: 'Nunito', sans-serif !important;
   /* cursor: pointer; */
 } 
+
+button#search-page-button-previous:hover {
+  cursor: pointer;
+  color: #F48395;
+}
+
 
 button#search-page-button-next {
   grid-area: next;
   height: 50px;
+  padding: 5px 15px;
   cursor: pointer;
+  outline: none;
+  border: none;
+  color: #1a2735;
+  font-family: 'Nunito', sans-serif !important;
+}
+
+button#search-page-button-next:hover {
+  cursor: pointer;
+  color: #F48395;
 }
 
 /*

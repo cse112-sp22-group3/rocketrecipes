@@ -12,12 +12,17 @@ class Navbar extends HTMLElement {
     const style = document.createElement('style');
     style.innerHTML = `
         .navbar-container {
-            background-color: #C2FFD9;
-            position: relative;
+            left: 0;
+            right: 0;
+            padding: 0 15px;
+            background-color: white;
+            margin: 0 auto;
+            width: 100%;
+            align-items: center;
+            position: fixed;
+            top: 0;
             display: flex;
             flex-direciton: row;
-            align-items: center;
-            width: 100%;
             justify-content: space-between;
             height: 80px;
             font-size: 20px;
@@ -25,7 +30,7 @@ class Navbar extends HTMLElement {
             z-index: 1000;
         }
         .navbar-container a{
-          background-color:  #C2FFD9;
+          background-color: white;
         }
         .navbar-image {
             text-decoration: none;
@@ -37,7 +42,7 @@ class Navbar extends HTMLElement {
             object-fit: cover;
         }
         .navbar-text-link {
-            background-color: #FFAB4C;
+            background-color: #F48395;
             display: flex;
             text-align: center;
             align-items: center;
@@ -51,7 +56,7 @@ class Navbar extends HTMLElement {
         }
         .navbar-text-link:hover {
             cursor: pointer;
-            background-color: #98fbbe;
+            background-color: #F48395;
         }
         .mobile-navbar-expanded {
             position: absolute;

@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/extensions
 import { search } from './utils.js';
 
-const resultsPerPage = 15;
+const resultsPerPage = 12;
 let pageUserIsOn = 1;
 
 function clickNextSearchPage(currentPage) {

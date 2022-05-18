@@ -195,7 +195,7 @@ export async function readRecipe(id) {
   if (response.ok) {
     const json = await response.json();
     return json;
-  } 
+  }
   return null;
 }
 

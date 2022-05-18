@@ -100,7 +100,7 @@ describe('navigate through pages', () => {
         const recipes = await page.$$('recipe-card');
         expect(recipes.length).toBe(11);
 
-        const card = await page.evaluateHandle( () => document.querySelector("#search-results-container > recipe-card:nth-child(1)"));
+        const card = await page.evaluateHandle( () => document.querySelector("#page1 > recipe-card:nth-child(1)"));
         await card.click();
     });
 

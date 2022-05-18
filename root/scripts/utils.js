@@ -189,15 +189,14 @@ export async function getBulkRecipes(recipeIds) {
  * does not exist, returns null
  */
 export async function readRecipe(id) {
-  const url = FIREBASE_BASE_URL + '/recipes/' + id + '.json';
+  const url = `${FIREBASE_BASE_URL}/recipes/${id}.json`;
   const response = await fetch(url);
 
   if (response.ok) {
     const json = await response.json();
     return json;
-  } else {
-    return null;
-  }
+  } 
+  return null;
 }
 
 /**

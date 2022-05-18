@@ -281,38 +281,64 @@ export function recipeIdArrayToObject(arr) {
  * @returns An array of recipeObjects that matches the search parameters
  */
 export async function search(searchQuery, tags) {
-  // match query to title, ingredients
-  const searchResults = new Set();
+  // Ignore recipe if query matches less than this percent of title
+  const MIN_MATCHING_THRESHOLD = 0.5;
   const allRecipes = await getAllRecipes();
   const query = searchQuery.toLowerCase();
+  const tokenizedQuery = [...new Set(query.trim().split(/\s+/))]; // regex matches one or more spaces
+  const minNumMatchingTokens = Math.ceil(tokenizedQuery.length * MIN_MATCHING_THRESHOLD);
+
+  let searchResults = [];
 
   for (let i = 0; i < allRecipes.length; i += 1) {
     const recipe = allRecipes[i];
     let recipeMatches = true;
     try {
+      // Check that recipe matches tags, reject if it doesn't
       tags.forEach((tag) => {
         if (!recipe[`${tag}`]) {
           recipeMatches = false;
         }
       });
 
+      // Create a search score for the title
+      let numMatchingTokens = 0;
+      let mostRecentMatch = tokenizedQuery.length;
+      let numMatchingCharacters = 0;
+      let searchScore = 0;
       const { title } = recipe;
       if (title) {
-        if (!title.toLowerCase().includes(query)) {
-          recipeMatches = false;
+        for (let j = tokenizedQuery.length - 1; j >= 0; j -= 1) {
+          if (title.toLowerCase().includes(tokenizedQuery[j])) {
+            numMatchingTokens += 1;
+            mostRecentMatch = j;
+            numMatchingCharacters += tokenizedQuery[j].length;
+          }
         }
+        // 1st: pick titles with more matching tokens over less matching tokens
+        // 2nd: pick titles that match with the first tokens in the search query
+        // 3rd: pick titles which have a large percentage of charaters that match with query
+        searchScore = numMatchingTokens * (tokenizedQuery.length ** 2)
+                    + (tokenizedQuery.length - mostRecentMatch - 1) * tokenizedQuery.length
+                    + (numMatchingCharacters / title.length) * tokenizedQuery.length;
+      }
+      if (numMatchingTokens < minNumMatchingTokens) {
+        recipeMatches = false;
       }
 
       if (recipeMatches) {
-        searchResults.add(recipe);
+        searchResults.push({ recipe, score: searchScore });
       }
     } catch (e) {
-      if (searchResults.has(recipe)) {
-        searchResults.delete(recipe);
+      // remove recipe from results if an error thrown
+      if (searchResults.some((a) => a.recipe === recipe)) {
+        searchResults = searchResults.filter((a) => a.recipe !== recipe);
       }
     }
   }
-  return Array.from(searchResults);
+  searchResults.sort((a, b) => b.score - a.score); // put a before b if a.score > b.score
+
+  return searchResults.map((a) => a.recipe);
 }
 
 /**

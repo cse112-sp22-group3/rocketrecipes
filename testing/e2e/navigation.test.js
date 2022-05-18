@@ -88,7 +88,7 @@ describe('navigate through pages', () => {
 
     it('navigate to search results', async () => {
         const form = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#ss"));
-        await form.type('deviled eggs');
+        await form.type('square deviled eggs');
 
         const but = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#search-bar-form > button"));
         await but.click();
@@ -100,7 +100,7 @@ describe('navigate through pages', () => {
         const recipes = await page.$$('recipe-card');
         expect(recipes.length).toBe(2);
 
-        const card = await page.evaluateHandle( () => document.querySelector("#search-results-container > recipe-card:nth-child(1)"));
+        const card = await page.evaluateHandle( () => document.querySelector("#page1 > recipe-card:nth-child(1)"));
         await card.click();
     });
 

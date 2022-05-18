@@ -98,7 +98,7 @@ describe('navigate through pages', () => {
         await page.waitForSelector('recipe-card');
 
         const recipes = await page.$$('recipe-card');
-        expect(recipes.length).toBe(11);
+        expect(recipes.length).toBe(2);
 
         const card = await page.evaluateHandle( () => document.querySelector("#page1 > recipe-card:nth-child(1)"));
         await card.click();

@@ -89,8 +89,9 @@ async function init() {
     const userGenRecipe = {};
     userGenRecipe.id = createId(); // crypto.randomBytes(16).toString('hex');
     userGenRecipe.title = document.getElementById('name').value;
-    userGenRecipe.readyInMinutes = document.getElementsByClassName('amount')[1].value;
-    userGenRecipe.servings = document.getElementsByClassName('amount')[0].value;
+    userGenRecipe.title = userGenRecipe.title.replace(/\s+/g, ' ').trim(); // trim whitespace
+    userGenRecipe.readyInMinutes = parseInt(document.getElementsByClassName('amount')[1].value, 10);
+    userGenRecipe.servings = parseInt(document.getElementsByClassName('amount')[0].value, 10);
     userGenRecipe.image = document.getElementById('image').value;
     userGenRecipe.uploader = 'From the User';
 
@@ -110,20 +111,25 @@ async function init() {
     for (let j = 0; j < document.getElementsByClassName('Ingre').length; j += 1) {
       const ingredientInfo = {};
       ingredientInfo.name = document.getElementsByClassName('Ingredient')[j].value;
-      ingredientInfo.amount = document.getElementsByClassName('Ingre')[j].value;
+      ingredientInfo.name = ingredientInfo.name.replace(/\s+/g, ' ').trim();
+      ingredientInfo.amount = parseInt(document.getElementsByClassName('Ingre')[j].value, 10);
+      ingredientInfo.amount = ingredientInfo.amount.replace(/\s+/g, ' ').trim();
       ingredientInfo.unit = document.getElementsByClassName('unit')[j].value;
+      ingredientInfo.unit = ingredientInfo.unit.replace(/\s+/g, ' ').trim();
       userGenRecipe.ingredients.push(ingredientInfo);
       numIngredients += 1;
     }
 
     userGenRecipe.fiveIngredientsOrLess = numIngredients <= 5;
     userGenRecipe.summary = document.getElementsByClassName('descrip')[0].value;
+    userGenRecipe.summary = userGenRecipe.summary.replace(/\s+/g, ' ').trim();
 
     userGenRecipe.steps = [];
     for (let k = 0; k < document.getElementsByClassName('step').length; k += 1) {
       const currStep = {};
       currStep.number = k;
       currStep.step = document.getElementsByClassName('step')[k].value;
+      currStep.step = currStep.step.replace(/\s+/g, ' ').trim();
       userGenRecipe.steps.push(currStep);
     }
     // validate form, if it is valid then create recipe

@@ -76,6 +76,9 @@ function createCheckboxContainer() {
 }
 
 class Searchbar extends HTMLElement {
+  searchInput;
+  handleSearch;
+
   constructor() {
     super(); // Inheret everything from HTMLElement
 
@@ -213,6 +216,7 @@ class Searchbar extends HTMLElement {
     searchInput.name = 's';
     searchInput.placeholder = 'Start typing...';
     searchInput.ariaLabel = 'Search through site content';
+    this.searchInput = searchInput;
 
     const searchButton = document.createElement('button');
     searchButton.innerHTML = `
@@ -228,6 +232,7 @@ class Searchbar extends HTMLElement {
     searchbarContainer.appendChild(checkboxContainer);
 
     this.shadowRoot.append(style, searchbarContainer);
+
 
     function handleSearch() {
       const searchInputValue = searchInput.value; // serach query
@@ -248,6 +253,7 @@ class Searchbar extends HTMLElement {
         tags.length > 0 ? `&tags=${tags.join(',')}` : ''
       }`;
     }
+    this.handleSearch = handleSearch;
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();

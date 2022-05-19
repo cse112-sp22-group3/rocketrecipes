@@ -8,7 +8,7 @@ class Navbar extends HTMLElement {
     // The shadow root will help us keep everything separated
     this.attachShadow({ mode: 'open' });
 
-    // Create styles for navbar
+    // create styles for navbar
     const style = document.createElement('style');
     style.innerHTML = `
         .navbar-container {

@@ -7,6 +7,7 @@ import {
 
 let i = 1; // instructions counter
 let ingCount = 1; // Ingredient Counter
+let url = ''; // Image URL for user upload
 
 function addStep() {
   const instructions = document.querySelector('.instructions');
@@ -71,6 +72,12 @@ function deleteIng() {
   amountStep.remove();
 }
 
+function upload() {
+  const img = document.getElementById('uploadImg');
+  const file = img.files;
+  url = URL.createObjectURL(file[0]);
+}
+
 async function init() {
   const addIngredient = document.getElementById('addIngredient');
   addIngredient.addEventListener('click', addIng);
@@ -84,6 +91,9 @@ async function init() {
   const deleteButton = document.getElementById('Delete');
   deleteButton.addEventListener('click', deleteStep);
 
+  const uploadImage = document.getElementById('uploadImg');
+  uploadImage.addEventListener('change', upload);
+
   await getAllRecipes();
   document.getElementById('Create').addEventListener('click', async () => {
     const userGenRecipe = {};
@@ -93,6 +103,11 @@ async function init() {
     userGenRecipe.servings = document.getElementsByClassName('amount')[0].value;
     userGenRecipe.image = document.getElementById('image').value;
     userGenRecipe.uploader = 'From the User';
+
+    // Set image for recipe if user uploaded photo
+    if(url != '') {
+      userGenRecipe.image = url;
+    }
 
     // Need to add tags to CreateRecipe.html so that the user can manually select which tags
     // associate with their recipe.

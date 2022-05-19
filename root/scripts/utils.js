@@ -365,21 +365,35 @@ export function validURL(str) {
  * @returns {Object} object containing values for if the form is valid, and error messages otherwise
  */
 export function validateForm(recipe) {
-  if (recipe.title === '' || recipe.summary === '') {
-    return { valid: false, errorMessage: 'Title is empty' };
+  console.log(recipe);
+  if (!recipe.title || recipe.title === '' || /\d/.test(recipe.title)) {
+    return { valid: false, errorMessage: 'Title is invalid (must not be empty or contain numbers)' };
   }
-  if (recipe.summary === '') {
+  if (!recipe.summary || recipe.summary === '') {
     return { valid: false, errorMessage: 'Summary is empty' };
   }
-  if (recipe.servings === '') {
-    return { valid: false, errorMessage: 'Servings field is empty' };
+  if (!recipe.servings || recipe.servings === '') {
+    return { valid: false, errorMessage: 'Amount field is invalid (must be integer)' };
   }
-  if (recipe.readyInMinutes === '') {
-    return { valid: false, errorMessage: 'Time field is empty' };
+  if (!recipe.readyInMinutes || recipe.readyInMinutes === '') {
+    return { valid: false, errorMessage: 'Time field is invalid (must be integer)' };
   }
   if (recipe.image !== '' && !validURL(recipe.image)) {
     return { valid: false, errorMessage: 'Image is not a valid link' };
   }
+
+  recipe.forEach((ingredient) => {
+    if (!ingredient.amount || ingredient.amount === '') {
+      return { valid: false, errorMessage: 'Ingredient amount is not a valid (must be integer)' };
+    }
+    if (!ingredient.name || ingredient.name === '' || /\d/.test(ingredient.name)) {
+      return { valid: false, errorMessage: 'Ingredient name is not a valid (must not contain numbers)' };
+    }
+    if (!ingredient.unit || ingredient.unit === '' || /\d/.test(ingredient.unit)) {
+      return { valid: false, errorMessage: 'Ingredient unit is not valid (must not contain numbers)' };
+    }
+    return { valid: true, errorMessage: '' };
+  });
 
   return { valid: true, errorMessage: '' };
 }

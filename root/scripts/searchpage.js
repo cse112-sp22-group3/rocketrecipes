@@ -73,15 +73,13 @@ function clickPreviousSearchPage(currentPage) {
 // takes the current recipe object and fills the html of the page with
 // the information within it
 function fillSearchPage(searchResults) {
-
   const queryString = window.location.search;
   const searchParams = new URLSearchParams(queryString);
   const searchQuery = searchParams.get('searchQuery');
 
   const searchResultsContainer = document.getElementById('search-results-container');
   if (searchResults.length === 0) {
-
-    document.getElementById('searchHeader').innerHTML =  "0 recipes found for " + searchQuery ;
+    document.getElementById('searchHeader').innerHTML = `0 recipes found for ${searchQuery}`;
     searchResultsContainer.innerHTML = `
       <p>Sorry, no results were found for your search</p>
     `;
@@ -97,7 +95,7 @@ function fillSearchPage(searchResults) {
       recipeCard.data = recipe;
       currentPageDiv.appendChild(recipeCard);
       resultsCounter += 1;
-      document.getElementById('searchHeader').innerHTML =  resultsCounter + " recipes found for " + searchQuery ;
+      document.getElementById('searchHeader').innerHTML = `${resultsCounter} recipes found for ${searchQuery}`;
 
       // turn on page buttons
       if (resultsCounter === resultsPerPage) {
@@ -135,12 +133,10 @@ function fillSearchPage(searchResults) {
       searchResultsContainer.appendChild(pageButtons);
     }
   }
-
 }
 
 async function init() {
   const queryString = window.location.search;
-
 
   const searchParams = new URLSearchParams(queryString);
   const searchQuery = searchParams.get('searchQuery');
@@ -157,7 +153,6 @@ async function init() {
       <p>Enter your search term above!</p>
     `;
   } else {
-    
     const searchedRecipes = await search(searchQuery, filterTags);
     fillSearchPage(searchedRecipes);
     const searchbarRoot = document.querySelector('custom-searchbar').shadowRoot;

@@ -1,5 +1,5 @@
 import { startVoiceRecognition, defaultNoMatchCallback } from '../scripts/voiceUtils.js';
-import {goToNextSearchPage, gotToPreviousSearchPage} from '../scripts/searchpage.js'
+import {goToNextSearchPage, gotToPreviousSearchPage, getCurrentSearchResults} from '../scripts/searchpage.js'
 
 //Order longer strings before shorter ones.
 const SEARCH_COMMAND_KEYWORDS = ['search for', 'search'];
@@ -68,7 +68,13 @@ class VoiceButton extends HTMLElement {
       transcript = trimKeywordFromTranscript(SELECT_COMMAND_KEYWORDS, transcript);
 
       if(result.isFinal) {
-        const searchResults = document.getElementById('search-results-container');
+        const searchResults = getCurrentSearchResults();
+        for(const result of searchResults) {
+          if(result.name.toLowerCase() == transcript){
+            result.openPage();
+          }
+        }
+        console.log('No results matched transcript. Num results' + searchResults.length + ' transcript: ' + transcript);
       }
     }
 

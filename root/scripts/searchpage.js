@@ -17,6 +17,18 @@ export function gotToPreviousSearchPage() {
   }
 }
 
+export function getCurrentSearchResults() {
+  const currentPageDiv = document.getElementById(`page${pageUserIsOn}`);
+  const children = currentPageDiv.children;
+  let output = [];
+  for(const child of children) {
+    if(child.constructor.name == 'RecipeCard') {
+      output.push(child);
+    }
+  }
+  return output;
+}
+
 function clickNextSearchPage(currentPage) {
   const currentPageDiv = document.getElementById(`page${currentPage}`);
   const nextPageDiv = document.getElementById(`page${String(parseInt(currentPage, 10) + 1)}`);

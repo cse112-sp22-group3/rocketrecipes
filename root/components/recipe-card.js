@@ -16,7 +16,7 @@ function minutesToTimeString(timeInMinutes) {
 }
 
 class RecipeCard extends HTMLElement {
-  openRecipe;
+  openPage;
   name;
   constructor() {
     super(); // Inheret everything from HTMLElement
@@ -170,13 +170,13 @@ class RecipeCard extends HTMLElement {
     });
     this.shadowRoot.append(style, card);
 
-    const openRecipe = () => {
+    const openPage = () => {
       const currentUrl = window.location;
       window.location = `${currentUrl.origin}/root/html/RecipePage.html?id=${data.id}`;
     };
-    this.openRecipe = openRecipe;
+    this.openPage = openPage;
 
-    card.querySelector('.clickable-card').addEventListener('click', openRecipe);
+    card.querySelector('.clickable-card').addEventListener('click', openPage);
   }
 
   get data() {

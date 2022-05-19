@@ -3,6 +3,19 @@ import { search } from './utils.js';
 
 const resultsPerPage = 12;
 let pageUserIsOn = 1;
+let numResults = 0;
+
+export function goToNextSearchPage() {
+  if(pageUserIsOn < Math.ceil(numResults / resultsPerPage)) {
+    clickNextSearchPage(pageUserIsOn);
+  }
+}
+
+export function gotToPreviousSearchPage() {
+  if(pageUserIsOn > 1) {
+    clickPreviousSearchPage(pageUserIsOn);
+  }
+}
 
 function clickNextSearchPage(currentPage) {
   const currentPageDiv = document.getElementById(`page${currentPage}`);
@@ -74,6 +87,7 @@ function clickPreviousSearchPage(currentPage) {
 // the information within it
 function fillSearchPage(searchResults) {
   const searchResultsContainer = document.getElementById('search-results-container');
+  numResults = searchResults.length;
   if (searchResults.length === 0) {
     searchResultsContainer.innerHTML = `
       <p>Sorry, no results were found for your search</p>

@@ -8,6 +8,7 @@ function minutesToTimeString(timeInMinutes) {
   const numMins = timeInMinutes % 60;
 
   let resultString = '';
+  //TODO: fix displays like '1 hours 1 minutes'
   resultString += numHours > 0 ? `${numHours} hours ` : '';
   resultString += numMins > 0 ? `${numMins} minutes` : '';
 
@@ -15,6 +16,8 @@ function minutesToTimeString(timeInMinutes) {
 }
 
 class RecipeCard extends HTMLElement {
+  openRecipe;
+  name;
   constructor() {
     super(); // Inheret everything from HTMLElement
 
@@ -138,6 +141,7 @@ class RecipeCard extends HTMLElement {
     `;
     const titleElement = card.querySelector('h3');
     titleElement.innerText = data.title || '';
+    this.name = data.title || '';
 
     const timeElement = card.querySelector('p');
     timeElement.innerText = `${minutesToTimeString(data.readyInMinutes)}`;
@@ -165,10 +169,14 @@ class RecipeCard extends HTMLElement {
       }
     });
     this.shadowRoot.append(style, card);
-    card.querySelector('.clickable-card').addEventListener('click', () => {
+
+    const openRecipe = () => {
       const currentUrl = window.location;
       window.location = `${currentUrl.origin}/root/html/RecipePage.html?id=${data.id}`;
-    });
+    };
+    this.openRecipe = openRecipe;
+
+    card.querySelector('.clickable-card').addEventListener('click', openRecipe);
   }
 
   get data() {

@@ -15,7 +15,7 @@ export async function getAllRecipes() {
   const url = `${FIREBASE_BASE_URL}/recipes.json?auth=${AUTH_KEY}`;
   let data = await fetch(url);
   let recipes = await data.json();
-  console.log(recipes);
+  recipes = Object.values(recipes);
   return recipes;
 }
 

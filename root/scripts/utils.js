@@ -1,11 +1,10 @@
 /** @module utils */
 /* eslint-disable no-mixed-operators */
-const COMMUNITY_HALF_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_2.json';
-const COMMUNITY_THIRD_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_3.json';
-const COMMUNITY_QUARTER_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_4.json';
-const COMMUNITY_TENTH_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_10.json';
 const LOCAL_STORAGE_ALL_RECIPES_KEY = 'allRecipes';
 const LOCAL_STORAGE_FAVORITED_RECIPES_KEY = 'favoritedRecipes';
+
+const FIREBASE_BASE_URL = 'https://rocketrecipes-6c192-default-rtdb.firebaseio.com';
+const AUTH_KEY = 'DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
 
 /**
  * @async
@@ -13,44 +12,11 @@ const LOCAL_STORAGE_FAVORITED_RECIPES_KEY = 'favoritedRecipes';
  * @returns {Array} An array of recipe objects, following the given schema
  */
 export async function getAllRecipes() {
-  if (localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY) !== null) {
-    const localStorageRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY));
-    return localStorageRecipes;
-  }
-  let fetchedRecipes = await fetch(COMMUNITY_HALF_RECIPE_URL)
-    .then((response) => response.json())
-    .then((data) => data);
-
-  try {
-    localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-  } catch (fe) {
-    try {
-      fetchedRecipes = await fetch(COMMUNITY_THIRD_RECIPE_URL)
-        .then((response) => response.json())
-        .then((data) => data);
-
-      localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-    } catch (e) {
-      try {
-        fetchedRecipes = await fetch(COMMUNITY_QUARTER_RECIPE_URL)
-          .then((response) => response.json())
-          .then((data) => data);
-
-        localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-      } catch (se) {
-        try {
-          fetchedRecipes = await fetch(COMMUNITY_TENTH_RECIPE_URL)
-            .then((response) => response.json())
-            .then((data) => data);
-
-          localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-        } catch (te) {
-          return null;
-        }
-      }
-    }
-  }
-  return fetchedRecipes;
+  const url = `${FIREBASE_BASE_URL}/recipes.json?auth=${AUTH_KEY}`;
+  let data = await fetch(url);
+  let recipes = await data.json();
+  console.log(recipes);
+  return recipes;
 }
 
 /**

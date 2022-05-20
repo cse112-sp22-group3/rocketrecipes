@@ -258,9 +258,15 @@
     }
   }
 }
+```
+##  Alternative Data Model
 
-An equivalent but alternative Data Model, in collaboration between @gmihir and @lramos10. This data model conains the exact same data, just separates user related data and recipe data into two endpoints `[base_url]/recipes/{userId}/...` and `[base_url]/users/{userId}/...`.
+-  An equivalent but alternative Data Model, in collaboration between @gmihir and @lramos10. This data model conains the exact same data, just separates user related data and recipe data into two endpoints:
+ `[base_url]/recipes/{userId}/...` and `[base_url]/users/{userId}/...`.
 
+ - RecipeIds assumed to be generated the same way as the last data model.
+
+```
 {
   "users": {
     "Br6v40acvTTGoMvvdbLLRBPplHF3": {

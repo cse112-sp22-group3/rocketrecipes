@@ -13,7 +13,7 @@ const AUTH_KEY = 'DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
  */
 export async function getAllRecipes() {
   const url = `${FIREBASE_BASE_URL}/recipes.json?auth=${AUTH_KEY}`;
-  let data = await fetch(url);
+  const data = await fetch(url);
   let recipes = await data.json();
   recipes = Object.values(recipes);
   return recipes;

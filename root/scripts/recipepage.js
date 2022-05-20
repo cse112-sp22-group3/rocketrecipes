@@ -66,7 +66,9 @@ function fillRecipePage(currentRecipe) {
   currentRecipe.ingredients.forEach((ingredient) => {
     // create new ingredient li
     const currentIngredientLi = document.createElement('li');
-    currentIngredientLi.innerText = `${ingredient.amount} ${ingredient.unit} ${ingredient.name}`;
+    // round ingredient amount to 2 decimal places
+    const roundedIngredient = Math.round(ingredient.amount * 100) / 100;
+    currentIngredientLi.innerText = `${roundedIngredient} ${ingredient.unit} ${ingredient.name}`;
     currentIngredientLi.setAttribute('class', 'ingred');
     recipeIngredientsElement.appendChild(currentIngredientLi);
   });
@@ -114,18 +116,19 @@ async function scaleIngredients() {
   const recipeIngredientsElement = document.getElementsByClassName('ingred');
   // yield scaled
   const recipeYieldlement = document.getElementById('yield');
-  recipeYieldlement.innerText = window.currentRecipe.servings * scale.value;
+
+  // round yield to 2 decimal places
+  const roundedYield = Math.round(window.currentRecipe.servings * scale.value * 100) / 100;
+  recipeYieldlement.innerText = roundedYield;
 
   for (let i = 0; i < recipeIngredientsElement.length; i += 1) {
     const ingre = window.currentRecipe.ingredients[i];
-    recipeIngredientsElement[i].innerText = `${ingre.amount * scale.value} ${ingre.unit} ${
-      ingre.name
-    }`;
-
+    // round ingredient amount to 2 decimal places
+    const roundedIngredient = Math.round(ingre.amount * scale.value * 100) / 100;
     if (scale.value / 1 === 0) {
       recipeIngredientsElement[i].innerText = `${ingre.amount} ${ingre.unit} ${ingre.name}`;
     } else {
-      recipeIngredientsElement[i].innerText = `${ingre.amount * scale.value} ${ingre.unit} ${
+      recipeIngredientsElement[i].innerText = `${roundedIngredient} ${ingre.unit} ${
         ingre.name
       }`;
     }

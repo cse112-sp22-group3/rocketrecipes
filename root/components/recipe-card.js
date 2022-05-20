@@ -71,7 +71,7 @@ class RecipeCard extends HTMLElement {
         .recipe-card {
           position: relative;
           width: 250px;
-          height: 320px;
+          height: 340px;
           box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.35);
           border-radius: 0px;
           margin: 20px;
@@ -102,7 +102,7 @@ class RecipeCard extends HTMLElement {
       
       .card-body {
         margin: 0px 10px;
-        height: 126px;
+        height: 150px;
         overflow-y: auto;
       }
       .recipe-card h3{

@@ -258,4 +258,259 @@
     }
   }
 }
+
+An equivalent but alternative Data Model, in collaboration between @gmihir and @lramos10. This data model conains the exact same data, just separates user related data and recipe data into two endpoints `[base_url]/recipes/{userId}/...` and `[base_url]/users/{userId}/...`.
+
+{
+  "users": {
+    "Br6v40acvTTGoMvvdbLLRBPplHF3": {
+      "name": "Jeff Huevos",
+      "recipeCount": "99"
+    },
+    "Br6v40acvTTGoMvvdbLLRBPplLF5": {
+      "name": "Jeff Nuevos",
+      "recipeCount": "70"
+    }
+  },
+  "recipes": {
+    "publishedRecipes": {
+      "Br6v40acvTTGoMvvdbLLRBPplHF3-98": {
+        "public": true,
+        "@context": "https://schema.org",
+        "@type": "Recipe",
+        "author": "Jake  Smith",
+        "cookTime": "PT2H",
+        "datePublished": "2015-05-18",
+        "description": "Your recipe description goes here",
+        "image": "http://www.example.com/images.jpg",
+        "recipeIngredient": {
+          "ingredient 1": "banana",
+          "ingredient 2": "bread crumbs",
+          "ingredient 3": "pudding",
+          "ingredient 4": "brown sugar",
+          "ingredient 5": "flour"
+        },
+        "name": "Rand's Cookies",
+        "nutrition": {
+          "@type": "NutritionInformation",
+          "calories": "1200 calories",
+          "carbohydrateContent": "12 carbs",
+          "proteinContent": "9 grams of protein",
+          "fatContent": "9 grams fat"
+        },
+        "prepTime": "PT15M",
+        "recipeInstructions": "This is the long part, etc.",
+        "recipeYield": "12 cookies"
+      },
+      "Br6v40acvTTGoMvvdbLLRBPplLF5-68": {
+        "public": true,
+        "@context": "https://schema.org",
+        "@type": "Recipe",
+        "author": "Jake  Smith",
+        "cookTime": "PT2H",
+        "datePublished": "2015-05-18",
+        "description": "Your recipe description goes here",
+        "image": "http://www.example.com/images.jpg",
+        "recipeIngredient": {
+          "ingredient 1": "banana",
+          "ingredient 2": "bread crumbs",
+          "ingredient 3": "pudding",
+          "ingredient 4": "brown sugar",
+          "ingredient 5": "flour"
+        },
+        "name": "Rand's Cookies",
+        "nutrition": {
+          "@type": "NutritionInformation",
+          "calories": "1200 calories",
+          "carbohydrateContent": "12 carbs",
+          "proteinContent": "9 grams of protein",
+          "fatContent": "9 grams fat"
+        },
+        "prepTime": "PT15M",
+        "recipeInstructions": "This is the long part, etc.",
+        "recipeYield": "12 cookies"
+      },
+      "Br6v40acvTTGoMvvdbLLRBPplHF3": {
+        "recipes": {
+          "Br6v40acvTTGoMvvdbLLRBPplHF3-97": {
+            "public": false,
+            "@context": "https://schema.org",
+            "@type": "Recipe",
+            "author": "Jake  Smith",
+            "cookTime": "PT2H",
+            "datePublished": "2015-05-18",
+            "description": "Your recipe description goes here",
+            "image": "http://www.example.com/images.jpg",
+            "recipeIngredient": {
+              "ingredient 1": "banana",
+              "ingredient 2": "bread crumbs",
+              "ingredient 3": "pudding",
+              "ingredient 4": "brown sugar",
+              "ingredient 5": "flour"
+            },
+            "name": "Rand's Cookies",
+            "nutrition": {
+              "@type": "NutritionInformation",
+              "calories": "1200 calories",
+              "carbohydrateContent": "12 carbs",
+              "proteinContent": "9 grams of protein",
+              "fatContent": "9 grams fat"
+            },
+            "prepTime": "PT15M",
+            "recipeInstructions": "This is the long part, etc.",
+            "recipeYield": "12 cookies"
+          },
+          "Br6v40acvTTGoMvvdbLLRBPplHF3-98": {
+            "public": true,
+            "@context": "https://schema.org",
+            "@type": "Recipe",
+            "author": "Jake  Smith",
+            "cookTime": "PT2H",
+            "datePublished": "2015-05-18",
+            "description": "Your recipe description goes here",
+            "image": "http://www.example.com/images.jpg",
+            "recipeIngredient": {
+              "ingredient 1": "banana",
+              "ingredient 2": "bread crumbs",
+              "ingredient 3": "pudding",
+              "ingredient 4": "brown sugar",
+              "ingredient 5": "flour"
+            },
+            "name": "Rand's Cookies",
+            "nutrition": {
+              "@type": "NutritionInformation",
+              "calories": "1200 calories",
+              "carbohydrateContent": "12 carbs",
+              "proteinContent": "9 grams of protein",
+              "fatContent": "9 grams fat"
+            },
+            "prepTime": "PT15M",
+            "recipeInstructions": "This is the long part, etc.",
+            "recipeYield": "12 cookies"
+          }
+        },
+        "favorites": {
+          "Br6v40acvTTGoMvvdbLLRBPplLF5-68": {
+            "public": true,
+            "@context": "https://schema.org",
+            "@type": "Recipe",
+            "author": "Jake  Smith",
+            "cookTime": "PT2H",
+            "datePublished": "2015-05-18",
+            "description": "Your recipe description goes here",
+            "image": "http://www.example.com/images.jpg",
+            "recipeIngredient": {
+              "ingredient 1": "banana",
+              "ingredient 2": "bread crumbs",
+              "ingredient 3": "pudding",
+              "ingredient 4": "brown sugar",
+              "ingredient 5": "flour"
+            },
+            "name": "Rand's Cookies",
+            "nutrition": {
+              "@type": "NutritionInformation",
+              "calories": "1200 calories",
+              "carbohydrateContent": "12 carbs",
+              "proteinContent": "9 grams of protein",
+              "fatContent": "9 grams fat"
+            },
+            "prepTime": "PT15M",
+            "recipeInstructions": "This is the long part, etc.",
+            "recipeYield": "12 cookies"
+          }
+        }
+      },
+      "Br6v40acvTTGoMvvdbLLRBPplHF5": {
+        "private": {
+          "Br6v40acvTTGoMvvdbLLRBPplLF5-67": {
+            "public": true,
+            "@context": "https://schema.org",
+            "@type": "Recipe",
+            "author": "Jake  Smith",
+            "cookTime": "PT2H",
+            "datePublished": "2015-05-18",
+            "description": "Your recipe description goes here",
+            "image": "http://www.example.com/images.jpg",
+            "recipeIngredient": {
+              "ingredient 1": "banana",
+              "ingredient 2": "bread crumbs",
+              "ingredient 3": "pudding",
+              "ingredient 4": "brown sugar",
+              "ingredient 5": "flour"
+            },
+            "name": "Rand's Cookies",
+            "nutrition": {
+              "@type": "NutritionInformation",
+              "calories": "1200 calories",
+              "carbohydrateContent": "12 carbs",
+              "proteinContent": "9 grams of protein",
+              "fatContent": "9 grams fat"
+            },
+            "prepTime": "PT15M",
+            "recipeInstructions": "This is the long part, etc.",
+            "recipeYield": "12 cookies"
+          },
+          "Br6v40acvTTGoMvvdbLLRBPplLF5-68": {
+            "public": true,
+            "@context": "https://schema.org",
+            "@type": "Recipe",
+            "author": "Jake  Smith",
+            "cookTime": "PT2H",
+            "datePublished": "2015-05-18",
+            "description": "Your recipe description goes here",
+            "image": "http://www.example.com/images.jpg",
+            "recipeIngredient": {
+              "ingredient 1": "banana",
+              "ingredient 2": "bread crumbs",
+              "ingredient 3": "pudding",
+              "ingredient 4": "brown sugar",
+              "ingredient 5": "flour"
+            },
+            "name": "Rand's Cookies",
+            "nutrition": {
+              "@type": "NutritionInformation",
+              "calories": "1200 calories",
+              "carbohydrateContent": "12 carbs",
+              "proteinContent": "9 grams of protein",
+              "fatContent": "9 grams fat"
+            },
+            "prepTime": "PT15M",
+            "recipeInstructions": "This is the long part, etc.",
+            "recipeYield": "12 cookies"
+          }
+        },
+        "favorites": {
+          "Br6v40acvTTGoMvvdbLLRBPplHF3-98": {
+            "public": true,
+            "@context": "https://schema.org",
+            "@type": "Recipe",
+            "author": "Jake  Smith",
+            "cookTime": "PT2H",
+            "datePublished": "2015-05-18",
+            "description": "Your recipe description goes here",
+            "image": "http://www.example.com/images.jpg",
+            "recipeIngredient": {
+              "ingredient 1": "banana",
+              "ingredient 2": "bread crumbs",
+              "ingredient 3": "pudding",
+              "ingredient 4": "brown sugar",
+              "ingredient 5": "flour"
+            },
+            "name": "Rand's Cookies",
+            "nutrition": {
+              "@type": "NutritionInformation",
+              "calories": "1200 calories",
+              "carbohydrateContent": "12 carbs",
+              "proteinContent": "9 grams of protein",
+              "fatContent": "9 grams fat"
+            },
+            "prepTime": "PT15M",
+            "recipeInstructions": "This is the long part, etc.",
+            "recipeYield": "12 cookies"
+          }
+        }
+      }
+    }
+  }
+}
 ```

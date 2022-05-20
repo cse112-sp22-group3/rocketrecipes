@@ -266,7 +266,7 @@
 
  - RecipeIds assumed to be generated the same way as the last data model.
 
-```
+```json
 {
   "users": {
     "Br6v40acvTTGoMvvdbLLRBPplHF3": {

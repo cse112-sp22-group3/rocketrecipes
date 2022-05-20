@@ -118,13 +118,21 @@ async function scaleIngredients() {
   const recipeYieldlement = document.getElementById('yield');
 
   // round yield to 2 decimal places
-  const roundedYield = Math.round(window.currentRecipe.servings * scale.value * 100) / 100;
+  let roundedYield = Math.round(window.currentRecipe.servings * scale.value * 100) / 100;
+  // if scaling set to negative value set ingredients needed to zero
+  if (roundedYield < 0) {
+    roundedYield = 0;
+  }
   recipeYieldlement.innerText = roundedYield;
 
   for (let i = 0; i < recipeIngredientsElement.length; i += 1) {
     const ingre = window.currentRecipe.ingredients[i];
     // round ingredient amount to 2 decimal places
-    const roundedIngredient = Math.round(ingre.amount * scale.value * 100) / 100;
+    let roundedIngredient = Math.round(ingre.amount * scale.value * 100) / 100;
+    // if scaling set to negative value set ingredients needed to zero
+    if (roundedIngredient < 0) {
+      roundedIngredient = 0;
+    }
     if (scale.value / 1 === 0) {
       recipeIngredientsElement[i].innerText = `${ingre.amount} ${ingre.unit} ${ingre.name}`;
     } else {

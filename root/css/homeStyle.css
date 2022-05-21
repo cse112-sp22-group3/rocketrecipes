@@ -21,7 +21,7 @@ main {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin:  8% 5%;
+  margin: 200px 5%;
 }
 .midPart {
   display: flex;
@@ -43,7 +43,7 @@ footer {
   margin:  10% 5%;
 }
 .foostPart {
-  margin-top: 3%;
+  margin-top: 0%;
   text-align: left;
   margin-bottom: 0px;
 }

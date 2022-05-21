@@ -84,7 +84,6 @@
 .unit-conversion {
   color: #222;
   border: 1px solid #222;
-  font-weight: 400;
   font-size: 11px;
   padding: 4px 12px;
   border-radius: 4px;
@@ -92,6 +91,16 @@
   text-decoration: none;
   margin-right: 5px;
   letter-spacing: 0.1em;
+}
+
+.unit-conversion:hover {
+  color: white;
+  background-color: #222;
+}
+
+.unit-conversion:active {
+  color: white;
+  background-color: #222;
 }
 
 #recipe-title {
@@ -190,7 +199,33 @@ ol li::marker {
 }
 
 ul li {
-  padding-left: 2px;
+  cursor: pointer;
+  position: relative;
+  padding: 1px 4px 1px 20px;
+  list-style-type: none;
+  /* background: rgb(248, 248, 248); */
+  transition: 0.2s;
+}
+
+ul li:hover {
+  /* background: #ddd; */
+}
+
+ul li.checked {
+  text-decoration: line-through;
+}
+
+ul li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: black;
+  border-style: solid;
+  border-width: 0 1px 1px 0;
+  top: 3px;
+  left: 0px;
+  transform: rotate(45deg);
+  height: 12px;
+  width: 5px;
 }
 
 ul li:not(:first-child) {

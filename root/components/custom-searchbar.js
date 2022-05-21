@@ -150,10 +150,12 @@ class Searchbar extends HTMLElement {
               }
             }
             .bar{
-                margin:0 auto;
-                // width:700px;
-                border-radius:30px;
-                border:1px solid ;
+                margin: 0 auto;
+                // width: 700px;
+                height: 55px;
+                border-radius: 0px;
+                color: #D3D3D3;
+                border: 1px solid;
                 background-color: white;
             }
             .bar:hover{
@@ -166,15 +168,14 @@ class Searchbar extends HTMLElement {
             .searchbar{
                 height:16px;
                 border:none;    
-                width:80%;
+                width:90%;
                 font-size:16px;
                 outline: none;
-                padding-bottom:20px;
                 background-color: white;
 
             }
             .search{
-                padding-top:10px;
+                padding-top:7px;
                 height:16px;
                 position:relative;
                 display:inline-block;
@@ -220,6 +221,7 @@ class Searchbar extends HTMLElement {
             <img class="search" src="../media/search.png" alt="Search"/>
         </a>
     `;
+    // searchButton.style.paddingTop = 'auto';
 
     form.appendChild(searchInput);
     form.appendChild(searchButton);

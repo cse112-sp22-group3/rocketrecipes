@@ -11,6 +11,38 @@ class Navbar extends HTMLElement {
     // create styles for navbar
     const style = document.createElement('style');
     style.innerHTML = `
+        .site-title {
+          font-weight: 800;
+          text-transform: uppercase;
+          font-size: 30px;
+          position: absolute;
+          float: none;
+          top: 7%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+        .site-description { 
+          font-weight: 400;
+          font-size: 15px;
+          text-align: center;
+          position: absolute;
+          color: #414550;
+          float: none;
+          top: 55%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+        #navbar-id {
+            position: fixed;
+            width: 100%;
+            padding: 50px 10px;
+            transition: 0.4s; 
+            background-image: url("../media/nav_background.png");
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-opacity: 60%;
+        }
         .navbar-container {
             left: 0;
             right: 0;
@@ -24,39 +56,40 @@ class Navbar extends HTMLElement {
             display: flex;
             flex-direciton: row;
             justify-content: space-between;
-            height: 80px;
             font-size: 20px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
             z-index: 1000;
         }
         .navbar-container a{
-          background-color: white;
+          color: black;
+          text-decoration: none;
         }
         .navbar-image {
             text-decoration: none;
-            width: 75px;
-            height 75px;
-            padding: 5px 0 0 10px;
         }
         .navbar-image img{
             object-fit: cover;
+            width: 68px;
+            height: 68px;
         }
         .navbar-text-link {
-            background-color: #F48395;
             display: flex;
             text-align: center;
             align-items: center;
             justify-content: center;
             width: 130px;
-            padding: 0 20px;
-            height: 80px;
+            padding: 0 10px;
+            height: 50px;
             color: black;
             text-decoration: none;
-            background-color: white;
+            background-color: none;
+            text-transform: uppercase;
+            font-size: 15px;
         }
         .navbar-text-link:hover {
             cursor: pointer;
-            background-color: #F48395;
+            background-color: white;
+            opacity: 0.6;
         }
         .mobile-navbar-expanded {
             position: absolute;
@@ -71,10 +104,26 @@ class Navbar extends HTMLElement {
             padding: 0;
         }
         .mobile-navbar-button {
-            width: 48px;
-            height: 48px;
+            width: 36px;
+            height: 36px;
             background: url('https://api.iconify.design/icon-park-outline/hamburger-button.svg?color=%23999&height=48') no-repeat center center / contain;
             margin-right: 10px;
+        }
+        @media(max-width: 1690px) {
+            .navbar-text-link {
+                width: 120px;
+                font-size: 15px;
+                padding: 5px;
+            }
+        }
+        @media(max-width: 1300px) {
+            .site-title {
+              font-weight: 800;
+              text-align: left;
+              text-transform: uppercase;
+              top: 7%;
+              left: 231px;
+            }
         }
         @media (max-width: 650px) {
             .navbar-links-container-desktop {
@@ -83,7 +132,6 @@ class Navbar extends HTMLElement {
             .navbar-links-container-mobile {
                 display: flex;
             }
-            
         }
         @media (min-width: 651px) {
             .navbar-links-container-desktop {
@@ -95,15 +143,21 @@ class Navbar extends HTMLElement {
                 display: none;
             }
         }
-        
     `;
 
     // create html for navbar
     const navbarContainer = document.createElement('div');
+    navbarContainer.setAttribute("id", "navbar-id");
     navbarContainer.innerHTML = `
         <a class="navbar-image" href="./index.html"> 
-            <img src="../media/teamLogo.png" width="68" height="68" > 
+            <img src="../media/teamLogo.png" > 
         </a>
+
+        <p class="site-title" id="site-title">
+            <a href="https://rocket-recipes.com/">Rocket Recipes</a> 
+        </p>
+        <p class="site-description" id="description">prepare for trouble, make it double (servings)!</p>
+        
         <div class="navbar-links-container-desktop"> 
             <a class="navbar-text-link" id="search" href="./searchpage.html">Search</a>
             <a class="navbar-text-link" id="create" href="./CreateRecipe.html">Create Recipe</a>
@@ -137,6 +191,45 @@ class Navbar extends HTMLElement {
     });
 
     navbarContainer.classList.add('navbar-container');
+    const navbarTitle = navbarContainer.querySelector('.site-title');
+    const navbarDescription = navbarContainer.querySelector('.site-description');
+    // navbar gets smaller as you scroll 
+    window.onscroll = function() {scrollFunction()};
+    function scrollFunction() {
+      if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
+        navbarContainer.style.padding = '10px 10px';
+        navbarTitle.style.fontSize = "30px";
+        navbarTitle.style.marginTop = "45px";
+        // hiding motto 
+        navbarDescription.style.display = "none";
+        // changing logo size
+        navbarContainer.querySelector('.navbar-image').style.width = "5px";
+        // document.getElementById("nava ")
+      } 
+      else {
+        navbarTitle.style.marginTop = "50px";
+        // showing motto 
+        navbarDescription.style.display = "block";
+        navbarDescription.style.padding = "0px";
+        // if window is small keep font small
+        if (window.innerWidth <= 1300) {
+          navbarContainer.style.padding = '30px 10px';
+          navbarTitle.style.fontSize = "30px";
+          navbarDescription.style.left = "231px";
+          navbarDescription.style.margin = "5px";
+        }
+        else {
+          navbarContainer.style.padding = '50px 10px';
+          navbarTitle.style.fontSize = "50px";
+          navbarTitle.style.marginTop = "75px";
+          navbarDescription.style.left = "50%";
+          navbarDescription.style.marginTop = "20px";
+          // changing logo size (?)
+          navbarContainer.querySelector('.navbar-image').style.height = "150%";
+          navbarContainer.querySelector('.navbar-image').style.width = "auto";
+        }
+      }
+    }
 
     const page = this.getAttribute('page');
     switch (page) {

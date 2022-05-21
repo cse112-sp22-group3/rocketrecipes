@@ -64,13 +64,32 @@ function fillRecipePage(currentRecipe) {
 
   const recipeIngredientsElement = document.getElementById('ingredients-list');
   currentRecipe.ingredients.forEach((ingredient) => {
+
+    var myNodelist = document.getElementsByTagName("LI");
+    
+
+    const check = document.createElement("input"); 
+    check.setAttribute('type','checkbox');
     // create new ingredient li
     const currentIngredientLi = document.createElement('li');
+
+    // Add a "checked" symbol when clicking on a list item
+    var list = document.querySelector('ul');
+    list.addEventListener('click', function(ev) {
+      if (ev.target.tagName === 'LI') {
+        ev.target.classList.toggle('checked');
+      }
+    }, false);
+    currentIngredientLi.appendChild(check);
     // round ingredient amount to 2 decimal places
     const roundedIngredient = Math.round(ingredient.amount * 100) / 100;
+    
     currentIngredientLi.innerText = `${roundedIngredient} ${ingredient.unit} ${ingredient.name}`;
     currentIngredientLi.setAttribute('class', 'ingred');
+    
     recipeIngredientsElement.appendChild(currentIngredientLi);
+
+    
   });
 
   const text = `Check out this recipe for ${document.getElementById('recipe-title').innerText}:`;
@@ -180,39 +199,6 @@ async function init() {
     window.location = `${currentUrl.origin}/root/html/editRecipe.html?id=${recipeId}`;
   });
 
-  const unitUSCustom = document.getElementById('us-customary');
-  unitUSCustom.addEventListener('click', () => {
-
-    // const recipeIngredientsElement = document.getElementsByClassName('ingred');
-    // // yield scaled
-    // const recipeYieldlement = document.getElementById('yield');
-
-    // // round yield to 2 decimal places
-    // const roundedYield = Math.round(window.currentRecipe.servings * scale.value * 100) / 100;
-    // recipeYieldlement.innerText = roundedYield;
-
-    // for (let i = 0; i < recipeIngredientsElement.length; i += 1) {
-    //   const ingre = window.currentRecipe.ingredients[i];
-    //   // round ingredient amount to 2 decimal places
-    //   const roundedIngredient = Math.round(ingre.amount * scale.value * 100) / 100;
-    //   if (scale.value / 1 === 0) {
-    //     recipeIngredientsElement[i].innerText = `${ingre.amount} ${ingre.unit} ${ingre.name}`;
-    //   } else {
-    //     recipeIngredientsElement[i].innerText = `${roundedIngredient} ${ingre.unit} ${
-    //       ingre.name
-    //     }`;
-    //   }
-    // }
-
-    for (let i = 0; i < recipeIngredientsElement.length; i += 1) { 
-      const ingre = window.currentRecipe.ingredients[i];
-      // if (`${ingre.unit}`.equals("pound")) {
-        const grams = "grams";
-        recipeIngredientsElement[i].innerText = `${ingre.amount} ${grams} ${ingre.name}`;
-      // }
-    }
-  });
-
   shareButton.addEventListener('click', () => {
     const isShown = document.getElementById('shareContainer').style.display !== 'none';
     if (isShown) {
@@ -236,6 +222,60 @@ async function init() {
     } else {
       window.location.href = new URL(window.location.origin);
     }
+  });
+
+  const unitUSCustomButton = document.getElementById('us-customary');
+  unitUSCustomButton.addEventListener('click', () => {
+    const recipeIngredientsElement = document.getElementsByClassName('ingred'); 
+    for (let i = 0; i < recipeIngredientsElement.length; i += 1) {
+      const ingre = window.currentRecipe.ingredients[i];
+      // console.log(ingre.unit);
+
+      // ml -> oz
+      if (ingre.unit == "ml") {
+        const converted = Math.round(ingre.amount * (1/29.5735) * 100) / 100;
+        recipeIngredientsElement[i].innerText = `${converted} ${"oz"} ${ingre.name}`;
+      }
+      // gr -> oz 
+      if (ingre.unit == "gr" || ingre.unit == "g") {
+        const converted = Math.round(ingre.amount * (1/28.3495) * 100) / 100;
+        recipeIngredientsElement[i].innerText = `${converted} ${"oz"} ${ingre.name}`;
+      }
+      // kg -> lbs
+      if (ingre.unit == "kg") {
+        const converted = Math.round(ingre.amount * (2.20462) * 100) / 100;
+        recipeIngredientsElement[i].innerText = `${converted} ${"pounds"} ${ingre.name}`;
+      }
+    } 
+  });
+
+  const unitMetricButton = document.getElementById('metric');
+  unitMetricButton.addEventListener('click', () => {
+    const recipeIngredientsElement = document.getElementsByClassName('ingred'); 
+    for (let i = 0; i < recipeIngredientsElement.length; i += 1) {
+      const ingre = window.currentRecipe.ingredients[i];
+      const liquids = ["stock", "water", "milk", "cream", "cooking oil"];
+      // oz -> ml 
+      if ((ingre.unit == "oz" || ingre.unit == "ounces") && liquids.includes(ingre.name)) {
+        const converted = Math.round(ingre.amount * (29.5735) * 100) / 100;
+        recipeIngredientsElement[i].innerText = `${converted} ${"ml"} ${ingre.name}`;
+      }
+      // oz -> gr
+      if (ingre.unit == "oz" || ingre.unit == "ounces") {
+        const converted = Math.round(ingre.amount * (28.3495) * 100) / 100;
+        recipeIngredientsElement[i].innerText = `${converted} ${"gr"} ${ingre.name}`;
+      }
+      // lbs -> kg
+      if (ingre.unit == "lbs" || ingre.unit == "pounds") {
+        const converted = Math.round(ingre.amount * (1/2.20462) * 100) / 100;
+        recipeIngredientsElement[i].innerText = `${converted} ${"kg"} ${ingre.name}`;
+      }
+      // quarts -> liter
+      if (ingre.unit == "quarts" || ingre.unit == "quart" || ingre.unit == "qt") {
+        const converted = Math.round(ingre.amount * (0.95) * 100) / 100;
+        recipeIngredientsElement[i].innerText = `${converted} ${"L"} ${ingre.name}`;
+      }
+    } 
   });
 
   // fetch four random recipes (except the currently displayed recipe) and

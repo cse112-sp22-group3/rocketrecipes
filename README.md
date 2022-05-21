@@ -11,25 +11,31 @@ If you are looking for our Private video, the link is [here](https://www.youtube
 ---
 ## Features
 
-#### CRUD Features
+**CRUD features**  
+Create, read, update and delete recepies easly!
+<p align="left">
+<img src="https://user-images.githubusercontent.com/69459954/169669901-fb182f09-9e5b-4f5a-b470-f7a0fef3c0d8.gif", align="left", width:"465" height="425">
+</p>
 
-Our project includes all CRUD features, including creating a new recipe, reading and viewing recipes, updating and editing recipes, and deleting recipes all together.
 
-Creating a recipe can be done by clicking the "Create Recipe" button on the navbar. This feature is also accessible from the account page.
+**Favourite Recepies**  
+We chose to include this feature because of our user-oriented research, we found that most chefs tend to find recipes they like and cook them over and over again. By favoriting a recipe, the user will be able to easily find the recipe again.
+<p>
+<img allign:"left", width:"465" height="425" src="https://user-images.githubusercontent.com/69459954/169669926-5479f6cb-8ec8-4491-b35f-a706bedfc2cb.gif">
+</p>
 
-Users can view recipes by clicking on a recipe card, which will redirect them to a page specialized to that recipe. Users can search for recipes on the home page and on the search page based on key words, as well as filter recipes with our predetermined set of filters. 
+**Scale Recepies**  
+When looking at a specific recipe, the user can input a number with which to scale the recipe. This will scale the yield of the recipe, as well as the amount of each ingredient they will need to make it.
+<p>
+<img allign:"left", width:"465" height="425" src="https://user-images.githubusercontent.com/69459954/169669923-3d16bcb0-4981-4711-9d44-3cebe02593be.gif">
+</p>
 
-Once the user is on a specific recipe, they can click the edit button that redirects them to the update recipe page, or decide to delete the recipe.
+**Share Recepies**  
+You have the ability to share a recipe using Twitter, Facebook, Reddit, or email.
+<p>
+<img allign:"left", width:"465" height="425" src="https://user-images.githubusercontent.com/69459954/169669914-55dfd244-f843-4298-bc4c-2110f848db43.gif">
+</p>
 
-#### Special Features
-
-One of the special features we've added is the ability for users to favorite recipes. This feature is available by clicking the star while they are viewing a specific recipe. Once the user has favorited a recipe, it will appear on their account page under the "Favorited Recipes" section. We chose to include this feature because, from our user-oriented research, we found that most chefs tend to find recipes they like and cook them over and over again. By favoriting a recipe, the user will be able to easily find the recipe again.
-
-Another special feature we added was the ability to scale a recipe. When looking at a specific recipe, the user can input a number with which to scale the recipe. This will scale the yield of the recipe, as well as the amount of each ingredient they will need to make it.
-
-One more special feature we decided to include in our project was the ability to share a recipe to social media. When looking at a specific recipe, the user will see a "network" button along with the other buttons. When clicked, it will expand and show buttons to share the recipe to Twitter, Facebook, Reddit, to email the recipe to another person, or to print the recipe.
-
----
 
 ## Repository Setup
 

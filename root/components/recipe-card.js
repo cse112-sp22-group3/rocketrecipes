@@ -101,6 +101,7 @@ class RecipeCard extends HTMLElement {
       }
       
       .card-body {
+        text-align: center;
         margin: 0px 10px;
         height: 150px;
         overflow-y: auto;

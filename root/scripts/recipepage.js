@@ -113,33 +113,21 @@ function createRecommendedRecipes() {
 async function scaleIngredients() {
   const scale = document.getElementById('servings');
 
+  // fix negative scaling
+  if (scale.value < 0) {
+    scale.value = 0;
+  }
   const recipeIngredientsElement = document.getElementsByClassName('ingred');
   // yield scaled
   const recipeYieldlement = document.getElementById('yield');
-
   // round yield to 2 decimal places
-  let roundedYield = Math.round(window.currentRecipe.servings * scale.value * 100) / 100;
-  // if scaling set to negative value set ingredients needed to zero
-  if (roundedYield < 0) {
-    roundedYield = 0;
-  }
+  const roundedYield = Math.round(window.currentRecipe.servings * scale.value * 100) / 100;
   recipeYieldlement.innerText = roundedYield;
-
   for (let i = 0; i < recipeIngredientsElement.length; i += 1) {
     const ingre = window.currentRecipe.ingredients[i];
     // round ingredient amount to 2 decimal places
-    let roundedIngredient = Math.round(ingre.amount * scale.value * 100) / 100;
-    // if scaling set to negative value set ingredients needed to zero
-    if (roundedIngredient < 0) {
-      roundedIngredient = 0;
-    }
-    if (scale.value / 1 === 0) {
-      recipeIngredientsElement[i].innerText = `${ingre.amount} ${ingre.unit} ${ingre.name}`;
-    } else {
-      recipeIngredientsElement[i].innerText = `${roundedIngredient} ${ingre.unit} ${
-        ingre.name
-      }`;
-    }
+    const roundedIngredient = Math.round(ingre.amount * scale.value * 100) / 100;
+    recipeIngredientsElement[i].innerText = `${roundedIngredient} ${ingre.unit} ${ingre.name}`;
   }
 }
 

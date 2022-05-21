@@ -180,6 +180,39 @@ async function init() {
     window.location = `${currentUrl.origin}/root/html/editRecipe.html?id=${recipeId}`;
   });
 
+  const unitUSCustom = document.getElementById('us-customary');
+  unitUSCustom.addEventListener('click', () => {
+
+    // const recipeIngredientsElement = document.getElementsByClassName('ingred');
+    // // yield scaled
+    // const recipeYieldlement = document.getElementById('yield');
+
+    // // round yield to 2 decimal places
+    // const roundedYield = Math.round(window.currentRecipe.servings * scale.value * 100) / 100;
+    // recipeYieldlement.innerText = roundedYield;
+
+    // for (let i = 0; i < recipeIngredientsElement.length; i += 1) {
+    //   const ingre = window.currentRecipe.ingredients[i];
+    //   // round ingredient amount to 2 decimal places
+    //   const roundedIngredient = Math.round(ingre.amount * scale.value * 100) / 100;
+    //   if (scale.value / 1 === 0) {
+    //     recipeIngredientsElement[i].innerText = `${ingre.amount} ${ingre.unit} ${ingre.name}`;
+    //   } else {
+    //     recipeIngredientsElement[i].innerText = `${roundedIngredient} ${ingre.unit} ${
+    //       ingre.name
+    //     }`;
+    //   }
+    // }
+
+    for (let i = 0; i < recipeIngredientsElement.length; i += 1) { 
+      const ingre = window.currentRecipe.ingredients[i];
+      // if (`${ingre.unit}`.equals("pound")) {
+        const grams = "grams";
+        recipeIngredientsElement[i].innerText = `${ingre.amount} ${grams} ${ingre.name}`;
+      // }
+    }
+  });
+
   shareButton.addEventListener('click', () => {
     const isShown = document.getElementById('shareContainer').style.display !== 'none';
     if (isShown) {
@@ -189,6 +222,7 @@ async function init() {
       document.getElementById('shareContainer').style.display = 'flex';
     }
   });
+  
   const backButton = document.getElementById('back-button');
   backButton.addEventListener('click', () => {
     if (document.referrer === '') {

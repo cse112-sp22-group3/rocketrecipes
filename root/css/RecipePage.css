@@ -81,6 +81,19 @@
   text-align: center;
 }
 
+.unit-conversion {
+  color: #222;
+  border: 1px solid #222;
+  font-weight: 400;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-right: 5px;
+  letter-spacing: 0.1em;
+}
+
 #recipe-title {
   margin: 10px 0;
   font-weight: bold;

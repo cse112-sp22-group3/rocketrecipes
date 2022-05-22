@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 // custom-navbar.js
 
 class Navbar extends HTMLElement {
@@ -220,8 +221,7 @@ class Navbar extends HTMLElement {
       navbarTitle.style.fontSize = '30px';
       navbarDescription.style.left = '252px';
       navbarDescription.style.margin = '5px';
-    } 
-    else {
+    } else {
       navbarContainer.style.padding = '50px 10px';
       navbarTitle.style.fontSize = '50px';
       navbarTitle.style.marginTop = '75px';
@@ -232,10 +232,7 @@ class Navbar extends HTMLElement {
       navbarContainer.querySelector('.navbar-image').style.width = 'auto';
     }
     // navbar gets smaller as you scroll
-    window.onscroll = function scroller() {
-      scrollFunction();
-    };
-    function scrollFunction() { 
+    function scrollFunction() {
       // scrolled down page
       if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
         navbarContainer.style.padding = '10px 10px';
@@ -246,8 +243,7 @@ class Navbar extends HTMLElement {
         // changing logo size
         navbarContainer.querySelector('.navbar-image').style.width = '5px';
         // document.getElementById('nava ')
-      } 
-      else {
+      } else {
         navbarTitle.style.marginTop = '50px';
         // showing motto
         navbarDescription.style.display = 'block';
@@ -259,8 +255,7 @@ class Navbar extends HTMLElement {
           navbarDescription.style.fontSize = '11px';
           navbarDescription.style.left = '210px';
           navbarDescription.style.margin = '5px';
-        } 
-        else {
+        } else {
           navbarContainer.style.padding = '50px 10px';
           navbarTitle.style.fontSize = '50px';
           navbarTitle.style.marginTop = '75px';
@@ -274,6 +269,9 @@ class Navbar extends HTMLElement {
       }
     }
 
+    window.onscroll = function scroller() {
+      scrollFunction();
+    };
     const page = this.getAttribute('page');
     switch (page) {
       case 'search':

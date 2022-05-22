@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 // creates form with all checkboxes for filtering search
 function createCheckboxes() {
   const tagProperties = [
@@ -14,7 +15,6 @@ function createCheckboxes() {
   const checkboxContainer = document.createElement('div');
   checkboxContainer.id = 'checkboxes';
   checkboxContainer.classList.add('checkboxes');
-
   tagProperties.forEach((tag) => {
     const func = document.createElement('div');
     func.classList.add('checked');

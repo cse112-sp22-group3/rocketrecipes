@@ -65,15 +65,15 @@ function fillRecipePage(currentRecipe) {
   const recipeIngredientsElement = document.getElementById('ingredients-list');
   currentRecipe.ingredients.forEach((ingredient) => {
 
-    var myNodelist = document.getElementsByTagName("LI");
+    var myNodelist = document.getElementsByTagName('LI');
     
 
-    const check = document.createElement("input"); 
+    const check = document.createElement('input'); 
     check.setAttribute('type','checkbox');
     // create new ingredient li
     const currentIngredientLi = document.createElement('li');
 
-    // Add a "checked" symbol when clicking on a list item
+    // Add a 'checked' symbol when clicking on a list item
     var list = document.querySelector('ul');
     list.addEventListener('click', function(ev) {
       if (ev.target.tagName === 'LI') {
@@ -232,19 +232,19 @@ async function init() {
       // console.log(ingre.unit);
 
       // ml -> oz
-      if (ingre.unit == "ml") {
+      if (ingre.unit == 'ml') {
         const converted = Math.round(ingre.amount * (1/29.5735) * 100) / 100;
-        recipeIngredientsElement[i].innerText = `${converted} ${"oz"} ${ingre.name}`;
+        recipeIngredientsElement[i].innerText = `${converted} ${'oz'} ${ingre.name}`;
       }
       // gr -> oz 
-      if (ingre.unit == "gr" || ingre.unit == "g") {
+      if (ingre.unit == 'gr' || ingre.unit == 'g') {
         const converted = Math.round(ingre.amount * (1/28.3495) * 100) / 100;
-        recipeIngredientsElement[i].innerText = `${converted} ${"oz"} ${ingre.name}`;
+        recipeIngredientsElement[i].innerText = `${converted} ${'oz'} ${ingre.name}`;
       }
       // kg -> lbs
-      if (ingre.unit == "kg") {
+      if (ingre.unit == 'kg') {
         const converted = Math.round(ingre.amount * (2.20462) * 100) / 100;
-        recipeIngredientsElement[i].innerText = `${converted} ${"pounds"} ${ingre.name}`;
+        recipeIngredientsElement[i].innerText = `${converted} ${'pounds'} ${ingre.name}`;
       }
     } 
   });
@@ -254,26 +254,26 @@ async function init() {
     const recipeIngredientsElement = document.getElementsByClassName('ingred'); 
     for (let i = 0; i < recipeIngredientsElement.length; i += 1) {
       const ingre = window.currentRecipe.ingredients[i];
-      const liquids = ["stock", "water", "milk", "cream", "cooking oil"];
+      const liquids = ['stock', 'water', 'milk', 'cream', 'cooking oil'];
       // oz -> ml 
-      if ((ingre.unit == "oz" || ingre.unit == "ounces") && liquids.includes(ingre.name)) {
+      if ((ingre.unit == 'oz' || ingre.unit == 'ounces') && liquids.includes(ingre.name)) {
         const converted = Math.round(ingre.amount * (29.5735) * 100) / 100;
-        recipeIngredientsElement[i].innerText = `${converted} ${"ml"} ${ingre.name}`;
+        recipeIngredientsElement[i].innerText = `${converted} ${'ml'} ${ingre.name}`;
       }
       // oz -> gr
-      if (ingre.unit == "oz" || ingre.unit == "ounces") {
+      if (ingre.unit == 'oz' || ingre.unit == 'ounces') {
         const converted = Math.round(ingre.amount * (28.3495) * 100) / 100;
-        recipeIngredientsElement[i].innerText = `${converted} ${"gr"} ${ingre.name}`;
+        recipeIngredientsElement[i].innerText = `${converted} ${'gr'} ${ingre.name}`;
       }
       // lbs -> kg
-      if (ingre.unit == "lbs" || ingre.unit == "pounds") {
+      if (ingre.unit == 'lbs' || ingre.unit == 'pounds') {
         const converted = Math.round(ingre.amount * (1/2.20462) * 100) / 100;
-        recipeIngredientsElement[i].innerText = `${converted} ${"kg"} ${ingre.name}`;
+        recipeIngredientsElement[i].innerText = `${converted} ${'kg'} ${ingre.name}`;
       }
       // quarts -> liter
-      if (ingre.unit == "quarts" || ingre.unit == "quart" || ingre.unit == "qt") {
+      if (ingre.unit == 'quarts' || ingre.unit == 'quart' || ingre.unit == 'qt') {
         const converted = Math.round(ingre.amount * (0.95) * 100) / 100;
-        recipeIngredientsElement[i].innerText = `${converted} ${"L"} ${ingre.name}`;
+        recipeIngredientsElement[i].innerText = `${converted} ${'L'} ${ingre.name}`;
       }
     } 
   });
@@ -287,8 +287,8 @@ async function init() {
   }
   const button = document.querySelector('#fav-icon');
   let isFav = await isFavorite(recipeId);
-  const outlinedStar = "background: url('https://api.iconify.design/ant-design/star-outlined.svg?color=%23c4c4c4&height=48') no-repeat center center / contain;";
-  const filledStar = "background: url('https://api.iconify.design/ant-design/star-filled.svg?color=%23ffc700&height=48') no-repeat center center / contain;";
+  const outlinedStar = 'background: url('https://api.iconify.design/ant-design/star-outlined.svg?color=%23c4c4c4&height=48') no-repeat center center / contain;';
+  const filledStar = 'background: url('https://api.iconify.design/ant-design/star-filled.svg?color=%23ffc700&height=48') no-repeat center center / contain;';
 
   button.addEventListener('click', async () => {
     // change icons based on favorite
@@ -318,7 +318,7 @@ async function init() {
   //   var js, fjs = d.getElementsByTagName(s)[0];
   //   if (d.getElementById(id)) return;
   //   js = d.createElement(s); js.id = id;
-  //   js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+  //   js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
   //   fjs.parentNode.insertBefore(js, fjs);
   //   }(document, 'script', 'facebook-jssdk'));
 }

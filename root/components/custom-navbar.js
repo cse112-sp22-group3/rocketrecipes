@@ -39,7 +39,7 @@ class Navbar extends HTMLElement {
             padding: 50px 10px;
             transition: 0s; 
             /* background
-            background-image: url("../media/nav_background.png");
+            background-image: url('../media/nav_background.png');
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -168,29 +168,29 @@ class Navbar extends HTMLElement {
 
     // create html for navbar
     const navbarContainer = document.createElement('div');
-    navbarContainer.setAttribute("id", "navbar-id");
+    navbarContainer.setAttribute('id', 'navbar-id');
     navbarContainer.innerHTML = `
-        <a class="navbar-image" href="./index.html"> 
-            <img src="../media/teamLogo.png" > 
+        <a class='navbar-image' href='./index.html'> 
+            <img src='../media/teamLogo.png' > 
         </a>
 
-        <p class="site-title" id="site-title">
-            <a href="https://rocket-recipes.com/">Rocket Recipes</a> 
+        <p class='site-title' id='site-title'>
+            <a href='https://rocket-recipes.com/'>Rocket Recipes</a> 
         </p>
-        <p class="site-description" id="description">prepare for trouble, make it double (servings)!</p>
+        <p class='site-description' id='description'>prepare for trouble, make it double (servings)!</p>
         
-        <div class="navbar-links-container-desktop"> 
-            <a class="navbar-text-link" id="search" href="./searchpage.html">Search</a>
-            <a class="navbar-text-link" id="create" href="./CreateRecipe.html">Create Recipe</a>
-            <a class="navbar-text-link" id="account" href="./generalAccount.html">My Account</a>
+        <div class='navbar-links-container-desktop'> 
+            <a class='navbar-text-link' id='search' href='./searchpage.html'>Search</a>
+            <a class='navbar-text-link' id='create' href='./CreateRecipe.html'>Create Recipe</a>
+            <a class='navbar-text-link' id='account' href='./generalAccount.html'>My Account</a>
         </div>
-        <div class="navbar-links-container-mobile"> 
-            <div class="mobile-navbar-button"></div>
+        <div class='navbar-links-container-mobile'> 
+            <div class='mobile-navbar-button'></div>
         </div>
-        <div class="mobile-navbar-expanded">
-            <a class="navbar-text-link mobile-link" id="search-mobile" href="./searchpage.html">Search</a>
-            <a class="navbar-text-link mobile-link" id="create-mobile" href="./CreateRecipe.html">Create Recipe</a>
-            <a class="navbar-text-link mobile-link" id="account-mobile" href="./generalAccount.html">My Account</a>
+        <div class='mobile-navbar-expanded'>
+            <a class='navbar-text-link mobile-link' id='search-mobile' href='./searchpage.html'>Search</a>
+            <a class='navbar-text-link mobile-link' id='create-mobile' href='./CreateRecipe.html'>Create Recipe</a>
+            <a class='navbar-text-link mobile-link' id='account-mobile' href='./generalAccount.html'>My Account</a>
         </div>
     `;
 
@@ -217,19 +217,19 @@ class Navbar extends HTMLElement {
 
     if (window.innerWidth <= 1300) {
       navbarContainer.style.padding = '30px 10px';
-      navbarTitle.style.fontSize = "30px";
-      navbarDescription.style.left = "252px";
-      navbarDescription.style.margin = "5px";
+      navbarTitle.style.fontSize = '30px';
+      navbarDescription.style.left = '252px';
+      navbarDescription.style.margin = '5px';
     }
     else {
       navbarContainer.style.padding = '50px 10px';
-      navbarTitle.style.fontSize = "50px";
-      navbarTitle.style.marginTop = "75px";
-      navbarDescription.style.left = "50%";
-      navbarDescription.style.marginTop = "20px";
+      navbarTitle.style.fontSize = '50px';
+      navbarTitle.style.marginTop = '75px';
+      navbarDescription.style.left = '50%';
+      navbarDescription.style.marginTop = '20px';
       // changing logo size (?)
-      navbarContainer.querySelector('.navbar-image').style.height = "150%";
-      navbarContainer.querySelector('.navbar-image').style.width = "auto";
+      navbarContainer.querySelector('.navbar-image').style.height = '150%';
+      navbarContainer.querySelector('.navbar-image').style.width = 'auto';
     }
     // navbar gets smaller as you scroll 
     window.onscroll = function() {scrollFunction()};
@@ -237,38 +237,38 @@ class Navbar extends HTMLElement {
       // scrolled down page
       if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
         navbarContainer.style.padding = '10px 10px';
-        navbarTitle.style.fontSize = "30px";
-        navbarTitle.style.marginTop = "45px";
+        navbarTitle.style.fontSize = '30px';
+        navbarTitle.style.marginTop = '45px';
         // hiding motto 
-        navbarDescription.style.display = "none";
+        navbarDescription.style.display = 'none';
         // changing logo size
-        navbarContainer.querySelector('.navbar-image').style.width = "5px";
-        // document.getElementById("nava ")
+        navbarContainer.querySelector('.navbar-image').style.width = '5px';
+        // document.getElementById('nava ')
       } 
       // at top of page
       else {
-        navbarTitle.style.marginTop = "50px";
+        navbarTitle.style.marginTop = '50px';
         // showing motto 
-        navbarDescription.style.display = "block";
-        navbarDescription.style.padding = "0px";
+        navbarDescription.style.display = 'block';
+        navbarDescription.style.padding = '0px';
         // if window is small keep font small
         if (window.innerWidth <= 1300) {
           navbarContainer.style.padding = '30px 10px';
-          navbarTitle.style.fontSize = "30px";
-          navbarDescription.style.fontSize = "11px";
-          navbarDescription.style.left = "210px";
-          navbarDescription.style.margin = "5px";
+          navbarTitle.style.fontSize = '30px';
+          navbarDescription.style.fontSize = '11px';
+          navbarDescription.style.left = '210px';
+          navbarDescription.style.margin = '5px';
         }
         else {
           navbarContainer.style.padding = '50px 10px';
-          navbarTitle.style.fontSize = "50px";
-          navbarTitle.style.marginTop = "75px";
-          navbarDescription.style.fontSize = "15px";
-          navbarDescription.style.left = "50%";
-          navbarDescription.style.marginTop = "20px";
+          navbarTitle.style.fontSize = '50px';
+          navbarTitle.style.marginTop = '75px';
+          navbarDescription.style.fontSize = '15px';
+          navbarDescription.style.left = '50%';
+          navbarDescription.style.marginTop = '20px';
           // changing logo size (?)
-          navbarContainer.querySelector('.navbar-image').style.height = "150%";
-          navbarContainer.querySelector('.navbar-image').style.width = "auto";
+          navbarContainer.querySelector('.navbar-image').style.height = '150%';
+          navbarContainer.querySelector('.navbar-image').style.width = 'auto';
         }
       }
     }

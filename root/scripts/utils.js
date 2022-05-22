@@ -365,35 +365,49 @@ export function validURL(str) {
  * @returns {Object} object containing values for if the form is valid, and error messages otherwise
  */
 export function validateForm(recipe) {
-  console.log(recipe);
   if (!recipe.title || recipe.title === '' || /\d/.test(recipe.title)) {
-    return { valid: false, errorMessage: 'Title is invalid (must not be empty or contain numbers)' };
+    return { valid: false, errorMessage: 'Title is invalid (must not be empty, must not contain numbers)' };
   }
   if (!recipe.summary || recipe.summary === '') {
     return { valid: false, errorMessage: 'Summary is empty' };
   }
-  if (!recipe.servings || recipe.servings === '') {
-    return { valid: false, errorMessage: 'Amount field is invalid (must be integer)' };
+  if (!recipe.servings || recipe.servings === '' || Number.isNaN(recipe.servings)) {
+    return { valid: false, errorMessage: 'Servings field is invalid (must be integer)' };
   }
-  if (!recipe.readyInMinutes || recipe.readyInMinutes === '') {
+  if (!recipe.readyInMinutes || recipe.readyInMinutes === ''
+    || Number.isNaN(recipe.readyInMinutes)) {
     return { valid: false, errorMessage: 'Time field is invalid (must be integer)' };
   }
   if (recipe.image !== '' && !validURL(recipe.image)) {
     return { valid: false, errorMessage: 'Image is not a valid link' };
   }
+  if (!recipe.ingredients || recipe.ingredients.length === 0) {
+    return { valid: false, errorMessage: 'Must have at least 1 ingredient' };
+  }
 
-  recipe.forEach((ingredient) => {
-    if (!ingredient.amount || ingredient.amount === '') {
+  let index = 0;
+  for (index = 0; index < recipe.ingredients.length; index += 1) {
+    const ingredient = recipe.ingredients[index];
+    if (!ingredient.amount || ingredient.amount === '' || Number.isNaN(ingredient.amount)) {
       return { valid: false, errorMessage: 'Ingredient amount is not a valid (must be integer)' };
     }
-    if (!ingredient.name || ingredient.name === '' || /\d/.test(ingredient.name)) {
-      return { valid: false, errorMessage: 'Ingredient name is not a valid (must not contain numbers)' };
+    if (!ingredient.name || ingredient.name.length === 0 || /\d/.test(ingredient.name)) {
+      return { valid: false, errorMessage: 'Ingredient name is not valid (must not contain numbers)' };
     }
-    if (!ingredient.unit || ingredient.unit === '' || /\d/.test(ingredient.unit)) {
+    if (!ingredient.unit || ingredient.unit.length === 0 || /\d/.test(ingredient.unit)) {
       return { valid: false, errorMessage: 'Ingredient unit is not valid (must not contain numbers)' };
     }
-    return { valid: true, errorMessage: '' };
-  });
+  }
+
+  if (!recipe.steps || recipe.steps.length === 0) {
+    return { valid: false, errorMessage: 'Must have at least 1 step' };
+  }
+  for (index = 0; index < recipe.steps.length; index += 1) {
+    const step = recipe.step[index];
+    if (!step || step.length === 0) {
+      return { valid: false, errorMessage: 'Step cannot be empty' };
+    }
+  }
 
   return { valid: true, errorMessage: '' };
 }

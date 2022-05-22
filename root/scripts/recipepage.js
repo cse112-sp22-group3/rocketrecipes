@@ -287,8 +287,8 @@ async function init() {
   }
   const button = document.querySelector('#fav-icon');
   let isFav = await isFavorite(recipeId);
-  const outlinedStar = 'background: url('https://api.iconify.design/ant-design/star-outlined.svg?color=%23c4c4c4&height=48') no-repeat center center / contain;';
-  const filledStar = 'background: url('https://api.iconify.design/ant-design/star-filled.svg?color=%23ffc700&height=48') no-repeat center center / contain;';
+  const outlinedStar = 'background: url("https://api.iconify.design/ant-design/star-outlined.svg?color=%23c4c4c4&height=48") no-repeat center center / contain;';
+  const filledStar = 'background: url("https://api.iconify.design/ant-design/star-filled.svg?color=%23ffc700&height=48") no-repeat center center / contain;';
 
   button.addEventListener('click', async () => {
     // change icons based on favorite

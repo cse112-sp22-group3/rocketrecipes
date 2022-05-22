@@ -267,7 +267,7 @@ class Navbar extends HTMLElement {
         }
       }
     }
-    window.onscroll = function () {
+    window.onscroll = function scroller() {
       scrollFunction();
     };
 

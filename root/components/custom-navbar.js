@@ -231,7 +231,7 @@ class Navbar extends HTMLElement {
       navbarContainer.querySelector('.navbar-image').style.width = 'auto';
     }
     // navbar gets smaller as you scroll
-    function scrollFunction () {
+    function scrollFunction() {
       // scrolled down page
       if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
         navbarContainer.style.padding = '10px 10px';
@@ -267,8 +267,8 @@ class Navbar extends HTMLElement {
         }
       }
     }
-    window.onscroll = function() {
-      scrollFunction()
+    window.onscroll = scroll_function () {
+      scrollFunction();
     };
 
     const page = this.getAttribute('page');

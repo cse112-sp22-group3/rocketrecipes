@@ -3,7 +3,7 @@
   width: 40px;
   height: 40px;
   position: relative;
-  top: 20px;
+  top: 115px;
   left: 20px;
   background: url('https://api.iconify.design/eva/arrow-back-outline.svg?color=%23111&height=40') no-repeat center center / contain;
   cursor: pointer;
@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  margin: 32px 5%;
+  margin: 52px 5%;
 }
 
 .recipe-header {

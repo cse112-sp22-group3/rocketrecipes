@@ -14,11 +14,12 @@ class Navbar extends HTMLElement {
         .site-title {
           font-weight: 800;
           text-transform: uppercase;
-          font-size: 30px;
+          font-size: 50px;
           position: absolute;
           float: none;
           top: 7%;
           left: 50%;
+          margin-top: 75px;
           transform: translate(-50%, -50%);
         }
         .site-description { 
@@ -26,7 +27,7 @@ class Navbar extends HTMLElement {
           font-size: 15px;
           text-align: center;
           position: absolute;
-          color: #414550;
+          color: #504143;
           float: none;
           top: 55%;
           left: 50%;
@@ -36,17 +37,19 @@ class Navbar extends HTMLElement {
             position: fixed;
             width: 100%;
             padding: 50px 10px;
-            transition: 0.4s; 
+            transition: 0s; 
+            /* background
             background-image: url("../media/nav_background.png");
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
             background-opacity: 60%;
+            */
         }
         .navbar-container {
             left: 0;
             right: 0;
-            padding: 0 15px;
+            padding: 50 10px;
             background-color: white;
             margin: 0 auto;
             width: 100%;
@@ -104,19 +107,22 @@ class Navbar extends HTMLElement {
             padding: 0;
         }
         .mobile-navbar-button {
-            width: 36px;
-            height: 36px;
-            background: url('https://api.iconify.design/icon-park-outline/hamburger-button.svg?color=%23999&height=48') no-repeat center center / contain;
-            margin-right: 10px;
+          width: 36px;
+          height: 36px;
+          background: url('https://api.iconify.design/icon-park-outline/hamburger-button.svg?color=%23999&height=48') no-repeat center center / contain;
+          margin-right: 10px;
         }
-        @media(max-width: 1690px) {
+        p.mobile { 
+          font-size: 10px;
+        }
+        @media (max-width: 1690px) {
             .navbar-text-link {
-                width: 120px;
-                font-size: 15px;
-                padding: 5px;
+              width: 120px;
+              font-size: 15px;
+              padding: 5px;
             }
         }
-        @media(max-width: 1300px) {
+        @media (max-width: 1300px) {
             .site-title {
               font-weight: 800;
               text-align: left;
@@ -124,14 +130,29 @@ class Navbar extends HTMLElement {
               top: 7%;
               left: 231px;
             }
+            .site-description {
+              margin: 5px;
+              left: 251px;
+            }
+        }
+        @media (max-width: 800px) {
+          .navbar-text-link {
+            font-size: 12px;
+            width: 100px;
+          }
         }
         @media (max-width: 650px) {
-            .navbar-links-container-desktop {
-                display: none;
-            }
-            .navbar-links-container-mobile {
-                display: flex;
-            }
+          .navbar-links-container-desktop {
+              display: none;
+          }
+          .navbar-links-container-mobile {
+              display: flex;
+          }
+        } 
+        @media screen and (max-width: 640px) {
+          .site-title.mobile {
+              font-size: 5px;
+          }
         }
         @media (min-width: 651px) {
             .navbar-links-container-desktop {
@@ -193,9 +214,27 @@ class Navbar extends HTMLElement {
     navbarContainer.classList.add('navbar-container');
     const navbarTitle = navbarContainer.querySelector('.site-title');
     const navbarDescription = navbarContainer.querySelector('.site-description');
+
+    if (window.innerWidth <= 1300) {
+      navbarContainer.style.padding = '30px 10px';
+      navbarTitle.style.fontSize = "30px";
+      navbarDescription.style.left = "252px";
+      navbarDescription.style.margin = "5px";
+    }
+    else {
+      navbarContainer.style.padding = '50px 10px';
+      navbarTitle.style.fontSize = "50px";
+      navbarTitle.style.marginTop = "75px";
+      navbarDescription.style.left = "50%";
+      navbarDescription.style.marginTop = "20px";
+      // changing logo size (?)
+      navbarContainer.querySelector('.navbar-image').style.height = "150%";
+      navbarContainer.querySelector('.navbar-image').style.width = "auto";
+    }
     // navbar gets smaller as you scroll 
     window.onscroll = function() {scrollFunction()};
     function scrollFunction() {
+      // scrolled down page
       if (document.body.scrollTop > 80 || document.documentElement.scrollTop > 80) {
         navbarContainer.style.padding = '10px 10px';
         navbarTitle.style.fontSize = "30px";
@@ -206,6 +245,7 @@ class Navbar extends HTMLElement {
         navbarContainer.querySelector('.navbar-image').style.width = "5px";
         // document.getElementById("nava ")
       } 
+      // at top of page
       else {
         navbarTitle.style.marginTop = "50px";
         // showing motto 
@@ -215,13 +255,15 @@ class Navbar extends HTMLElement {
         if (window.innerWidth <= 1300) {
           navbarContainer.style.padding = '30px 10px';
           navbarTitle.style.fontSize = "30px";
-          navbarDescription.style.left = "231px";
+          navbarDescription.style.fontSize = "11px";
+          navbarDescription.style.left = "210px";
           navbarDescription.style.margin = "5px";
         }
         else {
           navbarContainer.style.padding = '50px 10px';
           navbarTitle.style.fontSize = "50px";
           navbarTitle.style.marginTop = "75px";
+          navbarDescription.style.fontSize = "15px";
           navbarDescription.style.left = "50%";
           navbarDescription.style.marginTop = "20px";
           // changing logo size (?)

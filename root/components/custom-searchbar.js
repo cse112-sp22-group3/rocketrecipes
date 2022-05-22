@@ -89,15 +89,15 @@ class Searchbar extends HTMLElement {
               .button1{
                 margin-top: 2%;
                 margin-bottom: 3%;
-                float: center;
-                /* position: absolute; */
-                left: 0%;
+                float: left;
+                position: absolute; 
+                left: 2%;
                 border:none;
-                background-color: #FEF2E6;
-                text-decoration: underline;
-                font-size: 20px;
-                margin-left: 0%;
+                background-color: #DEDEDE;
+                font-size: 12px;
+                margin-left: 8%;
                 cursor: pointer;
+                font-family: 'Nunito', sans-serif !important;
               }
               .checked{
                 display: inline-block;
@@ -122,12 +122,12 @@ class Searchbar extends HTMLElement {
                 margin-top: 2%;
                 margin-bottom: 3%;
                 float: left;
-                /* position: absolute; */
+                position: absolute; 
                 left: 2%;
                 border:none;
                 background-color: #DEDEDE;
                 font-size: 12px;
-                margin-left: 8%;
+                margin-left: 12%;
                 cursor: pointer;
                 font-family: 'Nunito', sans-serif !important;
               }
@@ -168,7 +168,7 @@ class Searchbar extends HTMLElement {
             .searchbar{
                 height:16px;
                 border:none;    
-                width:90%;
+                width:80%;
                 font-size:16px;
                 outline: none;
                 background-color: white;

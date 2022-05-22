@@ -21,9 +21,6 @@ function addStep() {
 
 function deleteStep() {
   i -= 1;
-  if (i < 2) {
-    i = 2;
-  }
   const stepStr = `Step${i.toString()}`;
   const lastStep = document.getElementById(stepStr);
   lastStep.remove();
@@ -60,9 +57,6 @@ function addIng() {
 
 function deleteIng() {
   ingCount -= 1;
-  if (ingCount < 2) {
-    ingCount = 2;
-  }
   const ingStep = document.getElementById(`ing${ingCount.toString()}`);
   const amountStep = document.getElementById(`amount${ingCount.toString()}`);
   const unitStep = document.getElementById(`units${ingCount.toString()}`);
@@ -113,12 +107,12 @@ async function init() {
       ingredientInfo.name = document.getElementsByClassName('Ingredient')[j].value;
       ingredientInfo.name = ingredientInfo.name.replace(/\s+/g, ' ').trim();
       ingredientInfo.amount = parseInt(document.getElementsByClassName('Ingre')[j].value, 10);
-      ingredientInfo.amount = ingredientInfo.amount.replace(/\s+/g, ' ').trim();
       ingredientInfo.unit = document.getElementsByClassName('unit')[j].value;
       ingredientInfo.unit = ingredientInfo.unit.replace(/\s+/g, ' ').trim();
       userGenRecipe.ingredients.push(ingredientInfo);
       numIngredients += 1;
     }
+    // console.log(userGenRecipe.ingredients);
 
     userGenRecipe.fiveIngredientsOrLess = numIngredients <= 5;
     userGenRecipe.summary = document.getElementsByClassName('descrip')[0].value;

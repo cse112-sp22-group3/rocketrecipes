@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 // custom-navbar.js
-import {logOut} from '../scripts/authUtils.js';
+import { logOut } from '../scripts/authUtils.js';
 
 class Navbar extends HTMLElement {
   constructor() {

@@ -1,7 +1,10 @@
+/* eslint-disable import/extensions */
 // custom-navbar.js
+import {logOut} from '../scripts/authUtils.js';
 
 class Navbar extends HTMLElement {
   constructor() {
+    const LOCAL_STORAGE_USER_KEY = 'uuid';
     super(); // Inherit everything from HTMLElement
 
     // Attach the shadow DOM and append this markup / stlying inside
@@ -58,6 +61,26 @@ class Navbar extends HTMLElement {
             cursor: pointer;
             background-color: #F48395;
         }
+
+        .navbar-text-link-signin {
+            background-color: #F48395;
+            display: flex;
+            text-align: center;
+            align-items: center;
+            justify-content: center;
+            width: 130px;
+            padding: 0 20px;
+            height: 80px;
+            color: black;
+            text-decoration: none;
+            background-color: white;
+        }
+
+        .navbar-text-link-signin:hover {
+            cursor: pointer;
+            background-color: #F48395;
+        }
+
         .mobile-navbar-expanded {
             position: absolute;
             width: 100%;
@@ -108,7 +131,7 @@ class Navbar extends HTMLElement {
             <a class="navbar-text-link" id="search" href="./searchpage.html">Search</a>
             <a class="navbar-text-link" id="create" href="./CreateRecipe.html">Create Recipe</a>
             <a class="navbar-text-link" id="account" href="./generalAccount.html">My Account</a>
-            <a class="navbar-text-link" id="account" href="./entry.html">Sign In</a>
+            <a class="navbar-text-link-signin" id="sign-in" href="./entry.html">Sign In</a>
         </div>
         <div class="navbar-links-container-mobile"> 
             <div class="mobile-navbar-button"></div>
@@ -120,6 +143,17 @@ class Navbar extends HTMLElement {
             <a class="navbar-text-link mobile-link" id="account-mobile" href="./entry.html">Sign In</a>
         </div>
     `;
+
+    if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+      navbarContainer.querySelector('#sign-in').textContent = 'Logout';
+    }
+
+    navbarContainer.querySelector('#sign-in').addEventListener('click', () => {
+      if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+        navbarContainer.querySelector('#sign-in').textContent = 'Sign In';
+        logOut();
+      }
+    });
 
     const navbarLinksBody = navbarContainer.querySelector('.mobile-navbar-expanded');
     navbarLinksBody.style.display = 'none'; // hide mobile navbar links on new page

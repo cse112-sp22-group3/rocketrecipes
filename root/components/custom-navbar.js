@@ -108,6 +108,7 @@ class Navbar extends HTMLElement {
             <a class="navbar-text-link" id="search" href="./searchpage.html">Search</a>
             <a class="navbar-text-link" id="create" href="./CreateRecipe.html">Create Recipe</a>
             <a class="navbar-text-link" id="account" href="./generalAccount.html">My Account</a>
+            <a class="navbar-text-link" id="account" href="./entry.html">Sign In</a>
         </div>
         <div class="navbar-links-container-mobile"> 
             <div class="mobile-navbar-button"></div>
@@ -116,6 +117,7 @@ class Navbar extends HTMLElement {
             <a class="navbar-text-link mobile-link" id="search-mobile" href="./searchpage.html">Search</a>
             <a class="navbar-text-link mobile-link" id="create-mobile" href="./CreateRecipe.html">Create Recipe</a>
             <a class="navbar-text-link mobile-link" id="account-mobile" href="./generalAccount.html">My Account</a>
+            <a class="navbar-text-link mobile-link" id="account-mobile" href="./entry.html">Sign In</a>
         </div>
     `;
 

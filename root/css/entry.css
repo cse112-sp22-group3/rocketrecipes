@@ -17,7 +17,7 @@ body {
     background-color: #222;
     border-radius: 15px;
     height: 550px;
-    width: 350px;
+    width: 450px;
     position: relative;
     overflow: hidden;
 }
@@ -261,4 +261,10 @@ body {
     opacity: 1;
     visibility: visible;
     transition: all 0.3s ease;
+}
+
+@media only screen and (max-width: 450px) {
+    .form-structor {
+        width: 350px;
+    }
 }

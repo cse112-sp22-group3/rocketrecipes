@@ -19,7 +19,6 @@ loginBtn.addEventListener('click', (e) => {
 });
 
 signupBtn.addEventListener('click', (e) => {
-  signUp('hello', 'world');
   const parent = e.target.parentNode;
   loginBtn.parentNode.parentNode.classList.add('slide-up');
   parent.classList.remove('slide-up');
@@ -29,9 +28,6 @@ loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const email = document.getElementById('loginEmail').value;
   const password = document.getElementById('loginPassword').value;
-
-  console.log(email);
-  console.log(password);
 
   login(email, password).then((response) => {
     if (response.localId) {

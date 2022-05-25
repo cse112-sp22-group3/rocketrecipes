@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/entry.css" class="style">
     <script src="../components/custom-navbar.js" type="module"></script>
-    <script src="../scripts/auth.js" async></script>
+    <script src="../scripts/auth.js" async type="module"></script>
 
     <title>Login/Sign Up</title>
 </head>
@@ -21,8 +21,8 @@
             <h2 class="form-title control" id="signup">Sign up</h2>
             <div class="form-holder">
                 <form id="signup-user">
-                    <input type="email" class="input" placeholder="Email" />
-                    <input type="password" class="input" placeholder="Password" />
+                    <input id="signupEmail" type="email" class="input" placeholder="Email"/>
+                    <input id="signupPassword" type="password" class="input" placeholder="Password" />
                 </form>
             </div>
             <button class="submit-btn" type="submit" form="signup-user">Sign up</button>
@@ -32,8 +32,8 @@
                 <h2 class="form-title" id="login"><span>or</span>Log in</h2>
                 <div class="form-holder">
                     <form id="login-user">
-                        <input type="email" class="input" placeholder="Email" />
-                        <input type="password" class="input" placeholder="Password" />
+                        <input id="loginEmail" type="email" class="input" placeholder="Email" />
+                        <input id="loginPassword" type="password" class="input" placeholder="Password"/>
                     </form>
                 </div>
                 <button class="submit-btn" type="submit" form="login-user">Log in</button>

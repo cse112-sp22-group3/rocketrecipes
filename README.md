@@ -1,17 +1,24 @@
 # Rocket Recipes
 [![CI](https://github.com/cse112-sp22-group3/rocketrecipes/actions/workflows/main.yml/badge.svg)](https://github.com/cse112-sp22-group3/rocketrecipes/actions/workflows/main.yml)
-### Where your palette will be blasting off to the moon, time and time again
+### Prepare for trouble, make it double! (servings)
 
-This is Team Rocket's (Team 34) project repository for Rocket Recipes, a web application that allows users to search and create recipes for their own personal culinary escapades. 
+This is Team Rocket's (Team 3) new & improved project repository for Rocket Recipes, a web application that allows users to search and create recipes for their own personal culinary escapades. 
 
-Check out our website live [here](https://rocket-recipes.com/)!
+<!-- Check out our website live [here](https://rocket-recipes.com/)! -->
 
-If you are looking for our Private video, the link is [here](https://www.youtube.com/watch?v=MG4AHLxTytE)!
+<!-- If you are looking for our Private video, the link is [here](https://www.youtube.com/watch?v=MG4AHLxTytE)! -->
 
 ---
 ## Features
 
-#### CRUD Features
+#### Search Overhaul
+
+The original project contained a search feature, where users could search among the 1000+ recipes available in our database. We noticed multiple improvement points in the search feature:
+1. All the search results displayed on one page, meaning the user could potentially scroll through infinite results.
+2. Users were allowed to search for results without inputting any search terms, resulting in all recipes being shown.
+3. The search algorithm could be improved.
+
+#### UI Revamp
 
 Our project includes all CRUD features, including creating a new recipe, reading and viewing recipes, updating and editing recipes, and deleting recipes all together.
 

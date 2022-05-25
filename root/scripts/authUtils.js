@@ -1,7 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 const FIREBASE_SIGNUP_URL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser';
 const FIREBASE_LOGIN_URL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword';
-const FIREBASE_KEY = process.env.AUTHENTICATION_KEY;
+const FIREBASE_KEY = 'AIzaSyCSXC0gS7gdHANxVdisyYg1eRg18znec_k';
 const LOCAL_STORAGE_USER_KEY = 'uuid';
 
 async function postData(url = '', data = {}) {

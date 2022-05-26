@@ -1,6 +1,6 @@
 /** @module utils */
+/* global DOMPurify */
 /* eslint-disable no-mixed-operators */
-
 // eslint-disable-next-line import/extensions
 import '../../node_modules/dompurify/dist/purify.js';
 
@@ -364,25 +364,41 @@ export function validURL(str) {
 }
 
 /**
+ * A helper function to purify potential HTML
+ * @param {String} dirty dirty code
+ * @returns {String} purified code
+ */
+export function purifyDOM(dirty) {
+  return DOMPurify.sanitize(dirty, { ALLOWED_TAGS: [] });
+}
+
+/**
+ * A helper function to remove whitespace
+ * @param {String} dirty dirty inputs
+ * @returns {String} whitespaced stripped text
+ */
+export function whitespaceTrimmer(dirty) {
+  return dirty.replace(/\s+/g, ' ').trim();
+}
+
+/**
  * A helper function to validate form contents
  * @param {Object} recipe recipe object to validate
  * @returns {Object} object containing values for if the form is valid, and error messages otherwise
  */
 export function validateForm(recipe) {
-  console.log(DOMPurify.sanitize('<img src=x onerror=alert(1)//>'));
-
   if (!recipe.title || recipe.title === '' || /\d/.test(recipe.title)) {
-    return { valid: false, errorMessage: 'Title is invalid (must not be empty, must not contain numbers)' };
+    return { valid: false, errorMessage: 'Title is invalid' };
   }
   if (!recipe.summary || recipe.summary === '') {
-    return { valid: false, errorMessage: 'Summary is empty' };
+    return { valid: false, errorMessage: 'Summary is invalid' };
   }
   if (!recipe.servings || recipe.servings === '' || Number.isNaN(recipe.servings)) {
-    return { valid: false, errorMessage: 'Servings field is invalid (must be integer)' };
+    return { valid: false, errorMessage: 'Servings field is invalid' };
   }
   if (!recipe.readyInMinutes || recipe.readyInMinutes === ''
     || Number.isNaN(recipe.readyInMinutes)) {
-    return { valid: false, errorMessage: 'Time field is invalid (must be integer)' };
+    return { valid: false, errorMessage: 'Time field is invalid' };
   }
   if (recipe.image !== '' && !validURL(recipe.image)) {
     return { valid: false, errorMessage: 'Image is not a valid link' };
@@ -395,13 +411,13 @@ export function validateForm(recipe) {
   for (index = 0; index < recipe.ingredients.length; index += 1) {
     const ingredient = recipe.ingredients[index];
     if (!ingredient.amount || ingredient.amount === '' || Number.isNaN(ingredient.amount)) {
-      return { valid: false, errorMessage: 'Ingredient amount is not a valid (must be integer)' };
+      return { valid: false, errorMessage: `Ingredient ${index + 1} amount is not valid` };
     }
     if (!ingredient.name || ingredient.name.length === 0 || /\d/.test(ingredient.name)) {
-      return { valid: false, errorMessage: 'Ingredient name is not valid (must not contain numbers)' };
+      return { valid: false, errorMessage: `Ingredient ${index + 1} name is not valid` };
     }
     if (!ingredient.unit || ingredient.unit.length === 0 || /\d/.test(ingredient.unit)) {
-      return { valid: false, errorMessage: 'Ingredient unit is not valid (must not contain numbers)' };
+      return { valid: false, errorMessage: `Ingredient ${index + 1} unit is not valid` };
     }
   }
 
@@ -409,9 +425,9 @@ export function validateForm(recipe) {
     return { valid: false, errorMessage: 'Must have at least 1 step' };
   }
   for (index = 0; index < recipe.steps.length; index += 1) {
-    const step = recipe.step[index];
+    const step = recipe.steps[index];
     if (!step || step.length === 0) {
-      return { valid: false, errorMessage: 'Step cannot be empty' };
+      return { valid: false, errorMessage: `Step ${index + 1} cannot be empty` };
     }
   }
 

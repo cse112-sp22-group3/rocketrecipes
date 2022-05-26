@@ -1,8 +1,9 @@
 /* eslint-disable import/extensions */
 import {
-  signUp,
-  login,
+    signUp,
+    login,
 } from './authUtils.js';
+import { populateFavoriteRecipes } from './utils.js';
 
 const loginBtn = document.getElementById('login');
 const signupBtn = document.getElementById('signup');
@@ -13,41 +14,43 @@ const signUpForm = document.getElementById('signup-user');
 const LOCAL_STORAGE_USER_KEY = 'uuid';
 
 loginBtn.addEventListener('click', (e) => {
-  const parent = e.target.parentNode.parentNode;
-  signupBtn.parentNode.classList.add('slide-up');
-  parent.classList.remove('slide-up');
+    const parent = e.target.parentNode.parentNode;
+    signupBtn.parentNode.classList.add('slide-up');
+    parent.classList.remove('slide-up');
 });
 
 signupBtn.addEventListener('click', (e) => {
-  const parent = e.target.parentNode;
-  loginBtn.parentNode.parentNode.classList.add('slide-up');
-  parent.classList.remove('slide-up');
+    const parent = e.target.parentNode;
+    loginBtn.parentNode.parentNode.classList.add('slide-up');
+    parent.classList.remove('slide-up');
 });
 
 loginForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  const email = document.getElementById('loginEmail').value;
-  const password = document.getElementById('loginPassword').value;
+    e.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
 
-  login(email, password).then((response) => {
-    if (response.localId) {
-      // successful
-      localStorage.setItem(LOCAL_STORAGE_USER_KEY, response.localId);
-      window.location.href = '../html/index.html';
-    }
-  });
+    login(email, password).then((response) => {
+        if (response.localId) {
+            // successful
+            // localStorage.setItem(LOCAL_STORAGE_USER_KEY, response.localId);
+            // populateFavoriteRecipes().then((response) => {});
+            window.location.href = '../html/index.html';
+        }
+    });
 });
 
 signUpForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const email = document.getElementById('signupEmail').value;
-  const password = document.getElementById('signupPassword').value;
+    const email = document.getElementById('signupEmail').value;
+    const password = document.getElementById('signupPassword').value;
 
-  signUp(email, password).then((response) => {
-    if (response.localId) {
-      localStorage.setItem(LOCAL_STORAGE_USER_KEY, response.localId);
-      window.location.href = '../html/index.html';
-    }
-  });
+    signUp(email, password).then((response) => {
+        if (response.localId) {
+            localStorage.setItem(LOCAL_STORAGE_USER_KEY, response.localId);
+            populateFavoriteRecipes();
+            window.location.href = '../html/index.html';
+        }
+    });
 });

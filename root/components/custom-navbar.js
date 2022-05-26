@@ -3,17 +3,17 @@
 import { logOut } from '../scripts/authUtils.js';
 
 class Navbar extends HTMLElement {
-  constructor() {
-    const LOCAL_STORAGE_USER_KEY = 'uuid';
-    super(); // Inherit everything from HTMLElement
+    constructor() {
+        const LOCAL_STORAGE_USER_KEY = 'uuid';
+        super(); // Inherit everything from HTMLElement
 
-    // Attach the shadow DOM and append this markup / stlying inside
-    // The shadow root will help us keep everything separated
-    this.attachShadow({ mode: 'open' });
+        // Attach the shadow DOM and append this markup / stlying inside
+        // The shadow root will help us keep everything separated
+        this.attachShadow({ mode: 'open' });
 
-    // create styles for navbar
-    const style = document.createElement('style');
-    style.innerHTML = `
+        // create styles for navbar
+        const style = document.createElement('style');
+        style.innerHTML = `
         .navbar-container {
             left: 0;
             right: 0;
@@ -121,9 +121,9 @@ class Navbar extends HTMLElement {
         
     `;
 
-    // create html for navbar
-    const navbarContainer = document.createElement('div');
-    navbarContainer.innerHTML = `
+        // create html for navbar
+        const navbarContainer = document.createElement('div');
+        navbarContainer.innerHTML = `
         <a class="navbar-image" href="./index.html"> 
             <img src="../media/teamLogo.png" width="68" height="68" > 
         </a>
@@ -140,60 +140,63 @@ class Navbar extends HTMLElement {
             <a class="navbar-text-link mobile-link" id="search-mobile" href="./searchpage.html">Search</a>
             <a class="navbar-text-link mobile-link" id="create-mobile" href="./CreateRecipe.html">Create Recipe</a>
             <a class="navbar-text-link mobile-link" id="account-mobile" href="./generalAccount.html">My Account</a>
-            <a class="navbar-text-link mobile-link" id="account-mobile" href="./entry.html">Sign In</a>
+            <a class="navbar-text-link mobile-link" id="sign-in-mobile" href="./entry.html">Sign In</a>
         </div>
     `;
 
-    if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
-      navbarContainer.querySelector('#sign-in').textContent = 'Logout';
+        if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+            navbarContainer.querySelector('#sign-in').textContent = 'Logout';
+        }
+
+        navbarContainer.querySelector('#sign-in').addEventListener('click', () => {
+            if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+                navbarContainer.querySelector('#sign-in').textContent = 'Sign In';
+                logOut();
+            }
+        });
+
+        const navbarLinksBody = navbarContainer.querySelector('.mobile-navbar-expanded');
+        navbarLinksBody.style.display = 'none'; // hide mobile navbar links on new page
+
+        navbarContainer.querySelector('.mobile-navbar-button').addEventListener('click', () => {
+            if (navbarLinksBody.style.display === 'none') {
+                navbarLinksBody.style.display = 'flex';
+            } else {
+                navbarLinksBody.style.display = 'none';
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            if (window.innerWidth >= 650) {
+                navbarLinksBody.style.display = 'none';
+            }
+        });
+
+        navbarContainer.classList.add('navbar-container');
+
+        const page = this.getAttribute('page');
+        switch (page) {
+            case 'search':
+                navbarContainer.querySelector('#search').style.textDecoration = 'underline';
+                navbarContainer.querySelector('#search-mobile').style.textDecoration = 'underline';
+                break;
+            case 'create':
+                navbarContainer.querySelector('#create').style.textDecoration = 'underline';
+                navbarContainer.querySelector('#create-mobile').style.textDecoration = 'underline';
+                break;
+            case 'account':
+                navbarContainer.querySelector('#account').style.textDecoration = 'underline';
+                navbarContainer.querySelector('#account-mobile').style.textDecoration = 'underline';
+                break;
+            case 'sign-in':
+                navbarContainer.querySelector('#sign-in').style.textDecoration = 'underline';
+                navbarContainer.querySelector('#sign-in-mobile').style.textDecoration = 'underline';
+            default:
+                break;
+        }
+
+        this.shadowRoot.append(style, navbarContainer);
     }
-
-    navbarContainer.querySelector('#sign-in').addEventListener('click', () => {
-      if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
-        navbarContainer.querySelector('#sign-in').textContent = 'Sign In';
-        logOut();
-      }
-    });
-
-    const navbarLinksBody = navbarContainer.querySelector('.mobile-navbar-expanded');
-    navbarLinksBody.style.display = 'none'; // hide mobile navbar links on new page
-
-    navbarContainer.querySelector('.mobile-navbar-button').addEventListener('click', () => {
-      if (navbarLinksBody.style.display === 'none') {
-        navbarLinksBody.style.display = 'flex';
-      } else {
-        navbarLinksBody.style.display = 'none';
-      }
-    });
-
-    window.addEventListener('resize', () => {
-      if (window.innerWidth >= 650) {
-        navbarLinksBody.style.display = 'none';
-      }
-    });
-
-    navbarContainer.classList.add('navbar-container');
-
-    const page = this.getAttribute('page');
-    switch (page) {
-      case 'search':
-        navbarContainer.querySelector('#search').style.textDecoration = 'underline';
-        navbarContainer.querySelector('#search-mobile').style.textDecoration = 'underline';
-        break;
-      case 'create':
-        navbarContainer.querySelector('#create').style.textDecoration = 'underline';
-        navbarContainer.querySelector('#create-mobile').style.textDecoration = 'underline';
-        break;
-      case 'account':
-        navbarContainer.querySelector('#account').style.textDecoration = 'underline';
-        navbarContainer.querySelector('#account-mobile').style.textDecoration = 'underline';
-        break;
-      default:
-        break;
-    }
-
-    this.shadowRoot.append(style, navbarContainer);
-  }
 }
 
 // Define the Class so you can use it as a custom element

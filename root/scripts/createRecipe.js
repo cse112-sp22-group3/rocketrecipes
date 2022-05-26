@@ -1,9 +1,8 @@
 /* eslint-disable import/extensions */
 import {
-  getAllRecipes, createRecipe, createId, validateForm, trimRecipe,
+  getAllRecipes, createRecipe, createId, validateForm, trimRecipe, purifyDOM, whitespaceTrimmer,
 } from './utils.js';
 /* eslint-disable prefer-destructuring */
-// const crypto = require('crypto');
 
 let i = 1; // instructions counter
 let ingCount = 1; // Ingredient Counter
@@ -81,12 +80,11 @@ async function init() {
   await getAllRecipes();
   document.getElementById('Create').addEventListener('click', async () => {
     const userGenRecipe = {};
-    userGenRecipe.id = createId(); // crypto.randomBytes(16).toString('hex');
-    userGenRecipe.title = document.getElementById('name').value;
-    userGenRecipe.title = userGenRecipe.title.replace(/\s+/g, ' ').trim(); // trim whitespace
-    userGenRecipe.readyInMinutes = parseInt(document.getElementsByClassName('amount')[1].value, 10);
-    userGenRecipe.servings = parseInt(document.getElementsByClassName('amount')[0].value, 10);
-    userGenRecipe.image = document.getElementById('image').value;
+    userGenRecipe.id = createId();
+    userGenRecipe.title = whitespaceTrimmer(purifyDOM(document.getElementById('name').value));
+    userGenRecipe.readyInMinutes = parseInt(whitespaceTrimmer(document.getElementsByClassName('amount')[1].value), 10);
+    userGenRecipe.servings = parseInt(whitespaceTrimmer(document.getElementsByClassName('amount')[0].value), 10);
+    userGenRecipe.image = purifyDOM(document.getElementById('image').value);
     userGenRecipe.uploader = 'From the User';
 
     // Need to add tags to CreateRecipe.html so that the user can manually select which tags
@@ -104,26 +102,22 @@ async function init() {
     let numIngredients = 0;
     for (let j = 0; j < document.getElementsByClassName('Ingre').length; j += 1) {
       const ingredientInfo = {};
-      ingredientInfo.name = document.getElementsByClassName('Ingredient')[j].value;
-      ingredientInfo.name = ingredientInfo.name.replace(/\s+/g, ' ').trim();
+      ingredientInfo.name = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('Ingredient')[j].value));
       ingredientInfo.amount = parseInt(document.getElementsByClassName('Ingre')[j].value, 10);
-      ingredientInfo.unit = document.getElementsByClassName('unit')[j].value;
-      ingredientInfo.unit = ingredientInfo.unit.replace(/\s+/g, ' ').trim();
+      ingredientInfo.unit = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('unit')[j].value));
       userGenRecipe.ingredients.push(ingredientInfo);
       numIngredients += 1;
     }
     // console.log(userGenRecipe.ingredients);
 
     userGenRecipe.fiveIngredientsOrLess = numIngredients <= 5;
-    userGenRecipe.summary = document.getElementsByClassName('descrip')[0].value;
-    userGenRecipe.summary = userGenRecipe.summary.replace(/\s+/g, ' ').trim();
+    userGenRecipe.summary = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('descrip')[0].value));
 
     userGenRecipe.steps = [];
     for (let k = 0; k < document.getElementsByClassName('step').length; k += 1) {
       const currStep = {};
       currStep.number = k;
-      currStep.step = document.getElementsByClassName('step')[k].value;
-      currStep.step = currStep.step.replace(/\s+/g, ' ').trim();
+      currStep.step = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('step')[k].value));
       userGenRecipe.steps.push(currStep);
     }
     // validate form, if it is valid then create recipe

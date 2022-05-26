@@ -1,5 +1,9 @@
 /** @module utils */
 /* eslint-disable no-mixed-operators */
+
+// eslint-disable-next-line import/extensions
+import '../../node_modules/dompurify/dist/purify.js';
+
 const COMMUNITY_HALF_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_2.json';
 const COMMUNITY_THIRD_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_3.json';
 const COMMUNITY_QUARTER_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_4.json';
@@ -365,6 +369,8 @@ export function validURL(str) {
  * @returns {Object} object containing values for if the form is valid, and error messages otherwise
  */
 export function validateForm(recipe) {
+  console.log(DOMPurify.sanitize('<img src=x onerror=alert(1)//>'));
+
   if (!recipe.title || recipe.title === '' || /\d/.test(recipe.title)) {
     return { valid: false, errorMessage: 'Title is invalid (must not be empty, must not contain numbers)' };
   }

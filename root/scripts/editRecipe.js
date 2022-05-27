@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import {
-  getAllRecipes, readRecipe, updateRecipe, validateForm, trimRecipe,
+  getAllRecipes, readRecipe, updateRecipe, validateForm, trimRecipe, purifyDOM, whitespaceTrimmer,
 } from './utils.js';
 /* eslint-disable prefer-destructuring */
 // const crypto = require('crypto');
@@ -134,11 +134,11 @@ async function init() {
   await getAllRecipes();
   document.getElementById('edit-button').addEventListener('click', async () => {
     const userGenRecipe = {};
-    userGenRecipe.id = recipeId; // crypto.randomBytes(16).toString('hex');
-    userGenRecipe.title = document.getElementById('name').value;
-    userGenRecipe.readyInMinutes = document.getElementsByClassName('amount')[1].value;
-    userGenRecipe.servings = document.getElementsByClassName('amount')[0].value;
-    userGenRecipe.image = document.getElementById('image').value;
+    userGenRecipe.id = recipeId;
+    userGenRecipe.title = whitespaceTrimmer(purifyDOM(document.getElementById('name').value));
+    userGenRecipe.readyInMinutes = parseInt(whitespaceTrimmer(document.getElementsByClassName('amount')[1].value), 10);
+    userGenRecipe.servings = parseInt(whitespaceTrimmer(document.getElementsByClassName('amount')[0].value), 10);
+    userGenRecipe.image = purifyDOM(document.getElementById('image').value);
     userGenRecipe.uploader = 'From the User';
 
     // Need to add tags to CreateRecipe.html so that the user can manually select which tags
@@ -156,21 +156,21 @@ async function init() {
     let numIngredients = 0;
     for (let j = 0; j < document.getElementsByClassName('Ingre').length; j += 1) {
       const ingredientInfo = {};
-      ingredientInfo.name = document.getElementsByClassName('Ingredient')[j].value;
-      ingredientInfo.amount = document.getElementsByClassName('Ingre')[j].value;
-      ingredientInfo.unit = document.getElementsByClassName('unit')[j].value;
+      ingredientInfo.name = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('Ingredient')[j].value));
+      ingredientInfo.amount = parseInt(document.getElementsByClassName('Ingre')[j].value, 10);
+      ingredientInfo.unit = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('unit')[j].value));
       userGenRecipe.ingredients.push(ingredientInfo);
       numIngredients += 1;
     }
 
     userGenRecipe.fiveIngredientsOrLess = numIngredients <= 5;
-    userGenRecipe.summary = document.getElementsByClassName('descrip')[0].value;
+    userGenRecipe.summary = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('descrip')[0].value));
 
     userGenRecipe.steps = [];
     for (let k = 0; k < document.getElementsByClassName('step').length; k += 1) {
       const currStep = {};
       currStep.number = k;
-      currStep.step = document.getElementsByClassName('step')[k].value;
+      currStep.step = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('step')[k].value));
       userGenRecipe.steps.push(currStep);
     }
 

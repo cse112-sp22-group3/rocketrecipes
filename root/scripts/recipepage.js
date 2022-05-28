@@ -5,13 +5,14 @@ import {
   addFavoriteRecipe,
   isFavorite,
   deleteFavoriteRecipe,
-  getAllRecipes,
+  getAllRecipeID,
   deleteRecipe,
   syncWithDatabaseUser,
+  getOneRecipe,
 } from './utils.js';
 
 // holds recipes from localStorage
-let allRecipes = {};
+let allRecipeID = {};
 
 // holds recipe ID of currently displayed recipe
 let recipeId;
@@ -90,7 +91,7 @@ function fillRecipePage(currentRecipe) {
 }
 
 // grabs four random recipes from localStorage and displays them at the bottom of the page
-function createRecommendedRecipes() {
+async function createRecommendedRecipes() {
   const recommendedRecipeContainer = document.getElementById('recommendedRecipeContainer');
   recommendedRecipeContainer.style.display = 'flex';
   recommendedRecipeContainer.style.maxWidth = '100%';
@@ -98,13 +99,13 @@ function createRecommendedRecipes() {
 
   let numReccRecipes = 0;
   while (numReccRecipes < 4) {
-    const randomNumber = Math.floor(Math.random() * (allRecipes.length - 5));
-    const recipe = allRecipes[randomNumber];
+    const randomNumber = Math.floor(Math.random() * (allRecipeID.length - 5));
+    const curRecipeID = allRecipeID[randomNumber];
 
     // if current id does not match random recipe id, create recipe card
-    if (recipeId !== recipe.id) {
+    if (recipeId !== curRecipeID) {
       const recipeCard = document.createElement('recipe-card');
-      recipeCard.data = recipe;
+      recipeCard.data = await getOneRecipe(curRecipeID);
       recommendedRecipeContainer.appendChild(recipeCard);
       numReccRecipes += 1;
     }
@@ -205,12 +206,12 @@ async function init() {
   // fetch four random recipes (except the currently displayed recipe) and
   // display at bottom of page
   try {
-    allRecipes = await getAllRecipes();
+    allRecipeID = await getAllRecipeID();
   } finally {
-    createRecommendedRecipes();
+    await createRecommendedRecipes();
   }
   const button = document.querySelector('#fav-icon');
-  let isFav = await isFavorite(recipeId);
+  let isFav = isFavorite(recipeId);
   const outlinedStar = "background: url('https://api.iconify.design/ant-design/star-outlined.svg?color=%23c4c4c4&height=48') no-repeat center center / contain;";
   const filledStar = "background: url('https://api.iconify.design/ant-design/star-filled.svg?color=%23ffc700&height=48') no-repeat center center / contain;";
 
@@ -218,7 +219,7 @@ async function init() {
     // change icons based on favorite
     // filled in star, set style to: background: url('https://api.iconify.design/ant-design/star-filled.svg?color=%23ffc700&height=48') no-repeat center center / contain;
     // outlined star: set stye to background: url('https://api.iconify.design/ant-design/star-outlined.svg?color=%23c4c4c4&height=48') no-repeat center center / contain;
-    isFav = await isFavorite(recipeId);
+    isFav = isFavorite(recipeId);
     if (isFav) {
       button.style = outlinedStar;
       deleteFavoriteRecipe(recipeId);
@@ -234,7 +235,7 @@ async function init() {
     button.style = outlinedStar;
   }
 
-  window.currentRecipe = await readRecipe(recipeId);
+  window.currentRecipe = await readRecipe(recipeId); // not sure what this line is doing?
   const scaleButton = document.getElementById('servings');
   scaleButton.addEventListener('change', scaleIngredients);
 

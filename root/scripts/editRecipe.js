@@ -1,6 +1,5 @@
 /* eslint-disable import/extensions */
 import {
-  getAllRecipes,
   readRecipe,
   updateRecipe,
   validateForm,
@@ -137,7 +136,7 @@ async function init() {
   const deleteButton = document.getElementById('Delete');
   deleteButton.addEventListener('click', deleteStep);
 
-  await getAllRecipes();
+  // await getAllRecipes();
 
   document.getElementById('edit-button').addEventListener('click', async () => {
     const userGenRecipe = {};
@@ -185,6 +184,12 @@ async function init() {
     const formValidateObject = validateForm(userGenRecipe);
     if (formValidateObject.valid) {
       const trimmedRecipe = trimRecipe(userGenRecipe);
+      // TODO
+      // console.log('user generated recipe');
+      // console.log(trimmedRecipe);
+      // console.log('recipe from database');
+      // const database_recipe = await readRecipe(recipeId);
+      // console.log(database_recipe);
       await updateRecipe(trimmedRecipe);
       window.location = `${window.location.origin}/root/html/RecipePage.html?id=${trimmedRecipe.id}`;
     } else {

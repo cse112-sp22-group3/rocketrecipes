@@ -2,13 +2,12 @@
 import {
   getUserRecipes,
   getFavoriteRecipes,
-  recipeIdArrayToObject,
-  getBulkRecipes,
+  getOneRecipe,
   syncWithDatabaseUser,
 } from './utils.js';
 
 let favoriteRecipes = [];
-let userRecipes = [];
+const userRecipes = [];
 
 async function createFavoriteRecipes() {
   const Favorite = document.getElementsByClassName('FavoriteFood')[0];
@@ -16,13 +15,10 @@ async function createFavoriteRecipes() {
   Favorite.style.maxWidth = '100%';
   Favorite.style.flexWrap = 'wrap';
 
-  const favoriteRecipesObj = recipeIdArrayToObject(favoriteRecipes);
-  const allFavoriteRecipes = await getBulkRecipes(favoriteRecipesObj);
-
-  for (let i = 0; i < allFavoriteRecipes.length; i += 1) {
+  for (let i = 0; i < favoriteRecipes.length; i += 1) {
     const recipeCard = document.createElement('recipe-card');
-    const rec = allFavoriteRecipes[i];
-    recipeCard.data = rec;
+    const recipeData = await getOneRecipe(favoriteRecipes[i]);
+    recipeCard.data = recipeData;
     Favorite.appendChild(recipeCard);
   }
 }
@@ -44,7 +40,8 @@ async function init() {
   await syncWithDatabaseUser();
   favoriteRecipes = await getFavoriteRecipes();
 
-  userRecipes = await getUserRecipes();
+  const userRecipesObj = await getUserRecipes();
+  Object.entries(userRecipesObj).forEach(([key, value]) => { userRecipes.push(value); });
 
   await createMyRecipes();
   await createFavoriteRecipes();

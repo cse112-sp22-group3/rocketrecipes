@@ -1,32 +1,31 @@
 // eslint-disable-next-line import/extensions
-import { syncWithDatabaseUser, getAllRecipes } from './utils.js';
+import { syncWithDatabaseUser, getAllRecipeID, getOneRecipe } from './utils.js';
 
-let allRecipes = {};
+let allRecipeIDS = {};
 
-function createRecommendedRecipes() {
-  // fetch data for recommended recipes
-  // manually fetching for now until the backend functions are done
-  // fetch div for recommended recipes
-  const recommendedRecipeContainer = document.getElementById('recommendedRecipeContainer');
+async function createRecommendedRecipes() {
+    const recommendedRecipeContainer = document.getElementById('recommendedRecipeContainer');
 
-  const numRecipes = 8;
-  const randomNumber = Math.floor(Math.random() * (allRecipes.length - numRecipes - 1));
+    const numRecipes = 8;
+    const randomNumber = Math.floor(Math.random() * (allRecipeIDS.length - numRecipes - 1));
 
-  for (let i = 0; i < numRecipes; i += 1) {
-    const recipeCard = document.createElement('recipe-card');
-    recipeCard.data = allRecipes[randomNumber + i];
+    for (let i = 0; i < numRecipes; i += 1) {
+        const recipeCard = document.createElement('recipe-card');
+        const recipeData = await getOneRecipe(allRecipeIDS[randomNumber + i]);
+        recipeCard.data = recipeData;
 
-    recommendedRecipeContainer.appendChild(recipeCard);
-  }
+        recommendedRecipeContainer.appendChild(recipeCard);
+    }
 }
 
 async function init() {
-  await syncWithDatabaseUser();
-  allRecipes = await getAllRecipes();
+    await syncWithDatabaseUser();
+    allRecipeIDS = await getAllRecipeID();
 
-  createRecommendedRecipes();
+    await createRecommendedRecipes();
 }
 
+// test function for event-listener when closing the window
 // async function close() {
 //     let response = await syncFavoriteWithDatabase();
 //     flushFavoriteRecipes();
@@ -35,7 +34,6 @@ async function init() {
 
 // const beforeUnloadListener = (event) => {
 //     event.preventDefault();
-
 // };
 
 // addEventListener('beforeunload', beforeUnloadListener);

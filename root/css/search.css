@@ -38,6 +38,7 @@ div#search-results-container {
   max-width: 100%;
   justify-content: center;
   flex-wrap: wrap;
+  padding-top: 70px;
 }
 
 div#search-results-page-buttons {
@@ -63,7 +64,7 @@ button#search-page-button-previous {
 
 button#search-page-button-previous:hover {
   cursor: pointer;
-  color: #F48395;
+  text-decoration: underline;
 }
 
 
@@ -80,7 +81,7 @@ button#search-page-button-next {
 
 button#search-page-button-next:hover {
   cursor: pointer;
-  color: #F48395;
+  text-decoration: underline;
 }
 
 button#search-page-button-first {
@@ -96,7 +97,7 @@ button#search-page-button-first {
 
 button#search-page-button-first:hover {
   cursor: pointer;
-  color: #F48395;
+  text-decoration: underline;
 }
 
 button#search-page-button-last {
@@ -112,5 +113,5 @@ button#search-page-button-last {
 
 button#search-page-button-last:hover {
   cursor: pointer;
-  color: #F48395;
+  text-decoration: underline;
 }

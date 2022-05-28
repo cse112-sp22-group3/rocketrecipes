@@ -68,14 +68,14 @@ function fillRecipePage(currentRecipe) {
     const check = document.createElement('input');
     check.setAttribute('type', 'checkbox');
     check.setAttribute('class', 'checkbox-box');
-    
+
     const currentIngredientLi = document.createElement('li');
     const text = document.createElement('span');
     const roundedIngredient = Math.round(ingredient.amount * 100) / 100;
     text.innerHTML = `${roundedIngredient} ${ingredient.unit} ${ingredient.name}`;
 
     const list = document.querySelector('li');
-    list.addEventListener('change', function() {
+    list.addEventListener('change', function () {
       text.classList.toggle('checkbox-checked', this.checked);
     });
 
@@ -83,7 +83,6 @@ function fillRecipePage(currentRecipe) {
     currentIngredientLi.appendChild(text);
     currentIngredientLi.setAttribute('class', 'ingred');
     recipeIngredientsElement.appendChild(currentIngredientLi);
-
   });
 
   const text = `Check out this recipe for ${document.getElementById('recipe-title').innerText}:`;
@@ -250,7 +249,8 @@ async function init() {
   //     const ingre = window.currentRecipe.ingredients[i];
   //     const liquids = ['stock', 'water', 'milk', 'cream', 'cooking oil'];
   //     // oz -> ml
-  //     if ((ingre.unit === 'oz' || ingre.unit === 'ounces' || ingre.unit === 'ozs') && liquids.includes(ingre.name)) {
+  //     if ((ingre.unit === 'oz' || ingre.unit === 'ounces' || ingre.unit === 'ozs')
+  // && liquids.includes(ingre.name)) {
   //       const converted = Math.round(ingre.amount * (29.5735) * 100) / 100;
   //       recipeIngredientsElement[i].innerText = `${converted} ${'ml'} ${ingre.name}`;
   //     }

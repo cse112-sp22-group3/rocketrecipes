@@ -1,8 +1,8 @@
+/* eslint-disable linebreak-style */
 // eslint-disable-next-line import/extensions
 import { search } from './utils.js';
 
 const resultsPerPage = 12;
-const fadedColor = '#d3d3d3';
 const activeColor = 'white';
 let pageUserIsOn = 1;
 let totalPages = 1;

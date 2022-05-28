@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable import/extensions */
 // custom-navbar.js
 import { logOut } from '../scripts/authUtils.js';
@@ -214,6 +215,7 @@ class Navbar extends HTMLElement {
       }
     });
 
+    // eslint-disable-next-line linebreak-style
     window.addEventListener('resize', () => {
       if (window.innerWidth >= 650) {
         navbarLinksBody.style.display = 'none';
@@ -223,17 +225,16 @@ class Navbar extends HTMLElement {
     navbarContainer.classList.add('navbar-container');
 
     const initialSrc = '../media/header-logo.png';
-    const scrollSrc = '../media/teamLogo.png'
+    const scrollSrc = '../media/teamLogo.png';
     const navLogo = navbarContainer.querySelector('.logo');
-    window.addEventListener('scroll', function () {
-      let windowPosition = window.scrollY > 0;
+    window.addEventListener('scroll', () => {
+      const windowPosition = window.scrollY > 0;
       navbarContainer.classList.toggle('scrolling-active', windowPosition);
-      if (windowPosition) { 
+      if (windowPosition) {
         navLogo.setAttribute('src', scrollSrc);
-      }
-      else navLogo.setAttribute('src', initialSrc);
-    })
-    
+      } else navLogo.setAttribute('src', initialSrc);
+    });
+
     const page = this.getAttribute('page');
     switch (page) {
       case 'search':

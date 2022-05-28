@@ -201,14 +201,29 @@ ol li::marker {
 ul li {
   cursor: pointer;
   position: relative;
-  padding: 1px 4px 1px 20px;
   list-style-type: none;
   /* background: rgb(248, 248, 248); */
   transition: 0.2s;
 }
 
+ul li.checkbox-checked {
+  text-decoration: line-through;
+}
+
+.checkbox-box { 
+  height: 15px;
+  width: 15px;
+  border: 1px solid; 
+  margin: 3px 3px 3px 0px;
+}
+
+.checkbox-box:checked::before {
+  background-color: white;
+  color: black;
+}
+/**
 ul li:hover {
-  /* background: #ddd; */
+  background: #ddd; 
 }
 
 ul li.checked {
@@ -227,6 +242,7 @@ ul li.checked::before {
   height: 12px;
   width: 5px;
 }
+**/ 
 
 ul li:not(:first-child) {
   margin-top: 8px;

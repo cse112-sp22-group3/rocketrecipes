@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import { getAllRecipes } from './utils.js';
+import { syncWithDatabaseUser, getAllRecipes } from './utils.js';
 
 let allRecipes = {};
 
@@ -21,8 +21,23 @@ function createRecommendedRecipes() {
 }
 
 async function init() {
+  await syncWithDatabaseUser();
   allRecipes = await getAllRecipes();
+
   createRecommendedRecipes();
 }
+
+// async function close() {
+//     let response = await syncFavoriteWithDatabase();
+//     flushFavoriteRecipes();
+//     localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
+// }
+
+// const beforeUnloadListener = (event) => {
+//     event.preventDefault();
+
+// };
+
+// addEventListener('beforeunload', beforeUnloadListener);
 
 window.addEventListener('DOMContentLoaded', init);

@@ -1,6 +1,11 @@
 /* eslint-disable import/extensions */
 import {
-  getAllRecipes, createRecipe, createId, validateForm, trimRecipe,
+  getAllRecipes,
+  createRecipe,
+  createId,
+  validateForm,
+  trimRecipe,
+  syncWithDatabaseUser,
 } from './utils.js';
 /* eslint-disable prefer-destructuring */
 // const crypto = require('crypto');
@@ -72,6 +77,7 @@ function deleteIng() {
 }
 
 async function init() {
+  await syncWithDatabaseUser();
   const addIngredient = document.getElementById('addIngredient');
   addIngredient.addEventListener('click', addIng);
 
@@ -85,6 +91,7 @@ async function init() {
   deleteButton.addEventListener('click', deleteStep);
 
   await getAllRecipes();
+
   document.getElementById('Create').addEventListener('click', async () => {
     const userGenRecipe = {};
     userGenRecipe.id = createId(); // crypto.randomBytes(16).toString('hex');

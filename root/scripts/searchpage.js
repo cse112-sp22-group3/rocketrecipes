@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import { search } from './utils.js';
+import { search, syncWithDatabaseUser } from './utils.js';
 
 const resultsPerPage = 12;
 const fadedColor = '#d3d3d3';
@@ -186,6 +186,7 @@ function fillSearchPage(searchResults) {
 }
 
 async function init() {
+  await syncWithDatabaseUser();
   const queryString = window.location.search;
 
   const searchParams = new URLSearchParams(queryString);

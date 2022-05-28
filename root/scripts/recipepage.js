@@ -7,6 +7,7 @@ import {
   deleteFavoriteRecipe,
   getAllRecipes,
   deleteRecipe,
+  syncWithDatabaseUser,
 } from './utils.js';
 
 // holds recipes from localStorage
@@ -132,6 +133,7 @@ async function scaleIngredients() {
 }
 
 async function init() {
+  await syncWithDatabaseUser();
   const queryString = window.location.search;
 
   const searchParams = new URLSearchParams(queryString);

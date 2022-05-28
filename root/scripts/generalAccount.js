@@ -1,6 +1,10 @@
 /* eslint-disable import/extensions */
 import {
-  getUserRecipes, getFavoriteRecipes, recipeIdArrayToObject, getBulkRecipes,
+  getUserRecipes,
+  getFavoriteRecipes,
+  recipeIdArrayToObject,
+  getBulkRecipes,
+  syncWithDatabaseUser,
 } from './utils.js';
 
 let favoriteRecipes = [];
@@ -37,6 +41,7 @@ async function createMyRecipes() {
 }
 
 async function init() {
+  await syncWithDatabaseUser();
   favoriteRecipes = await getFavoriteRecipes();
 
   userRecipes = await getUserRecipes();

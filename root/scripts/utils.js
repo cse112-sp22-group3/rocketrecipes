@@ -4,12 +4,13 @@
 // const COMMUNITY_THIRD_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_3.json';
 // const COMMUNITY_QUARTER_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_4.json';
 // const COMMUNITY_TENTH_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_10.json';
-const auth = "DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo";
+const auth = 'DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
+const LOCAL_STORAGE_USER_KEY = 'uuid';
 
-const FIREBASE_ALL_RECIPES = "https://rocketrecipes-6c192-default-rtdb.firebaseio.com/recipes.json?auth=DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo";
+const FIREBASE_ALL_RECIPES = 'https://rocketrecipes-6c192-default-rtdb.firebaseio.com/recipes.json?auth=DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
 const LOCAL_STORAGE_ALL_RECIPES_KEY = 'allRecipes';
-const FIREBASE_DATABASE_USER = "https://rocketrecipes-6c192-default-rtdb.firebaseio.com/user/";
-const FIREBASE_DATABASE_USER_FAVORITE = "/favoriteRercipes.json?auth=" + auth;
+const FIREBASE_DATABASE_USER = 'https://rocketrecipes-6c192-default-rtdb.firebaseio.com/user/';
+const FIREBASE_DATABASE_USER_FAVORITE = `/favoriteRercipes.json?auth=${auth}`;
 
 const LOCAL_STORAGE_FAVORITED_RECIPES_KEY = 'favoritedRecipes';
 
@@ -19,62 +20,81 @@ const LOCAL_STORAGE_FAVORITED_RECIPES_KEY = 'favoritedRecipes';
  * @returns {Array} An array of recipe objects, following the given schema
  */
 export async function getAllRecipes() {
-    if (localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY) !== null) {
-        const localStorageRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY));
-        return localStorageRecipes;
-    }
-    let fetchedRecipes = await fetch(FIREBASE_ALL_RECIPES)
-        .then((response) => response.json())
-        .then((data) => data);
+  if (localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY) !== null) {
+    const localStorageRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY));
+    return localStorageRecipes;
+  }
+  const fetchedRecipes = await fetch(FIREBASE_ALL_RECIPES)
+    .then((response) => response.json())
+    .then((data) => data);
     // console.log(fetchedRecipes);
 
-    let tempArr = [];
-    // retrive all recipes from fireabse realtime datasbase and buffer them into local storage
-    Object.entries(fetchedRecipes).forEach(([key, value]) => {
-        console.log(`${key} : ${value}`);
-        tempArr.push(value);
-    });
+  let tempArr = [];
+  // retrive all recipes from fireabse realtime datasbase and buffer them into local storage
+  Object.entries(fetchedRecipes).forEach(([key, value]) => {
+    console.log(`${key} : ${value}`);
+    tempArr.push(value);
+  });
 
-    // hardcoded buffer size
-    // only allow caching 1200 recipes 
-    tempArr = tempArr.slice(0, 1200);
-    try {
-        localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(tempArr));
-    } catch (e) {
-        console.log("an error has occured inside getAllRecipes()");
-        console.log(e);
-    }
+  // hardcoded buffer size
+  // only allow caching 1200 recipes
+  tempArr = tempArr.slice(0, 1200);
+  try {
+    localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(tempArr));
+  } catch (e) {
+    console.log('an error has occured inside getAllRecipes()');
+    console.log(e);
+  }
 
-    // try {
-    //     localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-    // } catch (fe) {
-    //     try {
-    //         fetchedRecipes = await fetch(COMMUNITY_THIRD_RECIPE_URL)
-    //             .then((response) => response.json())
-    //             .then((data) => data);
+  // try {
+  //     localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
+  // } catch (fe) {
+  //     try {
+  //         fetchedRecipes = await fetch(COMMUNITY_THIRD_RECIPE_URL)
+  //             .then((response) => response.json())
+  //             .then((data) => data);
 
-    //         localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-    //     } catch (e) {
-    //         try {
-    //             fetchedRecipes = await fetch(COMMUNITY_QUARTER_RECIPE_URL)
-    //                 .then((response) => response.json())
-    //                 .then((data) => data);
+  //         localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
+  //     } catch (e) {
+  //         try {
+  //             fetchedRecipes = await fetch(COMMUNITY_QUARTER_RECIPE_URL)
+  //                 .then((response) => response.json())
+  //                 .then((data) => data);
 
-    //             localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-    //         } catch (se) {
-    //             try {
-    //                 fetchedRecipes = await fetch(COMMUNITY_TENTH_RECIPE_URL)
-    //                     .then((response) => response.json())
-    //                     .then((data) => data);
+  //             localStorage.setItem
+  // (LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
+  //         } catch (se) {
+  //             try {
+  //                 fetchedRecipes = await fetch(COMMUNITY_TENTH_RECIPE_URL)
+  //                     .then((response) => response.json())
+  //                     .then((data) => data);
 
-    //                 localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-    //             } catch (te) {
-    //                 return null;
-    //             }
-    //         }
-    //     }
-    // }
-    return tempArr;
+  //                 localStorage.setItem
+  // (LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
+  //             } catch (te) {
+  //                 return null;
+  //             }
+  //         }
+  //     }
+  // }
+  return tempArr;
+}
+
+async function putData(url = '', data = {}) {
+  const response = await fetch(url, {
+    method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+    mode: 'cors', // no-cors, *cors, same-origin
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: 'same-origin', // include, *same-origin, omit
+    headers: {
+      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: 'follow', // manual, *follow, error
+    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  });
+  return response.json(); // parses JSON response into native JavaScript objects
 }
 
 /**
@@ -83,48 +103,72 @@ export async function getAllRecipes() {
  * @returns {Array} An array of recipe objects, following the given schema
  */
 export async function getFavoriteRecipes() {
-    if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
-        const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
-        return favoritedRecipes;
-    }
+  if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
+    const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
+    return favoritedRecipes;
+  }
 
-    const blankFavoritedRecipes = [];
-    try {
-        localStorage.setItem(
-            LOCAL_STORAGE_FAVORITED_RECIPES_KEY,
-            JSON.stringify(blankFavoritedRecipes),
-        );
-    } catch (e) {
-        return false;
-    }
-    return blankFavoritedRecipes;
+  const blankFavoritedRecipes = [];
+  try {
+    localStorage.setItem(
+      LOCAL_STORAGE_FAVORITED_RECIPES_KEY,
+      JSON.stringify(blankFavoritedRecipes),
+    );
+  } catch (e) {
+    return false;
+  }
+  return blankFavoritedRecipes;
 }
 
-/**
+/** *************************************************************************************
  * Whenever a user logged in, flush the favorite recipes to accomdate current user
  * favorite recipes will be set to empty whenever a user logged in
  * then populate favorited recipes from firebase
+ * Whenever the user log out, sync the local storage favorite recipes with database
  */
-function flushFavoriteRecipes() {
-    if (localStorage.getItem("uuid" !== null)) {
-        localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, null);
-    }
+export function flushFavoriteRecipes() {
+  if (localStorage.getItem(LOCAL_STORAGE_USER_KEY) !== null) {
+    localStorage.removeItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY);
+  }
 }
 
 export async function populateFavoriteRecipes() {
-    flushFavoriteRecipes();
-    if (localStorage.getItem('uuid') !== null) {
-        let url = FIREBASE_DATABASE_USER + localStorage.getItem('uuid') + FIREBASE_DATABASE_USER_FAVORITE;
-        console.log("favorited url = ", url);
+  flushFavoriteRecipes();
+  if (localStorage.getItem(LOCAL_STORAGE_USER_KEY) !== null) {
+    const url = FIREBASE_DATABASE_USER
+            + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+            + FIREBASE_DATABASE_USER_FAVORITE;
+    console.log('favorited url = ', url);
 
-        let userFavorites = await fetch(url)
-            .then((response) => response.json())
-            .then((data) => data);
-        if (userFavorites !== null) {
-            localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(userFavorites));
-        }
+    const userFavorites = await fetch(url)
+      .then((response) => response.json())
+      .then((data) => data);
+    if (userFavorites !== null) {
+      localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(userFavorites));
     }
+  }
 }
+
+export async function syncFavoriteWithDatabase() {
+  if (localStorage.getItem(LOCAL_STORAGE_USER_KEY) !== null) {
+    const url = FIREBASE_DATABASE_USER
+            + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+            + FIREBASE_DATABASE_USER_FAVORITE;
+    console.log(url);
+
+    const tempArr = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
+    console.log(tempArr);
+
+    const response = await putData(url, tempArr);
+    return response;
+  }
+  return null;
+}
+
+export async function syncWithDatabaseUser() {
+  await syncFavoriteWithDatabase();
+}
+/** ************************************************************************************* */
 
 /**
  * Determines if the given recipe in a user's favorite list
@@ -132,13 +176,13 @@ export async function populateFavoriteRecipes() {
  * @returns {Boolean}
  */
 export async function isFavorite(id) {
-    const favoritedRecipes = await getFavoriteRecipes();
-    for (let i = 0; i < favoritedRecipes.length; i += 1) {
-        if (favoritedRecipes[i] === id) {
-            return true;
-        }
+  const favoritedRecipes = await getFavoriteRecipes();
+  for (let i = 0; i < favoritedRecipes.length; i += 1) {
+    if (favoritedRecipes[i] === id) {
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 /**
@@ -147,14 +191,14 @@ export async function isFavorite(id) {
  * @returns {Array} An array of recipe objects, following the given schema
  */
 export async function getUserRecipes() {
-    const allRecipes = await getAllRecipes();
-    const userRecipes = [];
-    for (let i = 0; i < allRecipes.length; i += 1) {
-        if (!allRecipes[i].isFromInternet) {
-            userRecipes.push(allRecipes[i]);
-        }
+  const allRecipes = await getAllRecipes();
+  const userRecipes = [];
+  for (let i = 0; i < allRecipes.length; i += 1) {
+    if (!allRecipes[i].isFromInternet) {
+      userRecipes.push(allRecipes[i]);
     }
-    return userRecipes;
+  }
+  return userRecipes;
 }
 
 /**
@@ -164,29 +208,29 @@ export async function getUserRecipes() {
  * @returns {Boolean} true if the operation was successful, false if it was not
  */
 export async function addFavoriteRecipe(id) {
-    const allRecipes = await getAllRecipes();
-    let recipeExists = false;
+  const allRecipes = await getAllRecipes();
+  let recipeExists = false;
 
-    for (let i = 0; i < allRecipes.length; i += 1) {
-        if (allRecipes[i].id === id) {
-            recipeExists = true;
-        }
+  for (let i = 0; i < allRecipes.length; i += 1) {
+    if (allRecipes[i].id === id) {
+      recipeExists = true;
     }
+  }
 
-    if (!recipeExists) {
-        return false;
+  if (!recipeExists) {
+    return false;
+  }
+
+  const favoritedRecipes = await getFavoriteRecipes();
+
+  for (let i = 0; i < favoritedRecipes.length; i += 1) {
+    if (favoritedRecipes[i] === id) {
+      return false;
     }
-
-    const favoritedRecipes = await getFavoriteRecipes();
-
-    for (let i = 0; i < favoritedRecipes.length; i += 1) {
-        if (favoritedRecipes[i] === id) {
-            return false;
-        }
-    }
-    favoritedRecipes.push(id);
-    localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
-    return true;
+  }
+  favoritedRecipes.push(id);
+  localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
+  return true;
 }
 
 /**
@@ -196,16 +240,16 @@ export async function addFavoriteRecipe(id) {
  * @returns {Boolean} true if the operation was successful, false if it was not
  */
 export async function deleteFavoriteRecipe(id) {
-    const favoritedRecipes = await getFavoriteRecipes();
+  const favoritedRecipes = await getFavoriteRecipes();
 
-    for (let i = 0; i < favoritedRecipes.length; i += 1) {
-        if (favoritedRecipes[i] === id) {
-            favoritedRecipes.splice(i, 1);
-            localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
-            return true;
-        }
+  for (let i = 0; i < favoritedRecipes.length; i += 1) {
+    if (favoritedRecipes[i] === id) {
+      favoritedRecipes.splice(i, 1);
+      localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 /**
@@ -218,15 +262,15 @@ export async function deleteFavoriteRecipe(id) {
  * @returns {Array} An array of recipe objects, following the given schema
  */
 export async function getBulkRecipes(recipeIds) {
-    const allRecipes = await getAllRecipes();
-    const recipes = [];
+  const allRecipes = await getAllRecipes();
+  const recipes = [];
 
-    for (let i = 0; i < allRecipes.length; i += 1) {
-        if (recipeIds[allRecipes[i].id]) {
-            recipes.push(allRecipes[i]);
-        }
+  for (let i = 0; i < allRecipes.length; i += 1) {
+    if (recipeIds[allRecipes[i].id]) {
+      recipes.push(allRecipes[i]);
     }
-    return recipes;
+  }
+  return recipes;
 }
 
 /**
@@ -237,14 +281,14 @@ export async function getBulkRecipes(recipeIds) {
  * does not exist, returns null
  */
 export async function readRecipe(id) {
-    const allRecipes = await getAllRecipes();
-    for (let i = 0; i < allRecipes.length; i += 1) {
-        if (allRecipes[i].id === id) {
-            return allRecipes[i];
-        }
+  const allRecipes = await getAllRecipes();
+  for (let i = 0; i < allRecipes.length; i += 1) {
+    if (allRecipes[i].id === id) {
+      return allRecipes[i];
     }
-    // recipe id was not found, return null
-    return null;
+  }
+  // recipe id was not found, return null
+  return null;
 }
 
 /**
@@ -254,16 +298,16 @@ export async function readRecipe(id) {
  * @returns {Boolean} true if the operation was successful, false otherwise
  */
 export async function deleteRecipe(id) {
-    const allRecipes = await getAllRecipes();
+  const allRecipes = await getAllRecipes();
 
-    for (let i = 0; i < allRecipes.length; i += 1) {
-        if (allRecipes[i].id === id) {
-            allRecipes.splice(i, 1);
-            localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(allRecipes));
-            return true;
-        }
+  for (let i = 0; i < allRecipes.length; i += 1) {
+    if (allRecipes[i].id === id) {
+      allRecipes.splice(i, 1);
+      localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(allRecipes));
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 /**
@@ -271,8 +315,8 @@ export async function deleteRecipe(id) {
  * @returns {String} a unique id
  */
 export function createId() {
-    // eslint-disable-next-line no-bitwise
-    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
+  // eslint-disable-next-line no-bitwise
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
 }
 
 /**
@@ -281,16 +325,16 @@ export function createId() {
  * @returns true if this operation is successful, false otherwise
  */
 export async function updateRecipe(newRecipe) {
-    const allRecipes = await getAllRecipes();
+  const allRecipes = await getAllRecipes();
 
-    for (let i = 0; i < allRecipes.length; i += 1) {
-        if (allRecipes[i].id === newRecipe.id) {
-            allRecipes[i] = newRecipe;
-            localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(allRecipes));
-            return true;
-        }
+  for (let i = 0; i < allRecipes.length; i += 1) {
+    if (allRecipes[i].id === newRecipe.id) {
+      allRecipes[i] = newRecipe;
+      localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(allRecipes));
+      return true;
     }
-    return false;
+  }
+  return false;
 }
 
 /**
@@ -299,16 +343,16 @@ export async function updateRecipe(newRecipe) {
  * @returns true if the operation was successful, false otherwise
  */
 export async function createRecipe(newRecipe) {
-    const allRecipes = await getAllRecipes();
-    for (let i = 0; i < allRecipes.length; i += 1) {
-        if (allRecipes[i].id === newRecipe.id) {
-            return false;
-        }
+  const allRecipes = await getAllRecipes();
+  for (let i = 0; i < allRecipes.length; i += 1) {
+    if (allRecipes[i].id === newRecipe.id) {
+      return false;
     }
+  }
 
-    allRecipes.push(newRecipe);
-    localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(allRecipes));
-    return true;
+  allRecipes.push(newRecipe);
+  localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(allRecipes));
+  return true;
 }
 
 /**
@@ -317,11 +361,11 @@ export async function createRecipe(newRecipe) {
  * @returns an object with recipeIds as keys
  */
 export function recipeIdArrayToObject(arr) {
-    const obj = {};
-    for (let i = 0; i < arr.length; i += 1) {
-        obj[arr[i]] = true;
-    }
-    return obj;
+  const obj = {};
+  for (let i = 0; i < arr.length; i += 1) {
+    obj[arr[i]] = true;
+  }
+  return obj;
 }
 
 /**
@@ -331,64 +375,64 @@ export function recipeIdArrayToObject(arr) {
  * @returns An array of recipeObjects that matches the search parameters
  */
 export async function search(searchQuery, tags) {
-    // Ignore recipe if query matches less than this percent of title
-    const MIN_MATCHING_THRESHOLD = 0.5;
-    const allRecipes = await getAllRecipes();
-    const query = searchQuery.toLowerCase();
-    const tokenizedQuery = [...new Set(query.trim().split(/\s+/))]; // regex matches one or more spaces
-    const minNumMatchingTokens = Math.ceil(tokenizedQuery.length * MIN_MATCHING_THRESHOLD);
+  // Ignore recipe if query matches less than this percent of title
+  const MIN_MATCHING_THRESHOLD = 0.5;
+  const allRecipes = await getAllRecipes();
+  const query = searchQuery.toLowerCase();
+  const tokenizedQuery = [...new Set(query.trim().split(/\s+/))]; // regex matches one or more spaces
+  const minNumMatchingTokens = Math.ceil(tokenizedQuery.length * MIN_MATCHING_THRESHOLD);
 
-    let searchResults = [];
+  let searchResults = [];
 
-    for (let i = 0; i < allRecipes.length; i += 1) {
-        const recipe = allRecipes[i];
-        let recipeMatches = true;
-        try {
-            // Check that recipe matches tags, reject if it doesn't
-            tags.forEach((tag) => {
-                if (!recipe[`${tag}`]) {
-                    recipeMatches = false;
-                }
-            });
-
-            // Create a search score for the title
-            let numMatchingTokens = 0;
-            let mostRecentMatch = tokenizedQuery.length;
-            let numMatchingCharacters = 0;
-            let searchScore = 0;
-            const { title } = recipe;
-            if (title) {
-                for (let j = tokenizedQuery.length - 1; j >= 0; j -= 1) {
-                    if (title.toLowerCase().includes(tokenizedQuery[j])) {
-                        numMatchingTokens += 1;
-                        mostRecentMatch = j;
-                        numMatchingCharacters += tokenizedQuery[j].length;
-                    }
-                }
-                // 1st: pick titles with more matching tokens over less matching tokens
-                // 2nd: pick titles that match with the first tokens in the search query
-                // 3rd: pick titles which have a large percentage of charaters that match with query
-                searchScore = numMatchingTokens * (tokenizedQuery.length ** 2) +
-                    (tokenizedQuery.length - mostRecentMatch - 1) * tokenizedQuery.length +
-                    (numMatchingCharacters / title.length) * tokenizedQuery.length;
-            }
-            if (numMatchingTokens < minNumMatchingTokens) {
-                recipeMatches = false;
-            }
-
-            if (recipeMatches) {
-                searchResults.push({ recipe, score: searchScore });
-            }
-        } catch (e) {
-            // remove recipe from results if an error thrown
-            if (searchResults.some((a) => a.recipe === recipe)) {
-                searchResults = searchResults.filter((a) => a.recipe !== recipe);
-            }
+  for (let i = 0; i < allRecipes.length; i += 1) {
+    const recipe = allRecipes[i];
+    let recipeMatches = true;
+    try {
+      // Check that recipe matches tags, reject if it doesn't
+      tags.forEach((tag) => {
+        if (!recipe[`${tag}`]) {
+          recipeMatches = false;
         }
-    }
-    searchResults.sort((a, b) => b.score - a.score); // put a before b if a.score > b.score
+      });
 
-    return searchResults.map((a) => a.recipe);
+      // Create a search score for the title
+      let numMatchingTokens = 0;
+      let mostRecentMatch = tokenizedQuery.length;
+      let numMatchingCharacters = 0;
+      let searchScore = 0;
+      const { title } = recipe;
+      if (title) {
+        for (let j = tokenizedQuery.length - 1; j >= 0; j -= 1) {
+          if (title.toLowerCase().includes(tokenizedQuery[j])) {
+            numMatchingTokens += 1;
+            mostRecentMatch = j;
+            numMatchingCharacters += tokenizedQuery[j].length;
+          }
+        }
+        // 1st: pick titles with more matching tokens over less matching tokens
+        // 2nd: pick titles that match with the first tokens in the search query
+        // 3rd: pick titles which have a large percentage of charaters that match with query
+        searchScore = numMatchingTokens * (tokenizedQuery.length ** 2)
+                    + (tokenizedQuery.length - mostRecentMatch - 1) * tokenizedQuery.length
+                    + (numMatchingCharacters / title.length) * tokenizedQuery.length;
+      }
+      if (numMatchingTokens < minNumMatchingTokens) {
+        recipeMatches = false;
+      }
+
+      if (recipeMatches) {
+        searchResults.push({ recipe, score: searchScore });
+      }
+    } catch (e) {
+      // remove recipe from results if an error thrown
+      if (searchResults.some((a) => a.recipe === recipe)) {
+        searchResults = searchResults.filter((a) => a.recipe !== recipe);
+      }
+    }
+  }
+  searchResults.sort((a, b) => b.score - a.score); // put a before b if a.score > b.score
+
+  return searchResults.map((a) => a.recipe);
 }
 
 /**
@@ -397,21 +441,16 @@ export async function search(searchQuery, tags) {
  * @returns {Boolean} true if the string is a link
  */
 export function validURL(str) {
-    const pattern = new RegExp(
-        '^(https?:\\/\\/)?' // protocol
-        +
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' // domain name
-        +
-        '((\\d{1,3}\\.){3}\\d{1,3}))' // OR ip (v4) address
-        +
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
-        +
-        '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
-        +
-        '(\\#[-a-z\\d_]*)?$',
-        'i',
-    ); // fragment locator
-    return !!pattern.test(str);
+  const pattern = new RegExp(
+    '^(https?:\\/\\/)?' // protocol
+        + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' // domain name
+        + '((\\d{1,3}\\.){3}\\d{1,3}))' // OR ip (v4) address
+        + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
+        + '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
+        + '(\\#[-a-z\\d_]*)?$',
+    'i',
+  ); // fragment locator
+  return !!pattern.test(str);
 }
 
 /**
@@ -420,23 +459,23 @@ export function validURL(str) {
  * @returns {Object} object containing values for if the form is valid, and error messages otherwise
  */
 export function validateForm(recipe) {
-    if (recipe.title === '' || recipe.summary === '') {
-        return { valid: false, errorMessage: 'Title is empty' };
-    }
-    if (recipe.summary === '') {
-        return { valid: false, errorMessage: 'Summary is empty' };
-    }
-    if (recipe.servings === '') {
-        return { valid: false, errorMessage: 'Servings field is empty' };
-    }
-    if (recipe.readyInMinutes === '') {
-        return { valid: false, errorMessage: 'Time field is empty' };
-    }
-    if (recipe.image !== '' && !validURL(recipe.image)) {
-        return { valid: false, errorMessage: 'Image is not a valid link' };
-    }
+  if (recipe.title === '' || recipe.summary === '') {
+    return { valid: false, errorMessage: 'Title is empty' };
+  }
+  if (recipe.summary === '') {
+    return { valid: false, errorMessage: 'Summary is empty' };
+  }
+  if (recipe.servings === '') {
+    return { valid: false, errorMessage: 'Servings field is empty' };
+  }
+  if (recipe.readyInMinutes === '') {
+    return { valid: false, errorMessage: 'Time field is empty' };
+  }
+  if (recipe.image !== '' && !validURL(recipe.image)) {
+    return { valid: false, errorMessage: 'Image is not a valid link' };
+  }
 
-    return { valid: true, errorMessage: '' };
+  return { valid: true, errorMessage: '' };
 }
 
 /**
@@ -445,19 +484,19 @@ export function validateForm(recipe) {
  * @returns {Object} recipe object without unneeded steps and ingredients
  */
 export function trimRecipe(recipe) {
-    const adjustedRecipe = recipe;
+  const adjustedRecipe = recipe;
 
-    const recipeIngredients = recipe.ingredients.filter(
-        (ing) => ing.name !== '' && ing.amount !== '',
-    );
-    const recipeSteps = recipe.steps.filter((s) => s.step !== '');
+  const recipeIngredients = recipe.ingredients.filter(
+    (ing) => ing.name !== '' && ing.amount !== '',
+  );
+  const recipeSteps = recipe.steps.filter((s) => s.step !== '');
 
-    adjustedRecipe.ingredients = recipeIngredients;
-    adjustedRecipe.steps = recipeSteps;
+  adjustedRecipe.ingredients = recipeIngredients;
+  adjustedRecipe.steps = recipeSteps;
 
-    // add default image if field is blank
-    if (adjustedRecipe.image === '') {
-        adjustedRecipe.image = 'https://media.istockphoto.com/photos/white-plate-wooden-table-tablecloth-rustic-wooden-clean-copy-freepik-picture-id1170315961?k=20&m=1170315961&s=612x612&w=0&h=nCCDMyt_1sMF3PdDurLw2pcTPgu7YBzjCaZO6z78CxE=';
-    }
-    return adjustedRecipe;
+  // add default image if field is blank
+  if (adjustedRecipe.image === '') {
+    adjustedRecipe.image = 'https://media.istockphoto.com/photos/white-plate-wooden-table-tablecloth-rustic-wooden-clean-copy-freepik-picture-id1170315961?k=20&m=1170315961&s=612x612&w=0&h=nCCDMyt_1sMF3PdDurLw2pcTPgu7YBzjCaZO6z78CxE=';
+  }
+  return adjustedRecipe;
 }

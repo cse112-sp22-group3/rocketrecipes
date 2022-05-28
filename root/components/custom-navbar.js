@@ -87,26 +87,6 @@ class Navbar extends HTMLElement {
             width: 55px;
             height: 55px;
         }
-
-        .navbar-text-link-signin {
-            background-color: #F48395;
-            display: flex;
-            text-align: center;
-            align-items: center;
-            justify-content: center;
-            width: 130px;
-            padding: 0 20px;
-            height: 80px;
-            color: black;
-            text-decoration: none;
-            background-color: white;
-        }
-
-        .navbar-text-link-signin:hover {
-            cursor: pointer;
-            background-color: #F48395;
-        }
-
         .mobile-navbar-expanded {
             position: absolute;
             width: 100%;
@@ -199,7 +179,7 @@ class Navbar extends HTMLElement {
             <a class='navbar-text-link' id='search' href='./searchpage.html'>Search</a>
             <a class='navbar-text-link' id='create' href='./CreateRecipe.html'>Create Recipe</a>
             <a class='navbar-text-link' id='account' href='./generalAccount.html'>My Account</a>
-            <a class="navbar-text-link-signin" id="sign-in" href="./entry.html">Sign In</a>
+            <a class="navbar-text-link" id="sign-in" href="./entry.html">Sign In</a>
         </div>
         <div class='navbar-links-container-mobile'> 
             <div class='mobile-navbar-button'></div>

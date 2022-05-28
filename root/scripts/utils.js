@@ -1,8 +1,9 @@
+/* eslint-disable import/no-unresolved */
 /** @module utils */
 /* global DOMPurify */
 /* eslint-disable no-mixed-operators */
 // eslint-disable-next-line import/extensions
-// import '../../node_modules/dompurify/dist/purify.js';
+import './purify.js';
 
 const COMMUNITY_HALF_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_2.json';
 const COMMUNITY_THIRD_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_3.json';

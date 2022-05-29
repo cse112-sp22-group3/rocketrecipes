@@ -21,7 +21,7 @@ class Navbar extends HTMLElement {
         #navbar-id {
             position: fixed;
             width: 100%;
-            transition: 0s; 
+            transition: 0.4s; 
             /* background
             background-image: url('../media/nav_background.png');
             background-position: center;

@@ -90,11 +90,13 @@ class Navbar extends HTMLElement {
         }
         .mobile-navbar-expanded {
             position: absolute;
-            width: 100%;
-            top: 80px;
+            width: 30%;
+            top: 100px;
+            right: 0px;
             display: flex;
             flex-direction: column;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+            background: white;
         }
         .mobile-link {
             width: 100%;
@@ -131,13 +133,15 @@ class Navbar extends HTMLElement {
             }
         }
         */
-        @media (max-width: 800px) {
+        @media (max-width: 950px) {
           .navbar-text-link {
             font-size: 12px;
-            width: 100px;
+            width: 90px;
           }
-          .site-title {
-
+          .navbar-image img{
+            object-fit: cover;
+            width: 250px;
+            height: 50px;
           }
         }
         @media (max-width: 650px) {
@@ -149,9 +153,11 @@ class Navbar extends HTMLElement {
           }
         } 
         @media screen and (max-width: 640px) {
-          .site-title.mobile {
-              font-size: 5px;
-          }
+          .navbar-image img{
+            object-fit: cover;
+            width: 250px;
+            height: 50px;
+        }
         }
         @media (min-width: 651px) {
             .navbar-links-container-desktop {

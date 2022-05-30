@@ -21,12 +21,14 @@ describe('favorite a recipe', () => {
     });
 
     it('should navigate to recipe page and favorite recipe', async () => {
+        jest.setTimeout('10000');
         await page.waitForSelector('recipe-card');
         const card = await page.evaluateHandle( () => document.querySelector("#recommendedRecipeContainer > recipe-card:nth-child(1)"));
         await card.click();
 
         await page.waitForSelector('recipe-card');
         const title = await page.evaluate( () => document.querySelector('#recipe-title').textContent);
+        // console.log(title);
         await expect(page.title()).resolves.toMatch(title);
 
         await page.click('#fav-icon');

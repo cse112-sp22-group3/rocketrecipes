@@ -3,7 +3,7 @@
   width: 40px;
   height: 40px;
   position: relative;
-  top: 20px;
+  top: 115px;
   left: 20px;
   background: url('https://api.iconify.design/eva/arrow-back-outline.svg?color=%23111&height=40') no-repeat center center / contain;
   cursor: pointer;
@@ -15,7 +15,7 @@
   align-items: center;
   justify-content: center;
   height: 100%;
-  margin: 32px 5%;
+  margin: 52px 5%;
 }
 
 .recipe-header {
@@ -79,6 +79,28 @@
   border-radius: 5px;
   border: 2px solid #C4C4C4;
   text-align: center;
+}
+
+.unit-conversion {
+  color: #222;
+  border: 1px solid #222;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  text-decoration: none;
+  margin-right: 5px;
+  letter-spacing: 0.1em;
+}
+
+.unit-conversion:hover {
+  color: white;
+  background-color: #222;
+}
+
+.unit-conversion:active {
+  color: white;
+  background-color: #222;
 }
 
 #recipe-title {
@@ -177,8 +199,50 @@ ol li::marker {
 }
 
 ul li {
-  padding-left: 2px;
+  cursor: pointer;
+  position: relative;
+  list-style-type: none;
+  /* background: rgb(248, 248, 248); */
+  transition: 0.2s;
 }
+
+ul li.checkbox-checked {
+  text-decoration: line-through;
+}
+
+.checkbox-box { 
+  height: 15px;
+  width: 15px;
+  border: 1px solid; 
+  margin: 3px 3px 3px 0px;
+}
+
+.checkbox-box:checked::before {
+  background-color: white;
+  color: black;
+}
+/**
+ul li:hover {
+  background: #ddd; 
+}
+
+ul li.checked {
+  text-decoration: line-through;
+}
+
+ul li.checked::before {
+  content: '';
+  position: absolute;
+  border-color: black;
+  border-style: solid;
+  border-width: 0 1px 1px 0;
+  top: 3px;
+  left: 0px;
+  transform: rotate(45deg);
+  height: 12px;
+  width: 5px;
+}
+**/ 
 
 ul li:not(:first-child) {
   margin-top: 8px;

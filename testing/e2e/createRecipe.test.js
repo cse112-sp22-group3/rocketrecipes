@@ -71,7 +71,12 @@ describe('create own recipe', () => {
         await page.type('.descrip', 'Example Description');
         await page.type('#serving', '3');
         await page.type('#time', '30');
-
+        await page.click('#addIngredient');
+        await page.type('#amount1', '1');
+        await page.type('#units1', 'cup');
+        await page.type('#ing1', 'apple');
+        await page.click('#plus');
+        await page.type("#Step1", 'step1');
         await page.click('#Create');
     });
 

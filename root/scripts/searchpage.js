@@ -1,9 +1,9 @@
+/* eslint-disable linebreak-style */
 // eslint-disable-next-line import/extensions
 import { search } from './utils.js';
 
 const resultsPerPage = 12;
-const fadedColor = '#d3d3d3';
-const activeColor = '#fef2e6';
+const activeColor = 'white';
 let pageUserIsOn = 1;
 let totalPages = 1;
 let resultsFound = 0;
@@ -15,31 +15,40 @@ function buttonReset() {
   const pageButtonNext = document.getElementById('search-page-button-next');
   const pageButtonLast = document.getElementById('search-page-button-last');
   if (pageUserIsOn === 1) { // no more previous pages
-    pageButtonPrevious.style.backgroundColor = fadedColor;
+    pageButtonPrevious.style.display = 'none';
     pageButtonPrevious.disabled = true;
-    pageButtonFirst.style.backgroundColor = fadedColor;
+    pageButtonFirst.style.display = 'none';
     pageButtonFirst.disabled = true;
+    // active buttons
+    pageButtonNext.style.display = 'block';
     pageButtonNext.style.backgroundColor = activeColor;
     pageButtonNext.disabled = false;
+    pageButtonLast.style.display = 'block';
     pageButtonLast.style.backgroundColor = activeColor;
     pageButtonLast.disabled = false;
   } else if (pageUserIsOn < totalPages) {
+    pageButtonPrevious.style.display = 'block';
     pageButtonPrevious.style.backgroundColor = activeColor;
     pageButtonPrevious.disabled = false;
+    pageButtonFirst.style.display = 'block';
     pageButtonFirst.style.backgroundColor = activeColor;
     pageButtonFirst.disabled = false;
+    pageButtonNext.style.display = 'block';
     pageButtonNext.style.backgroundColor = activeColor;
     pageButtonNext.disabled = false;
+    pageButtonLast.style.display = 'block';
     pageButtonLast.style.backgroundColor = activeColor;
     pageButtonLast.disabled = false;
   } else {
+    pageButtonPrevious.style.display = 'block';
     pageButtonPrevious.style.backgroundColor = activeColor;
     pageButtonPrevious.disabled = false;
+    pageButtonFirst.style.display = 'block';
     pageButtonFirst.style.backgroundColor = activeColor;
     pageButtonFirst.disabled = false;
-    pageButtonNext.style.backgroundColor = fadedColor;
+    pageButtonNext.style.display = 'none';
     pageButtonNext.disabled = true;
-    pageButtonLast.style.backgroundColor = fadedColor;
+    pageButtonLast.style.display = 'none';
     pageButtonLast.disabled = true;
   }
 

@@ -408,17 +408,6 @@ export function trimRecipe(recipe) {
   return adjustedRecipe;
 }
 
-export async function getRecipeByUrl(url) {
-  const requestUrl = `https://api.spoonacular.com/recipes/extract?url=${url}&apiKey=${SPOONACULAR_API_KEY}`;
-  const response = await fetch(requestUrl);
-  const json = await response.json();
-  // parse response into our format
-  const recipe = await parseRecipe(json);
-  if(await createRecipe(recipe)) {
-    return recipe.id;
-  }
-}
-
 async function parseRecipe(baseRecipe) {
   const scrapedRecipe = baseRecipe;
   const minutesToPrepare = scrapedRecipe.readyInMinutes;
@@ -433,7 +422,7 @@ async function parseRecipe(baseRecipe) {
   parsedRecipe.readyInMinutes = scrapedRecipe.readyInMinutes;
   parsedRecipe.servings = scrapedRecipe.servings;
   parsedRecipe.image = scrapedRecipe.image;
-  parsedRecipe.uploader = "From the Internet";
+  parsedRecipe.uploader = 'From the Internet';
   parsedRecipe.isFromInternet = true;
   parsedRecipe.vegetarian = scrapedRecipe.vegetarian;
   parsedRecipe.vegan = scrapedRecipe.vegan;
@@ -471,4 +460,17 @@ async function parseRecipe(baseRecipe) {
     parsedRecipe.steps.push(currStep);
   }
   return parsedRecipe;
+}
+
+export async function getRecipeByUrl(url) {
+  const requestUrl = `https://api.spoonacular.com/recipes/extract?url=${url}&apiKey=${SPOONACULAR_API_KEY}`;
+  const response = await fetch(requestUrl);
+  const json = await response.json();
+  // parse response into our format
+  const recipe = await parseRecipe(json);
+  if (await createRecipe(recipe)) {
+    return recipe.id;
+  }
+
+  return false;
 }

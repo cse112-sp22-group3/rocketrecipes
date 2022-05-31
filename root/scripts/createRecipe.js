@@ -1,6 +1,7 @@
+/* eslint-disable no-alert */
 /* eslint-disable import/extensions */
 import {
-  getAllRecipes, createRecipe, createId, validateForm, trimRecipe, getRecipeByUrl
+  getAllRecipes, createRecipe, createId, validateForm, trimRecipe, getRecipeByUrl,
 } from './utils.js';
 /* eslint-disable prefer-destructuring */
 // const crypto = require('crypto');
@@ -72,24 +73,25 @@ function deleteIng() {
 }
 
 async function createRecipeByUrl() {
-
-  const urlText = document.getElementById("urlText").value;
-  const regex = new RegExp(/^(ftp|http|https):\/\/[^ "]+$/);
+  const urlText = document.getElementById('urlText').value;
+  const regex = /^(ftp|http|https):\/\/[^ "]+$/;
 
   const validUrl = regex.test(urlText);
 
-  if(!validUrl) {
+  if (!validUrl) {
     alert('Please enter a valid website URL');
-  }
-  else {
+  } else {
     try {
-      const id = await getRecipeByUrl(document.getElementById("urlText").value);
-      window.location = `${window.location.origin}/root/html/RecipePage.html?id=${id}`;
+      const id = await getRecipeByUrl(document.getElementById('urlText').value);
+
+      if (id) {
+        window.location = `${window.location.origin}/root/html/RecipePage.html?id=${id}`;
+      }
     } catch (e) {
-      alert("Error: Please try again with a different recipe.");
+      alert('Error: Please try again with a different recipe.');
     }
   }
-  document.getElementById("urlText").value = "";
+  document.getElementById('urlText').value = '';
 }
 
 async function init() {

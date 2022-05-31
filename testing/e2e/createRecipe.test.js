@@ -1,21 +1,20 @@
 let rootUrl = 'rocketrecipesv2.netlify.app';
 const pullRequestId = process.env.GITHUB_PR_NUMBER;
 
-// beforeAll(async () => {
-//     if(pullRequestId) {
-//       console.log("PR: " + pullRequestId);
-//       rootUrl = `deploy-preview-${pullRequestId}--rocketrecipesv2.netlify.app`;
-//     }
-//     else if(process.env.GITHUB_REF) {
-//       rootUrl = `rocketrecipesv2.netlify.app`;
-//     }
-//     else {
-//       console.log('not in pr');
-//     }
+beforeAll(async () => {
+    if(pullRequestId) {
+      console.log("PR: " + pullRequestId);
+      rootUrl = `deploy-preview-${pullRequestId}--rocketrecipesv2.netlify.app`;
+    }
+    else if(process.env.GITHUB_REF) {
+      rootUrl = `rocketrecipesv2.netlify.app`;
+    }
+    else {
+      console.log('not in pr');
+    }
 
-// });
+});
 
-rootUrl = 'deploy-preview-72--rocketrecipesv2.netlify.app';
 describe('create own recipe', () => {
     beforeAll(async () => {
         await page.goto(`http://${rootUrl}/root/html/createrecipe`);
@@ -72,8 +71,12 @@ describe('create own recipe', () => {
         await page.type('.descrip', 'Example Description');
         await page.type('#serving', '3');
         await page.type('#time', '30');
-        await page.type('')
-
+        await page.click('#addIngredient');
+        await page.type('#amount1', '1');
+        await page.type('#units1', 'cup');
+        await page.type('#ing1', 'apple');
+        await page.click('#plus');
+        await page.type("#Step1", 'step1');
         await page.click('#Create');
     });
 

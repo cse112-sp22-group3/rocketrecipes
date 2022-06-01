@@ -1,20 +1,21 @@
 /** @module utils */
+/* global DOMPurify */
 /* eslint-disable no-mixed-operators */
 import {
-  getAllRecipesDatabase,
-  getAllRecipeIDDatabase,
-  readRecipeDatabase,
-  getFavoritedRecipesDatabase,
-  getUserAllCreatedRecipesDatabase,
-  addFavoriteRecipeDatabase,
-  deleteFavoriteRecipeDatabase,
-  ableToDeleteDatabase,
-  ableToPublishDatabase,
-  publishRecipeDatabase,
-  updateRecipeDatabase,
-  isFavoritedDatabase,
-  deleteRecipeDatabase,
-  createRecipeDatabase,
+    getAllRecipesDatabase,
+    getAllRecipeIDDatabase,
+    readRecipeDatabase,
+    getFavoritedRecipesDatabase,
+    getUserAllCreatedRecipesDatabase,
+    addFavoriteRecipeDatabase,
+    deleteFavoriteRecipeDatabase,
+    ableToDeleteDatabase,
+    ableToPublishDatabase,
+    publishRecipeDatabase,
+    updateRecipeDatabase,
+    isFavoritedDatabase,
+    deleteRecipeDatabase,
+    createRecipeDatabase,
 } from './database.js';
 
 /**
@@ -23,15 +24,15 @@ import {
  * @returns {Array} An array of recipe objects, following the given schema
  */
 export async function getAllRecipes() {
-  const allRecipes = await getAllRecipesDatabase();
-  const tempArr = [];
+    const allRecipes = await getAllRecipesDatabase();
+    const tempArr = [];
 
-  // retrive all recipes from fireabse realtime datasbase put them into an array, since other functions calling it assuming recipes are stored in an array
-  Object.entries(allRecipes).forEach(([key, value]) => {
-    tempArr.push(value);
-  });
+    // retrive all recipes from fireabse realtime datasbase put them into an array, since other functions calling it assuming recipes are stored in an array
+    Object.entries(allRecipes).forEach(([key, value]) => {
+        tempArr.push(value);
+    });
 
-  return tempArr;
+    return tempArr;
 }
 
 /**
@@ -42,7 +43,7 @@ export async function getAllRecipes() {
  * @async
  */
 export async function getAllRecipeID() {
-  return await getAllRecipeIDDatabase();
+    return await getAllRecipeIDDatabase();
 }
 
 /**
@@ -51,7 +52,7 @@ export async function getAllRecipeID() {
  * @returns {RecipeObject} an object contain all recipes, null when contain nothing
  */
 export async function getFavoriteRecipes() {
-  return await getFavoritedRecipesDatabase();
+    return await getFavoritedRecipesDatabase();
 }
 
 /**
@@ -61,7 +62,7 @@ export async function getFavoriteRecipes() {
  * @returns {Boolean} true-> favorited, false -> not favorited
  */
 export async function isFavorite(id) {
-  return await isFavoritedDatabase(id);
+    return await isFavoritedDatabase(id);
 }
 
 /**
@@ -71,7 +72,7 @@ export async function isFavorite(id) {
  * @returns {recipeObj} recipeObj when successful, null unsuccessful
  */
 export async function addFavoriteRecipe(id) {
-  return await addFavoriteRecipeDatabase(id);
+    return await addFavoriteRecipeDatabase(id);
 }
 
 /**
@@ -81,7 +82,7 @@ export async function addFavoriteRecipe(id) {
  * @returns {Boolean} true if the operation was successful, false if it was not
  */
 export async function deleteFavoriteRecipe(id) {
-  return await deleteFavoriteRecipeDatabase(id);
+    return await deleteFavoriteRecipeDatabase(id);
 }
 
 /**
@@ -90,7 +91,7 @@ export async function deleteFavoriteRecipe(id) {
  * @returns {recipeObj} object containnin all user craeted recipes
  */
 export async function getUserRecipes() {
-  return await getUserAllCreatedRecipesDatabase();
+    return await getUserAllCreatedRecipesDatabase();
 }
 
 /**
@@ -105,7 +106,7 @@ export async function getUserRecipes() {
  * does not exist, returns null
  */
 export async function readRecipe(id) {
-  return await readRecipeDatabase(id);
+    return await readRecipeDatabase(id);
 }
 
 /**
@@ -117,7 +118,7 @@ export async function readRecipe(id) {
  * @returns recipeObj create successful. null create unsuccessful
  */
 export async function createRecipe(newRecipe) {
-  return await createRecipeDatabase(newRecipe);
+    return await createRecipeDatabase(newRecipe);
 }
 
 /**
@@ -128,7 +129,7 @@ export async function createRecipe(newRecipe) {
  * @returns true-> able to delete, false-> unable to delete
  */
 export async function ableToDelete(id) {
-  return await ableToDeleteDatabase(id);
+    return await ableToDeleteDatabase(id);
 }
 
 /**
@@ -140,7 +141,7 @@ export async function ableToDelete(id) {
  * @returns {recipeObj} true if the operation was successful, false otherwise
  */
 export async function deleteRecipe(id) {
-  await deleteRecipeDatabase(id);
+    await deleteRecipeDatabase(id);
 }
 
 /**
@@ -150,7 +151,7 @@ export async function deleteRecipe(id) {
  * @returns ture -> able to publish, false ->unable to publish
  */
 export async function ableToPublish(recipeid) {
-  return await ableToPublishDatabase(recipeid);
+    return await ableToPublishDatabase(recipeid);
 }
 
 /**
@@ -161,7 +162,7 @@ export async function ableToPublish(recipeid) {
  * @returns recipeObj successful, null -> unsuccessful
  */
 export async function publishRecipe(newRecipe) {
-  return await publishRecipeDatabase(newRecipe);
+    return await publishRecipeDatabase(newRecipe);
 }
 
 /**
@@ -172,7 +173,7 @@ export async function publishRecipe(newRecipe) {
  * @returns recipe Obj if updates is successful, null if unsuccessful
  */
 export async function updateRecipe(newRecipe) {
-  return await updateRecipeDatabase(newRecipe);
+    return await updateRecipeDatabase(newRecipe);
 }
 
 /**
@@ -183,64 +184,64 @@ export async function updateRecipe(newRecipe) {
  * @returns An array of recipeObjects that matches the search parameters
  */
 export async function search(searchQuery, tags) {
-  // Ignore recipe if query matches less than this percent of title
-  const MIN_MATCHING_THRESHOLD = 0.5;
-  const allRecipes = await getAllRecipes();
-  const query = searchQuery.toLowerCase();
-  const tokenizedQuery = [...new Set(query.trim().split(/\s+/))]; // regex matches one or more spaces
-  const minNumMatchingTokens = Math.ceil(tokenizedQuery.length * MIN_MATCHING_THRESHOLD);
+    // Ignore recipe if query matches less than this percent of title
+    const MIN_MATCHING_THRESHOLD = 0.5;
+    const allRecipes = await getAllRecipes();
+    const query = searchQuery.toLowerCase();
+    const tokenizedQuery = [...new Set(query.trim().split(/\s+/))]; // regex matches one or more spaces
+    const minNumMatchingTokens = Math.ceil(tokenizedQuery.length * MIN_MATCHING_THRESHOLD);
 
-  let searchResults = [];
+    let searchResults = [];
 
-  for (let i = 0; i < allRecipes.length; i += 1) {
-    const recipe = allRecipes[i];
-    let recipeMatches = true;
-    try {
-      // Check that recipe matches tags, reject if it doesn't
-      tags.forEach((tag) => {
-        if (!recipe[`${tag}`]) {
-          recipeMatches = false;
+    for (let i = 0; i < allRecipes.length; i += 1) {
+        const recipe = allRecipes[i];
+        let recipeMatches = true;
+        try {
+            // Check that recipe matches tags, reject if it doesn't
+            tags.forEach((tag) => {
+                if (!recipe[`${tag}`]) {
+                    recipeMatches = false;
+                }
+            });
+
+            // Create a search score for the title
+            let numMatchingTokens = 0;
+            let mostRecentMatch = tokenizedQuery.length;
+            let numMatchingCharacters = 0;
+            let searchScore = 0;
+            const { title } = recipe;
+            if (title) {
+                for (let j = tokenizedQuery.length - 1; j >= 0; j -= 1) {
+                    if (title.toLowerCase().includes(tokenizedQuery[j])) {
+                        numMatchingTokens += 1;
+                        mostRecentMatch = j;
+                        numMatchingCharacters += tokenizedQuery[j].length;
+                    }
+                }
+                // 1st: pick titles with more matching tokens over less matching tokens
+                // 2nd: pick titles that match with the first tokens in the search query
+                // 3rd: pick titles which have a large percentage of charaters that match with query
+                searchScore = numMatchingTokens * (tokenizedQuery.length ** 2) +
+                    (tokenizedQuery.length - mostRecentMatch - 1) * tokenizedQuery.length +
+                    (numMatchingCharacters / title.length) * tokenizedQuery.length;
+            }
+            if (numMatchingTokens < minNumMatchingTokens) {
+                recipeMatches = false;
+            }
+
+            if (recipeMatches) {
+                searchResults.push({ recipe, score: searchScore });
+            }
+        } catch (e) {
+            // remove recipe from results if an error thrown
+            if (searchResults.some((a) => a.recipe === recipe)) {
+                searchResults = searchResults.filter((a) => a.recipe !== recipe);
+            }
         }
-      });
-
-      // Create a search score for the title
-      let numMatchingTokens = 0;
-      let mostRecentMatch = tokenizedQuery.length;
-      let numMatchingCharacters = 0;
-      let searchScore = 0;
-      const { title } = recipe;
-      if (title) {
-        for (let j = tokenizedQuery.length - 1; j >= 0; j -= 1) {
-          if (title.toLowerCase().includes(tokenizedQuery[j])) {
-            numMatchingTokens += 1;
-            mostRecentMatch = j;
-            numMatchingCharacters += tokenizedQuery[j].length;
-          }
-        }
-        // 1st: pick titles with more matching tokens over less matching tokens
-        // 2nd: pick titles that match with the first tokens in the search query
-        // 3rd: pick titles which have a large percentage of charaters that match with query
-        searchScore = numMatchingTokens * (tokenizedQuery.length ** 2)
-                    + (tokenizedQuery.length - mostRecentMatch - 1) * tokenizedQuery.length
-                    + (numMatchingCharacters / title.length) * tokenizedQuery.length;
-      }
-      if (numMatchingTokens < minNumMatchingTokens) {
-        recipeMatches = false;
-      }
-
-      if (recipeMatches) {
-        searchResults.push({ recipe, score: searchScore });
-      }
-    } catch (e) {
-      // remove recipe from results if an error thrown
-      if (searchResults.some((a) => a.recipe === recipe)) {
-        searchResults = searchResults.filter((a) => a.recipe !== recipe);
-      }
     }
-  }
-  searchResults.sort((a, b) => b.score - a.score); // put a before b if a.score > b.score
+    searchResults.sort((a, b) => b.score - a.score); // put a before b if a.score > b.score
 
-  return searchResults.map((a) => a.recipe);
+    return searchResults.map((a) => a.recipe);
 }
 
 /**
@@ -249,16 +250,39 @@ export async function search(searchQuery, tags) {
  * @returns {Boolean} true if the string is a link
  */
 export function validURL(str) {
-  const pattern = new RegExp(
-    '^(https?:\\/\\/)?' // protocol
-        + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' // domain name
-        + '((\\d{1,3}\\.){3}\\d{1,3}))' // OR ip (v4) address
-        + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
-        + '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
-        + '(\\#[-a-z\\d_]*)?$',
-    'i',
-  ); // fragment locator
-  return !!pattern.test(str);
+    const pattern = new RegExp(
+        '^(https?:\\/\\/)?' // protocol
+        +
+        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' // domain name
+        +
+        '((\\d{1,3}\\.){3}\\d{1,3}))' // OR ip (v4) address
+        +
+        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
+        +
+        '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
+        +
+        '(\\#[-a-z\\d_]*)?$',
+        'i',
+    ); // fragment locator
+    return !!pattern.test(str);
+}
+
+/**
+ * A helper function to purify potential HTML
+ * @param {String} dirty dirty code
+ * @returns {String} purified code
+ */
+export function purifyDOM(dirty) {
+    return DOMPurify.sanitize(dirty, { ALLOWED_TAGS: [] });
+}
+
+/**
+ * A helper function to remove whitespace
+ * @param {String} dirty dirty inputs
+ * @returns {String} whitespaced stripped text
+ */
+export function whitespaceTrimmer(dirty) {
+    return dirty.replace(/\s+/g, ' ').trim();
 }
 
 /**
@@ -267,23 +291,51 @@ export function validURL(str) {
  * @returns {Object} object containing values for if the form is valid, and error messages otherwise
  */
 export function validateForm(recipe) {
-  if (recipe.title === '' || recipe.summary === '') {
-    return { valid: false, errorMessage: 'Title is empty' };
-  }
-  if (recipe.summary === '') {
-    return { valid: false, errorMessage: 'Summary is empty' };
-  }
-  if (recipe.servings === '') {
-    return { valid: false, errorMessage: 'Servings field is empty' };
-  }
-  if (recipe.readyInMinutes === '') {
-    return { valid: false, errorMessage: 'Time field is empty' };
-  }
-  if (recipe.image !== '' && !validURL(recipe.image)) {
-    return { valid: false, errorMessage: 'Image is not a valid link' };
-  }
+    if (!recipe.title || recipe.title === '' || /\d/.test(recipe.title)) {
+        return { valid: false, errorMessage: 'Title is invalid' };
+    }
+    if (!recipe.summary || recipe.summary === '') {
+        return { valid: false, errorMessage: 'Summary is invalid' };
+    }
+    if (!recipe.servings || recipe.servings === '' || Number.isNaN(recipe.servings)) {
+        return { valid: false, errorMessage: 'Servings field is invalid' };
+    }
+    if (!recipe.readyInMinutes || recipe.readyInMinutes === '' ||
+        Number.isNaN(recipe.readyInMinutes)) {
+        return { valid: false, errorMessage: 'Time field is invalid' };
+    }
+    if (recipe.image !== '' && !validURL(recipe.image)) {
+        return { valid: false, errorMessage: 'Image is not a valid link' };
+    }
+    if (!recipe.ingredients || recipe.ingredients.length === 0) {
+        return { valid: false, errorMessage: 'Must have at least 1 ingredient' };
+    }
 
-  return { valid: true, errorMessage: '' };
+    let index = 0;
+    for (index = 0; index < recipe.ingredients.length; index += 1) {
+        const ingredient = recipe.ingredients[index];
+        if (!ingredient.amount || ingredient.amount === '' || Number.isNaN(ingredient.amount)) {
+            return { valid: false, errorMessage: `Ingredient ${index + 1} amount is not valid` };
+        }
+        if (!ingredient.name || ingredient.name.length === 0 || /\d/.test(ingredient.name)) {
+            return { valid: false, errorMessage: `Ingredient ${index + 1} name is not valid` };
+        }
+        if (!ingredient.unit || ingredient.unit.length === 0 || /\d/.test(ingredient.unit)) {
+            return { valid: false, errorMessage: `Ingredient ${index + 1} unit is not valid` };
+        }
+    }
+
+    if (!recipe.steps || recipe.steps.length === 0) {
+        return { valid: false, errorMessage: 'Must have at least 1 step' };
+    }
+    for (index = 0; index < recipe.steps.length; index += 1) {
+        const step = recipe.steps[index];
+        if (!step || step.length === 0) {
+            return { valid: false, errorMessage: `Step ${index + 1} cannot be empty` };
+        }
+    }
+
+    return { valid: true, errorMessage: '' };
 }
 
 /**
@@ -292,19 +344,86 @@ export function validateForm(recipe) {
  * @returns {Object} recipe object without unneeded steps and ingredients
  */
 export function trimRecipe(recipe) {
-  const adjustedRecipe = recipe;
+    const adjustedRecipe = recipe;
 
-  const recipeIngredients = recipe.ingredients.filter(
-    (ing) => ing.name !== '' && ing.amount !== '',
-  );
-  const recipeSteps = recipe.steps.filter((s) => s.step !== '');
+    const recipeIngredients = recipe.ingredients.filter(
+        (ing) => ing.name !== '' && ing.amount !== '',
+    );
+    const recipeSteps = recipe.steps.filter((s) => s.step !== '');
 
-  adjustedRecipe.ingredients = recipeIngredients;
-  adjustedRecipe.steps = recipeSteps;
+    adjustedRecipe.ingredients = recipeIngredients;
+    adjustedRecipe.steps = recipeSteps;
 
-  // add default image if field is blank
-  if (adjustedRecipe.image === '') {
-    adjustedRecipe.image = 'https://media.istockphoto.com/photos/white-plate-wooden-table-tablecloth-rustic-wooden-clean-copy-freepik-picture-id1170315961?k=20&m=1170315961&s=612x612&w=0&h=nCCDMyt_1sMF3PdDurLw2pcTPgu7YBzjCaZO6z78CxE=';
-  }
-  return adjustedRecipe;
+    // add default image if field is blank
+    if (adjustedRecipe.image === '') {
+        adjustedRecipe.image = 'https://media.istockphoto.com/photos/white-plate-wooden-table-tablecloth-rustic-wooden-clean-copy-freepik-picture-id1170315961?k=20&m=1170315961&s=612x612&w=0&h=nCCDMyt_1sMF3PdDurLw2pcTPgu7YBzjCaZO6z78CxE=';
+    }
+    return adjustedRecipe;
+}
+
+async function parseRecipe(baseRecipe) {
+    const scrapedRecipe = baseRecipe;
+    const minutesToPrepare = scrapedRecipe.readyInMinutes;
+    const numIngredients = scrapedRecipe.extendedIngredients.length;
+
+    const numSteps = scrapedRecipe.analyzedInstructions[0].steps.length;
+    const isEasy = numSteps <= 5 && numIngredients <= 5 && minutesToPrepare <= 60;
+
+    const parsedRecipe = {};
+    parsedRecipe.id = createId();
+    parsedRecipe.title = scrapedRecipe.title;
+    parsedRecipe.readyInMinutes = scrapedRecipe.readyInMinutes;
+    parsedRecipe.servings = scrapedRecipe.servings;
+    parsedRecipe.image = scrapedRecipe.image;
+    parsedRecipe.uploader = 'From the Internet';
+    parsedRecipe.isFromInternet = true;
+    parsedRecipe.vegetarian = scrapedRecipe.vegetarian;
+    parsedRecipe.vegan = scrapedRecipe.vegan;
+    parsedRecipe.cheap = scrapedRecipe.cheap;
+    parsedRecipe.glutenFree = scrapedRecipe.glutenFree;
+    parsedRecipe.dairyFree = scrapedRecipe.dairyFree;
+    parsedRecipe.quickEat = minutesToPrepare > 30;
+    parsedRecipe.fiveIngredientsOrLess = numIngredients <= 5;
+    parsedRecipe.easyCook = isEasy;
+
+    parsedRecipe.ingredients = [];
+
+    const scrapedIngredients = scrapedRecipe.extendedIngredients;
+
+    for (let i = 0; i < scrapedIngredients.length; i += 1) {
+        const currIngredient = {};
+        currIngredient.name = scrapedIngredients[i].nameClean;
+        currIngredient.amount = scrapedIngredients[i].amount;
+        currIngredient.unit = scrapedIngredients[i].unit;
+
+        parsedRecipe.ingredients.push(currIngredient);
+    }
+
+    parsedRecipe.summary = scrapedRecipe.summary;
+    const scrapedSteps = scrapedRecipe.analyzedInstructions[0].steps;
+
+    parsedRecipe.steps = [];
+
+    for (let i = 0; i < scrapedSteps.length; i += 1) {
+        const currStep = {};
+
+        currStep.number = scrapedSteps[i].number;
+        currStep.step = scrapedSteps[i].step;
+
+        parsedRecipe.steps.push(currStep);
+    }
+    return parsedRecipe;
+}
+
+export async function getRecipeByUrl(url) {
+    const requestUrl = `https://api.spoonacular.com/recipes/extract?url=${url}&apiKey=${SPOONACULAR_API_KEY}`;
+    const response = await fetch(requestUrl);
+    const json = await response.json();
+    // parse response into our format
+    const recipe = await parseRecipe(json);
+    if (await createRecipe(recipe)) {
+        return recipe.id;
+    }
+
+    return false;
 }

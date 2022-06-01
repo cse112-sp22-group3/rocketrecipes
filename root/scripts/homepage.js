@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/extensions
-import { syncWithDatabaseUser, getAllRecipeID, getOneRecipe } from './utils.js';
+import { getAllRecipeID, readRecipe } from './utils.js';
 
 let allRecipeIDS = {};
 
@@ -11,7 +11,7 @@ async function createRecommendedRecipes() {
 
     for (let i = 0; i < numRecipes; i += 1) {
         const recipeCard = document.createElement('recipe-card');
-        const recipeData = await getOneRecipe(allRecipeIDS[randomNumber + i]);
+        const recipeData = await readRecipe(allRecipeIDS[randomNumber + i]);
         recipeCard.data = recipeData;
 
         recommendedRecipeContainer.appendChild(recipeCard);
@@ -19,7 +19,6 @@ async function createRecommendedRecipes() {
 }
 
 async function init() {
-    await syncWithDatabaseUser();
     allRecipeIDS = await getAllRecipeID();
 
     await createRecommendedRecipes();

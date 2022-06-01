@@ -7,8 +7,9 @@ import {
     deleteFavoriteRecipe,
     getAllRecipeID,
     deleteRecipe,
-    syncWithDatabaseUser,
-    getOneRecipe,
+    ableToPublish,
+    publishRecipe,
+    ableToDelete
 } from './utils.js';
 
 // holds recipes from localStorage
@@ -111,7 +112,7 @@ async function createRecommendedRecipes() {
         // if current id does not match random recipe id, create recipe card
         if (recipeId !== curRecipeID) {
             const recipeCard = document.createElement('recipe-card');
-            recipeCard.data = await getOneRecipe(curRecipeID);
+            recipeCard.data = await readRecipe(curRecipeID);
             recommendedRecipeContainer.appendChild(recipeCard);
             numReccRecipes += 1;
         }
@@ -140,7 +141,6 @@ async function scaleIngredients() {
 }
 
 async function init() {
-    await syncWithDatabaseUser();
     const queryString = window.location.search;
 
     const searchParams = new URLSearchParams(queryString);
@@ -161,7 +161,7 @@ async function init() {
 
     const shareButton = document.getElementById('shareButton');
     const printSoloButton = document.getElementById('print-solo');
-    if (currentRecipe != null && currentRecipe.isFromInternet) {
+    if (currentRecipe != null) {
         // show share buttons
         shareButton.style.display = 'block';
         printSoloButton.style.display = 'none';
@@ -173,23 +173,37 @@ async function init() {
     }
 
     const deleteButton = document.getElementById('deleteButton');
-    deleteButton.addEventListener('click', async() => {
-        await deleteRecipe(recipeId);
-        window.location = `${window.location.origin}/root/html/index.html`;
-    });
+    if (await ableToDelete(recipeId)) {
+        deleteButton.addEventListener('click', async() => {
+            await deleteRecipe(recipeId);
+            window.location = `${window.location.origin}/root/html/index.html`;
+        });
+    } else {
+        deleteButton.style.display = 'none';
+    }
+
+
+    const publishButton = document.getElementById('publishButton');
+    if (await ableToPublish(recipeId)) {
+        publishButton.addEventListener('click', async() => {
+            publishRecipe(recipeId);
+            location.reload();
+        });
+    } else {
+        publishButton.style.display = 'none';
+    }
 
     const editRecipeButton = document.getElementById('editButton');
-
     editRecipeButton.addEventListener('click', () => {
         const currentUrl = window.location;
         window.location = `${currentUrl.origin}/root/html/editRecipe.html?id=${recipeId}`;
     });
 
-    shareButton.addEventListener('click', () => {
+    shareButton.addEventListener('click', async() => {
         const isShown = document.getElementById('shareContainer').style.display !== 'none';
         if (isShown) {
             document.getElementById('shareContainer').style.display = 'none';
-            deleteFavoriteRecipe(recipeId);
+            await deleteFavoriteRecipe(recipeId);
         } else {
             document.getElementById('shareContainer').style.display = 'flex';
         }
@@ -217,7 +231,7 @@ async function init() {
         await createRecommendedRecipes();
     }
     const button = document.querySelector('#fav-icon');
-    let isFav = isFavorite(recipeId);
+    let isFav = await isFavorite(recipeId);
     const outlinedStar = "background: url('https://api.iconify.design/ant-design/star-outlined.svg?color=%23c4c4c4&height=48') no-repeat center center / contain;";
     const filledStar = "background: url('https://api.iconify.design/ant-design/star-filled.svg?color=%23ffc700&height=48') no-repeat center center / contain;";
 
@@ -225,13 +239,13 @@ async function init() {
         // change icons based on favorite
         // filled in star, set style to: background: url('https://api.iconify.design/ant-design/star-filled.svg?color=%23ffc700&height=48') no-repeat center center / contain;
         // outlined star: set stye to background: url('https://api.iconify.design/ant-design/star-outlined.svg?color=%23c4c4c4&height=48') no-repeat center center / contain;
-        isFav = isFavorite(recipeId);
+        isFav = await isFavorite(recipeId);
         if (isFav) {
             button.style = outlinedStar;
-            deleteFavoriteRecipe(recipeId);
+            await deleteFavoriteRecipe(recipeId);
         } else {
             button.style = filledStar;
-            addFavoriteRecipe(recipeId);
+            await addFavoriteRecipe(recipeId);
         }
     });
     // not favorited, user clicks

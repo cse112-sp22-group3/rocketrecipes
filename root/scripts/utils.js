@@ -1,6 +1,9 @@
 /** @module utils */
 /* global DOMPurify */
 /* eslint-disable no-mixed-operators */
+/* eslint-disable no-return-await */
+/* eslint-disable import/extensions */
+/* eslint-disable no-restricted-syntax */
 import {
   getAllRecipesDatabase,
   getAllRecipeIDDatabase,
@@ -16,7 +19,10 @@ import {
   isFavoritedDatabase,
   deleteRecipeDatabase,
   createRecipeDatabase,
+  createId,
 } from './database.js';
+
+const SPOONACULAR_API_KEY = 'c6ae2142af6b40ba99198aa307725180';
 
 /**
  * This function gets an array of all recipes from database.
@@ -27,10 +33,11 @@ export async function getAllRecipes() {
   const allRecipes = await getAllRecipesDatabase();
   const tempArr = [];
 
-  // retrive all recipes from fireabse realtime datasbase put them into an array, since other functions calling it assuming recipes are stored in an array
-  Object.entries(allRecipes).forEach(([key, value]) => {
+  // retrive all recipes from fireabse realtime datasbase put them into an array,
+  // since other functions calling it assuming recipes are stored in an array
+  for (const value of Object.values(allRecipes)) {
     tempArr.push(value);
-  });
+  }
 
   return tempArr;
 }
@@ -113,7 +120,8 @@ export async function readRecipe(id) {
  * Creates the given recipe object
  * create recipes based on user, therefore, user actually owns the recipe.
  * In order to publish a recipe(push to whole database), has to use publish recipe method
- * does not assume the newRecipe object already has an unique id, meaning use generatekey() function to get an unique id.
+ * does not assume the newRecipe object already has an unique id,
+ * meaning use generatekey() function to get an unique id.
  * @param {recipeObj} newRecipe - the recipe to be created
  * @returns recipeObj create successful. null create unsuccessful
  */
@@ -134,7 +142,8 @@ export async function ableToDelete(id) {
 
 /**
  * Delete a recipe when the recipe belongs to the user.
- * if user is logged in, and recipe is user created, it will delete recipe from user created recipes list and from the whole database if it exists.
+ * if user is logged in, and recipe is user created,
+ * it will delete recipe from user created recipes list and from the whole database if it exists.
  * if user is logged in, and recipe is not user created, delete button would not work.
  * if user not logged in, it will only delte at local storage.
  * @param {recipeId} id of the recipe to be deleted
@@ -145,7 +154,8 @@ export async function deleteRecipe(id) {
 }
 
 /**
- * if the recipe id is ownber by the user and recipeid does not present in the whole database, that means it is able to be published.
+ * if the recipe id is ownber by the user and recipeid does not present in the whole database,
+ * that means it is able to be published.
  * always return false if the user is not logged in.
  * @param {recipdid} recipeid
  * @returns ture -> able to publish, false ->unable to publish
@@ -168,7 +178,8 @@ export async function publishRecipe(newRecipe) {
 /**
  * @async
  * updates the contents of recipe into paramenter newRecipe from user created recipes.
- * update recipe is only called when editing page, therefore, update the whole database if the same recipe if presented.
+ * update recipe is only called when editing page, therefore,
+ * update the whole database if the same recipe if presented.
  * @param {recipeObj} newRecipe - the recipe whose contents will be updated
  * @returns recipe Obj if updates is successful, null if unsuccessful
  */

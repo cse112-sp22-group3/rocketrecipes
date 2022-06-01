@@ -1,5 +1,6 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable import/named */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-globals */
 /* eslint-disable import/extensions */
 import {
   readRecipe,

@@ -4,6 +4,9 @@ import {
   createRecipe,
   validateForm,
   trimRecipe,
+  purifyDOM,
+  whitespaceTrimmer,
+  getRecipeByUrl,
 } from './utils.js';
 import { createId } from './database.js';
 /* eslint-disable prefer-destructuring */

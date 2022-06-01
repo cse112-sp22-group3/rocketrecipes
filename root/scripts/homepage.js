@@ -1,4 +1,6 @@
-// eslint-disable-next-line import/extensions
+/* eslint-disable import/extensions */
+/* eslint-disable no-return-await */
+/* eslint-disable no-await-in-loop */
 import { getAllRecipeID, readRecipe } from './utils.js';
 
 let allRecipeIDS = {};

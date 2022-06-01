@@ -1,4 +1,6 @@
 /* eslint-disable import/extensions */
+/* eslint-disable no-restricted-syntax */
+
 import {
   getUserRecipes,
   getFavoriteRecipes,
@@ -9,10 +11,11 @@ async function createFavoriteRecipes(favoriteRecipes) {
   Favorite.style.display = 'flex';
   Favorite.style.maxWidth = '100%';
   Favorite.style.flexWrap = 'wrap';
+
   if (favoriteRecipes !== null) {
-    for (const key in favoriteRecipes) {
+    for (const value of Object.values(favoriteRecipes)) {
       const recipeCard = document.createElement('recipe-card');
-      recipeCard.data = favoriteRecipes[key];
+      recipeCard.data = value;
       Favorite.appendChild(recipeCard);
     }
   }
@@ -25,9 +28,9 @@ async function createMyRecipes(userRecipes) {
   foodList.style.flexWrap = 'wrap';
 
   if (userRecipes !== null) {
-    for (const key in userRecipes) {
+    for (const value of Object.values(userRecipes).keys) {
       const recipeCard = document.createElement('recipe-card');
-      recipeCard.data = userRecipes[key];
+      recipeCard.data = value;
       foodList.appendChild(recipeCard);
     }
   }

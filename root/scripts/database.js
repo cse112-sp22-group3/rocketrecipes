@@ -1,4 +1,8 @@
 /** @module database */
+/* eslint-disable  no-return-await */
+/* eslint-disable  no-restricted-syntax */
+/* eslint-disable  no-await-in-loop */
+
 const AUTH = '?auth=DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
 const LOCAL_STORAGE_USER_KEY = 'uuid';
 const LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY = 'allRecipesKeys';
@@ -130,7 +134,10 @@ async function getUserFavoritedRecipe(id) {
  * @returns {allRecieps} Object
  */
 async function getUserAllFavoritedRecipes() {
-  const allRrecipes = await fetch(FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_RECIPES + AUTH).then((response) => response.json());
+  const allRrecipes = await fetch(FIREBASE_DATABASE_USER
+            + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+            + USER_FAVORITED_RECIPES + AUTH)
+    .then((response) => response.json());
   return allRrecipes;
 }
 
@@ -165,7 +172,8 @@ async function getDatabaseRecipe(id) {
  * @returns {promise}
  */
 async function deleteDatabaseRecipe(id) {
-  return await deleteData(`${SINGLE_RECIPE + id}.json${AUTH}`);
+  const response = await deleteData(`${SINGLE_RECIPE + id}.json${AUTH}`);
+  return response;
 }
 
 export async function getAllRecipesDatabase() {
@@ -181,9 +189,9 @@ export async function getAllRecipeIDDatabase() {
 
   const fetchedRecipes = await getAllRecipesDatabase();
   const recipeIDArr = [];
-  Object.entries(fetchedRecipes).forEach(([key, value]) => {
+  for (const key of Object.keys(fetchedRecipes)) {
     recipeIDArr.push(key);
-  });
+  }
 
   try {
     localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY, JSON.stringify(recipeIDArr));
@@ -261,7 +269,8 @@ export async function readRecipeDatabase(recipeID) {
       return userCreatedLocal[recipeID];
     }
   }
-  // when user if not logged in or when recipe does not exist in userCreatedRecipe or userFavoritedRecipe
+  // when user if not logged in or
+  // when recipe does not exist in userCreatedRecipe or userFavoritedRecipe
   const recipe = await getDatabaseRecipe(recipeID);
   return recipe;
 }
@@ -277,7 +286,8 @@ export async function addFavoriteRecipeDatabase(id) {
   if (recipe === null) { return null; }
 
   if (isUserLoggedIn()) {
-    return await putUserFavoriteRecipe(recipe);
+    const response = await putUserFavoriteRecipe(recipe);
+    return response;
   }
   if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
     const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
@@ -289,8 +299,6 @@ export async function addFavoriteRecipeDatabase(id) {
   tempObj[id] = recipe;
   localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(tempObj));
   return recipe;
-
-  return null;
 }
 
 /**
@@ -376,26 +384,29 @@ async function generateKey(userGeneratedID) {
  * Creates the given recipe object
  * create recipes based on user, therefore, user actually owns the recipe.
  * In order to publish a recipe(push to whole database), has to use publish recipe method
- * does not assume the newRecipe object already has an unique id, meaning use generatekey() function to get an unique id.
+ * does not assume the newRecipe object already has an unique id,
+ * meaning use generatekey() function to get an unique id.
  * @param {recipeObj} newRecipe - the recipe to be created
  * @returns recipeObj create successful. null create unsuccessful
  */
 export async function createRecipeDatabase(newRecipe) {
   const id = await generateKey(newRecipe.id);
-  newRecipe.id = id;
+  const newRecipe2 = JSON.parse(JSON.stringify(newRecipe));
+  newRecipe2.id = id;
   if (isUserLoggedIn()) {
-    return await putUserCreatedRecipe(newRecipe);
+    const response = await putUserCreatedRecipe(newRecipe2);
+    return response;
   }
   if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) !== null) {
     const myRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
-    myRecipes[newRecipe.id] = newRecipe;
+    myRecipes[newRecipe2.id] = newRecipe2;
     localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(myRecipes));
-    return newRecipe;
+    return newRecipe2;
   }
   const tempObj = {};
-  tempObj[newRecipe.id] = newRecipe;
+  tempObj[newRecipe2.id] = newRecipe2;
   localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(tempObj));
-  return newRecipe;
+  return newRecipe2;
 }
 
 /**
@@ -422,7 +433,8 @@ export async function ableToDeleteDatabase(id) {
 
 /**
  * Delete a recipe when the recipe belongs to the user.
- * if user is logged in, and recipe is user created, it will delete recipe from user created recipes list and from the whole database if it exists.
+ * if user is logged in, and recipe is user created,
+ * it will delete recipe from user created recipes list and from the whole database if it exists.
  * if user is logged in, and recipe is not user created, delete button would not work.
  * if user not logged in, it will only delte at local storage.
  * @param {recipeId} id of the recipe to be deleted
@@ -447,7 +459,8 @@ export async function deleteRecipeDatabase(id) {
 }
 
 /**
- * if the recipe id is ownber by the user and recipeid does not present in the whole database, that means it is able to be published.
+ * if the recipe id is ownber by the user and recipeid does not present in the whole database,
+ * that means it is able to be published.
  * always return false if the user is not logged in.
  * @param {recipdid} recipeid
  * @returns ture -> able to publish, false ->unable to publish
@@ -470,40 +483,47 @@ export async function ableToPublishDatabase(recipeid) {
  */
 export async function publishRecipeDatabase(newRecipe) {
   if (isUserLoggedIn()) {
-    return await putDatabaseRecipe(newRecipe);
+    const response = await putDatabaseRecipe(newRecipe);
+    return response;
   }
   return null;
 }
 
 /**
  * updates the contents of recipe into paramenter newRecipe from user created recipes.
- * update recipe is only called when editing page, therefore, update the whole database if the same recipe if presented.
+ * update recipe is only called when editing page, therefore,
+ * update the whole database if the same recipe if presented.
  * @param {recipeObj} newRecipe - the recipe whose contents will be updated
  * @returns recipe Obj if updates is successful, null if unsuccessful
  */
 export async function updateRecipeDatabase(newRecipe) {
+  const newRecipe2 = JSON.parse(JSON.stringify(newRecipe));
   if (isUserLoggedIn()) {
-    const duplicateRecipe = await getUserCreatedRecipe(newRecipe.id);
-    if (duplicateRecipe !== null) { await putUserCreatedRecipe(newRecipe); } // overwrite duplicate recipes
-    else {
+    const duplicateRecipe = await getUserCreatedRecipe(newRecipe2.id);
+    if (duplicateRecipe !== null) {
+      await putUserCreatedRecipe(newRecipe2);
+    } else { // overwrite duplicate recipes
       // no dulicate must not present in whole database
-      const generatedID = await generateKey(newRecipe.id);
-      newRecipe.id = generatedID;
-      return await putUserCreatedRecipe(newRecipe);
+      const generatedID = await generateKey(newRecipe2.id);
+      newRecipe2.id = generatedID;
+      return await putUserCreatedRecipe(newRecipe2);
     }
-    // check for if the recipe is in the big database(the user publish the recipe to the whole database, meaning the recipe is owned by one user), update if it exists
-    const databaseDuplicate = getDatabaseRecipe(newRecipe.id);
+    // check for if the recipe is in the big database
+    // the user publish the recipe to the whole database,
+    // meaning the recipe is owned by one user
+    // update if it exists
+    const databaseDuplicate = getDatabaseRecipe(newRecipe2.id);
     if (databaseDuplicate !== null) {
-      return await putDatabaseRecipe(newRecipe);
+      return await putDatabaseRecipe(newRecipe2);
     }
   } else {
     // update only at locally created when not logged in, do not sync with whole database
     if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) !== null) {
       const myRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
       // when the new recipe already exists in local storage
-      myRecipes[newRecipe.id] = newRecipe;
+      myRecipes[newRecipe2.id] = newRecipe2;
       localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(myRecipes));
-      return newRecipe;
+      return newRecipe2;
     }
     return null;
   }

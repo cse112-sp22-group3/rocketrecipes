@@ -1,6 +1,7 @@
+/* eslint-disable no-alert */
 /* eslint-disable import/extensions */
 import {
-  getAllRecipes, createRecipe, createId, validateForm, trimRecipe, purifyDOM, whitespaceTrimmer,
+  getAllRecipes, createRecipe, createId, validateForm, trimRecipe, purifyDOM, whitespaceTrimmer, getRecipeByUrl,
 } from './utils.js';
 /* eslint-disable prefer-destructuring */
 
@@ -64,6 +65,28 @@ function deleteIng() {
   amountStep.remove();
 }
 
+async function createRecipeByUrl() {
+  const urlText = document.getElementById('urlText').value;
+  const regex = /^(ftp|http|https):\/\/[^ "]+$/;
+
+  const validUrl = regex.test(urlText);
+
+  if (!validUrl) {
+    alert('Please enter a valid website URL');
+  } else {
+    try {
+      const id = await getRecipeByUrl(document.getElementById('urlText').value);
+
+      if (id) {
+        window.location = `${window.location.origin}/root/html/RecipePage.html?id=${id}`;
+      }
+    } catch (e) {
+      alert('Error: Please try again with a different recipe.');
+    }
+  }
+  document.getElementById('urlText').value = '';
+}
+
 async function init() {
   const addIngredient = document.getElementById('addIngredient');
   addIngredient.addEventListener('click', addIng);
@@ -76,6 +99,9 @@ async function init() {
 
   const deleteButton = document.getElementById('Delete');
   deleteButton.addEventListener('click', deleteStep);
+
+  const urlButton = document.getElementById('urlButton');
+  urlButton.addEventListener('click', createRecipeByUrl);
 
   await getAllRecipes();
   document.getElementById('Create').addEventListener('click', async () => {

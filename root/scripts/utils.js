@@ -6,6 +6,7 @@ const COMMUNITY_QUARTER_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-f
 const COMMUNITY_TENTH_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_10.json';
 const LOCAL_STORAGE_ALL_RECIPES_KEY = 'allRecipes';
 const LOCAL_STORAGE_FAVORITED_RECIPES_KEY = 'favoritedRecipes';
+const SPOONACULAR_API_KEY = 'c6ae2142af6b40ba99198aa307725180';
 
 /**
  * @async
@@ -405,4 +406,71 @@ export function trimRecipe(recipe) {
     adjustedRecipe.image = 'https://media.istockphoto.com/photos/white-plate-wooden-table-tablecloth-rustic-wooden-clean-copy-freepik-picture-id1170315961?k=20&m=1170315961&s=612x612&w=0&h=nCCDMyt_1sMF3PdDurLw2pcTPgu7YBzjCaZO6z78CxE=';
   }
   return adjustedRecipe;
+}
+
+async function parseRecipe(baseRecipe) {
+  const scrapedRecipe = baseRecipe;
+  const minutesToPrepare = scrapedRecipe.readyInMinutes;
+  const numIngredients = scrapedRecipe.extendedIngredients.length;
+
+  const numSteps = scrapedRecipe.analyzedInstructions[0].steps.length;
+  const isEasy = numSteps <= 5 && numIngredients <= 5 && minutesToPrepare <= 60;
+
+  const parsedRecipe = {};
+  parsedRecipe.id = createId();
+  parsedRecipe.title = scrapedRecipe.title;
+  parsedRecipe.readyInMinutes = scrapedRecipe.readyInMinutes;
+  parsedRecipe.servings = scrapedRecipe.servings;
+  parsedRecipe.image = scrapedRecipe.image;
+  parsedRecipe.uploader = 'From the Internet';
+  parsedRecipe.isFromInternet = true;
+  parsedRecipe.vegetarian = scrapedRecipe.vegetarian;
+  parsedRecipe.vegan = scrapedRecipe.vegan;
+  parsedRecipe.cheap = scrapedRecipe.cheap;
+  parsedRecipe.glutenFree = scrapedRecipe.glutenFree;
+  parsedRecipe.dairyFree = scrapedRecipe.dairyFree;
+  parsedRecipe.quickEat = minutesToPrepare > 30;
+  parsedRecipe.fiveIngredientsOrLess = numIngredients <= 5;
+  parsedRecipe.easyCook = isEasy;
+
+  parsedRecipe.ingredients = [];
+
+  const scrapedIngredients = scrapedRecipe.extendedIngredients;
+
+  for (let i = 0; i < scrapedIngredients.length; i += 1) {
+    const currIngredient = {};
+    currIngredient.name = scrapedIngredients[i].nameClean;
+    currIngredient.amount = scrapedIngredients[i].amount;
+    currIngredient.unit = scrapedIngredients[i].unit;
+
+    parsedRecipe.ingredients.push(currIngredient);
+  }
+
+  parsedRecipe.summary = scrapedRecipe.summary;
+  const scrapedSteps = scrapedRecipe.analyzedInstructions[0].steps;
+
+  parsedRecipe.steps = [];
+
+  for (let i = 0; i < scrapedSteps.length; i += 1) {
+    const currStep = {};
+
+    currStep.number = scrapedSteps[i].number;
+    currStep.step = scrapedSteps[i].step;
+
+    parsedRecipe.steps.push(currStep);
+  }
+  return parsedRecipe;
+}
+
+export async function getRecipeByUrl(url) {
+  const requestUrl = `https://api.spoonacular.com/recipes/extract?url=${url}&apiKey=${SPOONACULAR_API_KEY}`;
+  const response = await fetch(requestUrl);
+  const json = await response.json();
+  // parse response into our format
+  const recipe = await parseRecipe(json);
+  if (await createRecipe(recipe)) {
+    return recipe.id;
+  }
+
+  return false;
 }

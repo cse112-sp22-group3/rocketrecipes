@@ -10,9 +10,9 @@ async function createFavoriteRecipes(favoriteRecipes) {
   Favorite.style.maxWidth = '100%';
   Favorite.style.flexWrap = 'wrap';
   if (favoriteRecipes !== null) {
-    for (const [key, value] of Object.entries(favoriteRecipes)) {
+    for (const key in favoriteRecipes) {
       const recipeCard = document.createElement('recipe-card');
-      recipeCard.data = value;
+      recipeCard.data = favoriteRecipes[key];
       Favorite.appendChild(recipeCard);
     }
   }
@@ -25,9 +25,9 @@ async function createMyRecipes(userRecipes) {
   foodList.style.flexWrap = 'wrap';
 
   if (userRecipes !== null) {
-    for (const [key, value] of Object.entries(userRecipes)) {
+    for (const key in userRecipes) {
       const recipeCard = document.createElement('recipe-card');
-      recipeCard.data = value;
+      recipeCard.data = userRecipes[key];
       foodList.appendChild(recipeCard);
     }
   }

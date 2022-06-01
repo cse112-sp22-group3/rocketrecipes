@@ -67,7 +67,8 @@ function isUserLoggedIn() {
  * @returns {recipeObject}
  */
 async function putUserCreatedRecipe(recipeObj) {
-  return await putData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
+  const response = await putData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
+  return response;
 }
 
 /**
@@ -84,7 +85,10 @@ async function getUserCreatedRecipe(id) {
  * @returns
  */
 async function getUserAllCreatedRecipes() {
-  const allRecipes = await fetch(FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_RECIPES + AUTH).then((response) => response.json());
+  const allRecipes = await fetch(FIREBASE_DATABASE_USER
+            + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+            + USER_CREATED_RECIPES + AUTH)
+    .then((response) => response.json());
   return allRecipes;
 }
 
@@ -93,7 +97,8 @@ async function getUserAllCreatedRecipes() {
  * @param {} id
  */
 async function deleteUserCreatedRecipe(id) {
-  return await deleteData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + id}.json${AUTH}`);
+  const response = await deleteData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + id}.json${AUTH}`);
+  return response;
 }
 
 /**
@@ -102,7 +107,11 @@ async function deleteUserCreatedRecipe(id) {
  * @returns
  */
 async function putUserFavoriteRecipe(recipeObj) {
-  return await putData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
+  const response = await putData(`${FIREBASE_DATABASE_USER
+      + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+      + USER_FAVORITED_SINGLE_RECIPE
+      + recipeObj.id}.json${AUTH}`, recipeObj);
+  return response;
 }
 
 /**
@@ -130,11 +139,13 @@ async function getUserAllFavoritedRecipes() {
  * @returns
  */
 async function deleteUserFavoriteRecipe(id) {
-  return await deleteData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_SINGLE_RECIPE + id}.json${AUTH}`);
+  const response = await deleteData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_SINGLE_RECIPE + id}.json${AUTH}`);
+  return response;
 }
 
 async function putDatabaseRecipe(recipeObj) {
-  return await putData(`${SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
+  const response = await putData(`${SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
+  return response;
 }
 
 /**
@@ -220,6 +231,38 @@ export async function isFavoritedDatabase(id) {
     }
   }
   return false;
+}
+
+/**
+ * Priority List:
+ * 1. user created recipe
+ * 2. user favorited recipe
+ * 3. database recipe
+ *
+ * @async
+ * @param {recipeID} recipeID id of the recipe
+ * @return {recipeObject} recipeObject corresponding to the id that was passed in. If the recipe
+ * does not exist, returns null
+ */
+export async function readRecipeDatabase(recipeID) {
+  if (isUserLoggedIn()) {
+    const userCreated = await getUserCreatedRecipe(recipeID);
+    if (userCreated !== null) {
+      return userCreated;
+    }
+    const userFavorited = await getUserFavoritedRecipe(recipeID);
+    if (userFavorited !== null) {
+      return userFavorited;
+    }
+  } else {
+    const userCreatedLocal = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
+    if (recipeID in userCreatedLocal) {
+      return userCreatedLocal[recipeID];
+    }
+  }
+  // when user if not logged in or when recipe does not exist in userCreatedRecipe or userFavoritedRecipe
+  const recipe = await getDatabaseRecipe(recipeID);
+  return recipe;
 }
 
 /**
@@ -329,38 +372,6 @@ async function generateKey(userGeneratedID) {
 }
 
 /**
- * Priority List:
- * 1. user created recipe
- * 2. user favorited recipe
- * 3. database recipe
- *
- * @async
- * @param {recipeID} recipeID id of the recipe
- * @return {recipeObject} recipeObject corresponding to the id that was passed in. If the recipe
- * does not exist, returns null
- */
-export async function readRecipeDatabase(recipeID) {
-  if (isUserLoggedIn()) {
-    const userCreated = await getUserCreatedRecipe(recipeID);
-    if (userCreated !== null) {
-      return userCreated;
-    }
-    const userFavorited = await getUserFavoritedRecipe(recipeID);
-    if (userFavorited !== null) {
-      return userFavorited;
-    }
-  } else {
-    const userCreatedLocal = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
-    if (recipeID in userCreatedLocal) {
-      return userCreatedLocal[recipeID];
-    }
-  }
-  // when user if not logged in or when recipe does not exist in userCreatedRecipe or userFavoritedRecipe
-  const recipe = await getDatabaseRecipe(recipeID);
-  return recipe;
-}
-
-/**
  * Creates the given recipe object
  * create recipes based on user, therefore, user actually owns the recipe.
  * In order to publish a recipe(push to whole database), has to use publish recipe method
@@ -375,7 +386,7 @@ export async function createRecipeDatabase(newRecipe) {
     return await putUserCreatedRecipe(newRecipe);
   }
   if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) !== null) {
-    myRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
+    const myRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
     myRecipes[newRecipe.id] = newRecipe;
     localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(myRecipes));
     return newRecipe;
@@ -420,8 +431,8 @@ export async function deleteRecipeDatabase(id) {
   if (isUserLoggedIn()) {
     const userCreatedRecipe = await getUserCreatedRecipe(id);
     if (userCreatedRecipe !== null) {
-      const responseUserRecipes = await deleteUserCreatedRecipe(id);
-      const responeDatabase = await deleteDatabaseRecipe(id); // automically fail when user does not own this reipe
+      await deleteUserCreatedRecipe(id);
+      await deleteDatabaseRecipe(id); // automically fail when user does not own this reipe
       return true;
     }
   } else if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) !== null) {
@@ -493,6 +504,7 @@ export async function updateRecipeDatabase(newRecipe) {
       localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(myRecipes));
       return newRecipe;
     }
+    return null;
   }
   return null;
 }

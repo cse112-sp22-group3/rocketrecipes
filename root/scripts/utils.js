@@ -1,5 +1,9 @@
 /** @module utils */
+/* global DOMPurify */
 /* eslint-disable no-mixed-operators */
+// eslint-disable-next-line import/extensions
+import './purify.js';
+
 const COMMUNITY_HALF_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_2.json';
 const COMMUNITY_THIRD_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_3.json';
 const COMMUNITY_QUARTER_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_4.json';
@@ -361,25 +365,71 @@ export function validURL(str) {
 }
 
 /**
+ * A helper function to purify potential HTML
+ * @param {String} dirty dirty code
+ * @returns {String} purified code
+ */
+export function purifyDOM(dirty) {
+  return DOMPurify.sanitize(dirty, { ALLOWED_TAGS: [] });
+}
+
+/**
+ * A helper function to remove whitespace
+ * @param {String} dirty dirty inputs
+ * @returns {String} whitespaced stripped text
+ */
+export function whitespaceTrimmer(dirty) {
+  return dirty.replace(/\s+/g, ' ').trim();
+}
+
+/**
  * A helper function to validate form contents
  * @param {Object} recipe recipe object to validate
  * @returns {Object} object containing values for if the form is valid, and error messages otherwise
  */
 export function validateForm(recipe) {
-  if (recipe.title === '' || recipe.summary === '') {
-    return { valid: false, errorMessage: 'Title is empty' };
+  if (!recipe.title || recipe.title === '' || /\d/.test(recipe.title)) {
+    return { valid: false, errorMessage: 'Title is invalid' };
   }
-  if (recipe.summary === '') {
-    return { valid: false, errorMessage: 'Summary is empty' };
+  if (!recipe.summary || recipe.summary === '') {
+    return { valid: false, errorMessage: 'Summary is invalid' };
   }
-  if (recipe.servings === '') {
-    return { valid: false, errorMessage: 'Servings field is empty' };
+  if (!recipe.servings || recipe.servings === '' || Number.isNaN(recipe.servings)) {
+    return { valid: false, errorMessage: 'Servings field is invalid' };
   }
-  if (recipe.readyInMinutes === '') {
-    return { valid: false, errorMessage: 'Time field is empty' };
+  if (!recipe.readyInMinutes || recipe.readyInMinutes === ''
+    || Number.isNaN(recipe.readyInMinutes)) {
+    return { valid: false, errorMessage: 'Time field is invalid' };
   }
   if (recipe.image !== '' && !validURL(recipe.image)) {
     return { valid: false, errorMessage: 'Image is not a valid link' };
+  }
+  if (!recipe.ingredients || recipe.ingredients.length === 0) {
+    return { valid: false, errorMessage: 'Must have at least 1 ingredient' };
+  }
+
+  let index = 0;
+  for (index = 0; index < recipe.ingredients.length; index += 1) {
+    const ingredient = recipe.ingredients[index];
+    if (!ingredient.amount || ingredient.amount === '' || Number.isNaN(ingredient.amount)) {
+      return { valid: false, errorMessage: `Ingredient ${index + 1} amount is not valid` };
+    }
+    if (!ingredient.name || ingredient.name.length === 0 || /\d/.test(ingredient.name)) {
+      return { valid: false, errorMessage: `Ingredient ${index + 1} name is not valid` };
+    }
+    if (!ingredient.unit || ingredient.unit.length === 0 || /\d/.test(ingredient.unit)) {
+      return { valid: false, errorMessage: `Ingredient ${index + 1} unit is not valid` };
+    }
+  }
+
+  if (!recipe.steps || recipe.steps.length === 0) {
+    return { valid: false, errorMessage: 'Must have at least 1 step' };
+  }
+  for (index = 0; index < recipe.steps.length; index += 1) {
+    const step = recipe.steps[index];
+    if (!step || step.length === 0) {
+      return { valid: false, errorMessage: `Step ${index + 1} cannot be empty` };
+    }
   }
 
   return { valid: true, errorMessage: '' };

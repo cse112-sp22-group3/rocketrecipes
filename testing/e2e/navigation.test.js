@@ -24,12 +24,6 @@ describe('navigate through pages', () => {
         await expect(page.title()).resolves.toMatch('Home');
     });
 
-    it('home page header should be Rocket Recipes', async () => {
-        await page.waitForSelector('body > main > div > h1');
-        const header = await page.evaluate( () => document.querySelector('body > main > div > h1').textContent);
-        expect(header).toBe('Rocket Recipes');
-    });
-
     it('home page should have 8 recommended recipes', async () => {
         await page.waitForSelector('recipe-card');
         const recipes = await page.$$('recipe-card');

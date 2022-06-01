@@ -256,7 +256,7 @@ export async function readRecipeDatabase(recipeID) {
     }
   } else {
     const userCreatedLocal = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
-    if (recipeID in userCreatedLocal) {
+    if (userCreatedLocal !== null && recipeID in userCreatedLocal) {
       return userCreatedLocal[recipeID];
     }
   }

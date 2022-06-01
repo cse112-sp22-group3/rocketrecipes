@@ -106,7 +106,7 @@ async function init() {
   const urlButton = document.getElementById('urlButton');
   urlButton.addEventListener('click', createRecipeByUrl);
 
-  await getAllRecipes();
+  // await getAllRecipes();
   document.getElementById('Create').addEventListener('click', async () => {
     const userGenRecipe = {};
     userGenRecipe.id = createId();

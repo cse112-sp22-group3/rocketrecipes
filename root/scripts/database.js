@@ -22,43 +22,43 @@ const USER_CREATED_SINGLE_RECIPE = '/createdRecipes/';
 const NO_LOGIN_MY_RECIPES_LOCAL_STORAGE = 'createdRecipes';
 
 async function putData(url = '', data = {}) {
-  const response = await fetch(url, {
-    method: 'PUT', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json',
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-    body: JSON.stringify(data), // body data type must match "Content-Type" header
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
+    const response = await fetch(url, {
+        method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+        body: JSON.stringify(data), // body data type must match "Content-Type" header
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
 }
 
 async function deleteData(url = '') {
-  const response = await fetch(url, {
-    method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
-    mode: 'cors', // no-cors, *cors, same-origin
-    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-    credentials: 'same-origin', // include, *same-origin, omit
-    headers: {
-      'Content-Type': 'application/json',
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    redirect: 'follow', // manual, *follow, error
-    referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-  });
-  return response.json(); // parses JSON response into native JavaScript objects
+    const response = await fetch(url, {
+        method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, *cors, same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        redirect: 'follow', // manual, *follow, error
+        referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+    });
+    return response.json(); // parses JSON response into native JavaScript objects
 }
 
 function isUserLoggedIn() {
-  if (localStorage.getItem(LOCAL_STORAGE_USER_KEY) !== null) {
-    return true;
-  }
-  return false;
+    if (localStorage.getItem(LOCAL_STORAGE_USER_KEY) !== null) {
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -67,7 +67,7 @@ function isUserLoggedIn() {
  * @returns {recipeObject}
  */
 async function putUserCreatedRecipe(recipeObj) {
-  return await putData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
+    return await putData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
 }
 
 /**
@@ -76,16 +76,16 @@ async function putUserCreatedRecipe(recipeObj) {
  * @returns {recipeObject}
  */
 async function getUserCreatedRecipe(id) {
-  const recipe = await fetch(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + id}.json${AUTH}`).then((response) => response.json());
-  return recipe;
+    const recipe = await fetch(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + id}.json${AUTH}`).then((response) => response.json());
+    return recipe;
 }
 /**
  * get all user created recipes
  * @returns
  */
 async function getUserAllCreatedRecipes() {
-  const allRecipes = await fetch(FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_RECIPES + AUTH).then((response) => response.json());
-  return allRecipes;
+    const allRecipes = await fetch(FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_RECIPES + AUTH).then((response) => response.json());
+    return allRecipes;
 }
 
 /**
@@ -93,7 +93,7 @@ async function getUserAllCreatedRecipes() {
  * @param {} id
  */
 async function deleteUserCreatedRecipe(id) {
-  return await deleteData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + id}.json${AUTH}`);
+    return await deleteData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + id}.json${AUTH}`);
 }
 
 /**
@@ -102,7 +102,7 @@ async function deleteUserCreatedRecipe(id) {
  * @returns
  */
 async function putUserFavoriteRecipe(recipeObj) {
-  return await putData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
+    return await putData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
 }
 
 /**
@@ -111,8 +111,8 @@ async function putUserFavoriteRecipe(recipeObj) {
  * @returns {recipeObject}
  */
 async function getUserFavoritedRecipe(id) {
-  const recipe = await fetch(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_SINGLE_RECIPE + id}.json${AUTH}`).then((response) => response.json());
-  return recipe;
+    const recipe = await fetch(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_SINGLE_RECIPE + id}.json${AUTH}`).then((response) => response.json());
+    return recipe;
 }
 
 /**
@@ -120,8 +120,8 @@ async function getUserFavoritedRecipe(id) {
  * @returns
  */
 async function getUserAllFavoritedRecipes() {
-  const allRrecipes = await fetch(FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_RECIPES + AUTH).then((response) => response.json());
-  return allRrecipes;
+    const allRrecipes = await fetch(FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_RECIPES + AUTH).then((response) => response.json());
+    return allRrecipes;
 }
 
 /**
@@ -130,11 +130,11 @@ async function getUserAllFavoritedRecipes() {
  * @returns
  */
 async function deleteUserFavoriteRecipe(id) {
-  return await deleteData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_SINGLE_RECIPE + id}.json${AUTH}`);
+    return await deleteData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_SINGLE_RECIPE + id}.json${AUTH}`);
 }
 
 async function putDatabaseRecipe(recipeObj) {
-  return await putData(`${SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
+    return await putData(`${SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
 }
 
 /**
@@ -143,8 +143,8 @@ async function putDatabaseRecipe(recipeObj) {
  * @returns {recipeObject}
  */
 async function getDatabaseRecipe(id) {
-  const recipe = await fetch(`${SINGLE_RECIPE + id}.json${AUTH}`).then((response) => response.json());
-  return recipe;
+    const recipe = await fetch(`${SINGLE_RECIPE + id}.json${AUTH}`).then((response) => response.json());
+    return recipe;
 }
 
 /**
@@ -153,33 +153,180 @@ async function getDatabaseRecipe(id) {
  * @returns
  */
 async function deleteDatabaseRecipe(id) {
-  return await deleteData(`${SINGLE_RECIPE + id}.json${AUTH}`);
+    return await deleteData(`${SINGLE_RECIPE + id}.json${AUTH}`);
 }
 
 export async function getAllRecipesDatabase() {
-  const fetchedRecipes = await fetch(FIREBASE_ALL_RECIPES).then((response) => response.json());
-  return fetchedRecipes;
+    const fetchedRecipes = await fetch(FIREBASE_ALL_RECIPES).then((response) => response.json());
+    return fetchedRecipes;
 }
 
 export async function getAllRecipeIDDatabase() {
-  if (localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY) !== null) {
-    const recipesKeys = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY));
-    return recipesKeys;
-  }
+    if (localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY) !== null) {
+        const recipesKeys = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY));
+        return recipesKeys;
+    }
 
-  const fetchedRecipes = await getAllRecipesDatabase();
-  const recipeIDArr = [];
-  Object.entries(fetchedRecipes).forEach(([key, value]) => {
-    recipeIDArr.push(key);
-  });
+    const fetchedRecipes = await getAllRecipesDatabase();
+    const recipeIDArr = [];
+    Object.entries(fetchedRecipes).forEach(([key, value]) => {
+        recipeIDArr.push(key);
+    });
 
-  try {
-    localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY, JSON.stringify(recipeIDArr));
-  } catch (e) {
-    console.log('an error has occured inside getAllRecipeIDDatabase()');
-    console.log(e);
-  }
-  return recipeIDArr;
+    try {
+        localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY, JSON.stringify(recipeIDArr));
+    } catch (e) {
+        console.log('an error has occured inside getAllRecipeIDDatabase()');
+        console.log(e);
+    }
+    return recipeIDArr;
+}
+
+
+/**
+ * Gets all recipes a user has favorited from database.
+ * @async
+ * @returns {RecipeObject} an object contain all recipes, null when contain nothing
+ */
+export async function getFavoritedRecipesDatabase() {
+    if (isUserLoggedIn()) {
+        const allRecipes = await getUserAllFavoritedRecipes();
+        return allRecipes;
+    }
+    if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
+        const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
+        return favoritedRecipes;
+    }
+    return null;
+}
+
+/**
+ * Determines if the given recipe in a user's favorite list
+ * @async
+ * @param {recipeId} id - recipeId to check
+ * @returns {Boolean} true-> favorited, false -> not favorited
+ */
+export async function isFavoritedDatabase(id) {
+    if (isUserLoggedIn()) {
+        const recipe = await getUserFavoritedRecipe(id);
+        if (recipe !== null) {
+            return true;
+        }
+        return false;
+    }
+    if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
+        const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
+        if (id in favoritedRecipes) {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Adds recipe with given id to a user's of favorited recipes
+ * @async
+ * @param {recipeId} id of recipe to add
+ * @returns {recipeObj} recipeObj when successful, null unsuccessful
+ */
+export async function addFavoriteRecipeDatabase(id) {
+    const recipe = await readRecipeDatabase(id);
+    if (recipe === null) { return null; }
+
+    if (isUserLoggedIn()) {
+        return await putUserFavoriteRecipe(recipe);
+    }
+    if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
+        const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
+        favoritedRecipes[id] = recipe;
+        localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
+        return recipe;
+    } else {
+        let tempObj = {};
+        tempObj[id] = recipe;
+        localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(tempObj));
+        return recipe;
+    }
+    return null;
+}
+
+/**
+ * Deletes recipe with given id from the user's list of favorite recipes
+ * @async
+ * @param {recipeId} id of the recipe to be deleted
+ * @returns {Boolean} true if the operation was successful, false if it was not
+ */
+export async function deleteFavoriteRecipeDatabase(id) {
+    if (isUserLoggedIn()) {
+        await deleteUserFavoriteRecipe(id);
+        return true;
+    }
+    if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
+        const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
+        if (id in favoritedRecipes) {
+            delete favoritedRecipes[id];
+        }
+        localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Gets all recipes a user has created
+ * @async
+ * @returns {recipeObj} object containnin all user craeted recipes
+ */
+export async function getUserAllCreatedRecipesDatabase() {
+    if (isUserLoggedIn()) {
+        const allRecipes = await getUserAllCreatedRecipes();
+        return allRecipes;
+    }
+    if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) !== null) {
+        return JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
+    }
+    return null;
+}
+
+/**
+ * check if the recipe id already exist in the whole database and user created recipes
+ * @param {id} id 
+ * @returns true -> no conflict, false -> conflict
+ */
+async function isConflict(id) {
+    const recipeDatabase = await getDatabaseRecipe(id);
+    if (isUserLoggedIn()) {
+        const userRecipe = await getUserCreatedRecipe(id);
+        const userFavoriteRecipe = await getUserFavoritedRecipe(id);
+        if (recipeDatabase == null && userRecipe == null && userFavoriteRecipe == null) {
+            return false;
+        }
+    } else if (recipeDatabase == null) {
+        return false;
+    }
+    return true;
+}
+
+/**
+ * Generates a unique id
+ * @returns {String} a unique id
+ */
+export function createId() {
+    // eslint-disable-next-line no-bitwise
+    return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
+}
+
+/**
+ * generate an ID that is not used in the whole database
+ * @param {id} userGeneratedID
+ * @returns a key
+ */
+async function generateKey(userGeneratedID) {
+    let id = userGeneratedID;
+    while (await isConflict(id)) {
+        id = createId(id);
+    }
+    return id;
 }
 
 /**
@@ -194,225 +341,164 @@ export async function getAllRecipeIDDatabase() {
  * does not exist, returns null
  */
 export async function readRecipeDatabase(recipeID) {
-  if (isUserLoggedIn()) {
-    const userCreated = await getUserCreatedRecipe(recipeID);
-    if (userCreated !== null) {
-      return userCreated;
-    }
-    const userFavorited = await getUserFavoritedRecipe(recipeID);
-    if (userFavorited !== null) {
-      return userFavorited;
-    }
-  }
-  // when user if not logged in or when recipe does not exist in userCreatedRecipe or userFavoritedRecipe
-  const recipe = await getDatabaseRecipe(recipeID);
-  return recipe;
-}
-
-export async function getFavoritedRecipesDatabase() {
-  if (isUserLoggedIn()) {
-    const allRecipes = await getUserAllFavoritedRecipes();
-    return allRecipes;
-  }
-  if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
-    const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
-    return favoritedRecipes;
-  }
-  return {};
-}
-
-export async function isFavoritedDatabase(id) {
-  if (isUserLoggedIn()) {
-    const recipe = await getUserFavoritedRecipe(id);
-    if (recipe !== null) {
-      return true;
-    }
-    return false;
-  }
-  if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
-    const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
-    let containsRecipe = false;
-    favoritedRecipes.every((recipe) => {
-      if (recipe.id === id) {
-        containsRecipe = true;
-        return false;
-      }
-      return true;
-    });
-    return containsRecipe;
-  }
-}
-
-export async function addFavoriteRecipeDatabase(id) {
-  const recipe = await readRecipeDatabase(id);
-  if (recipe === null) { return null; }
-
-  if (isUserLoggedIn()) {
-    return await putUserFavoriteRecipe(recipe);
-  }
-  if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
-    const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
-    favoritedRecipes.push(recipe);
-    localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
-    return recipe;
-  }
-  if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) === null) {
-    const favoritedRecipes = [];
-    favoritedRecipes.push(recipe);
-    localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
-    return recipe;
-  }
-}
-
-export async function deleteFavoriteRecipeDatabase(id) {
-  if (isUserLoggedIn()) {
-    await deleteUserFavoriteRecipe(id);
-    return true;
-  }
-  if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
-    const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
-    favoritedRecipes.every((recipe) => {
-      if (recipe.id === id) {
-        const index = favoritedRecipes.indexOf(recipe);
-        if (index > -1) {
-          favoritedRecipes.splice(index, 1);
-          return false;
+    if (isUserLoggedIn()) {
+        const userCreated = await getUserCreatedRecipe(recipeID);
+        if (userCreated !== null) {
+            return userCreated;
         }
-      }
-      return true;
-    });
-    localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
-    return true;
-  }
-}
-
-export async function getUserAllCreatedRecipesDatabase() {
-  if (isUserLoggedIn()) {
-    const allRecipes = await getUserAllCreatedRecipes();
-    return allRecipes;
-  }
-  if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) !== null) {
-    return JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
-  }
-  return {};
-}
-
-async function isConflict(id) {
-  const recipeDatabase = await getDatabaseRecipe(id);
-  if (isUserLoggedIn()) {
-    const userRecipe = await getUserCreatedRecipe(id);
-    const userFavoriteRecipe = await getUserFavoritedRecipe(id);
-    if (recipeDatabase == null && userRecipe == null && userFavoriteRecipe == null) {
-      return false;
+        const userFavorited = await getUserFavoritedRecipe(recipeID);
+        if (userFavorited !== null) {
+            return userFavorited;
+        }
+    } else {
+        let userCreatedLocal = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
+        if (recipeID in userCreatedLocal) {
+            return userCreatedLocal[recipeID];
+        }
     }
-  } else if (recipeDatabase == null) {
-    return false;
-  }
-  return true;
+    // when user if not logged in or when recipe does not exist in userCreatedRecipe or userFavoritedRecipe
+    const recipe = await getDatabaseRecipe(recipeID);
+    return recipe;
 }
 
 /**
- * Generates a unique id
- * @returns {String} a unique id
+ * Creates the given recipe object
+ * create recipes based on user, therefore, user actually owns the recipe.
+ * In order to publish a recipe(push to whole database), has to use publish recipe method
+ * does not assume the newRecipe object already has an unique id, meaning use generatekey() function to get an unique id.
+ * @param {recipeObj} newRecipe - the recipe to be created
+ * @returns recipeObj create successful. null create unsuccessful
  */
-export function createId() {
-  // eslint-disable-next-line no-bitwise
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
-}
-
-/**
- * generate an ID that is not used in the whole database
- * @param {id} userGeneratedID
- * @returns
- */
-async function generateKey(userGeneratedID) {
-  let id = userGeneratedID;
-  while (await isConflict(id)) {
-    id = createId(id);
-  }
-  return id;
-}
-
 export async function createRecipeDatabase(newRecipe) {
-  const id = await generateKey(newRecipe.id);
-  newRecipe.id = id;
-  if (isUserLoggedIn()) {
-    return await putUserCreatedRecipe(newRecipe);
-  }
-  if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) != null) {
-    myRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
-    myRecipes[newRecipe.id] = newRecipe;
-    localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(myRecipes));
-    return newRecipe;
-  }
-  return {};
+    const id = await generateKey(newRecipe.id);
+    newRecipe.id = id;
+    if (isUserLoggedIn()) {
+        return await putUserCreatedRecipe(newRecipe);
+    }
+    if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) !== null) {
+        myRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
+        myRecipes[newRecipe.id] = newRecipe;
+        localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(myRecipes));
+        return newRecipe;
+    } else {
+        let tempObj = {};
+        tempObj[newRecipe.id] = newRecipe;
+        localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(tempObj));
+        return newRecipe;
+    }
 }
 
+/**
+ * if the user owns a recipe, the use can delte it.
+ * if the user has already published recipe, it will also get deleted from whole database. 
+ * when the user is not logged in, only delete at local storage, can not delete at whole database
+ * @param {recipdID} id 
+ * @returns true-> able to delete, false-> unable to delete
+ */
 export async function ableToDeleteDatabase(id) {
-  if (isUserLoggedIn()) {
-    const recipe = await getUserCreatedRecipe(id);
-    if (recipe !== null) {
-      return true;
+    if (isUserLoggedIn()) {
+        const recipe = await getUserCreatedRecipe(id);
+        if (recipe !== null) {
+            return true;
+        }
+    } else {
+        if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) !== null) {
+            const createdRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
+            if (id in createdRecipes) {
+                return true;
+            }
+        }
     }
-  } else if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) != null) {
-    const createdRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
-    if (createdRecipes[id] !== null) {
-      return true;
-    }
-  }
-  return false;
+    return false;
 }
 
+/**
+ * Delete a recipe when the recipe belongs to the user.
+ * if user is logged in, and recipe is user created, it will delete recipe from user created recipes list and from the whole database if it exists. 
+ * if user is logged in, and recipe is not user created, delete button would not work.
+ * if user not logged in, it will only delte at local storage. 
+ * @param {recipeId} id of the recipe to be deleted
+ * @returns {recipeObj} true if the operation was successful, false otherwise
+ */
 export async function deleteRecipeDatabase(id) {
-  if (isUserLoggedIn()) {
-    const userCreatedRecipe = await getUserCreatedRecipe(id);
-    if (userCreatedRecipe != null) {
-      const reponseUserRecipes = await deleteUserCreatedRecipe(id);
-      const responeDatabase = await deleteDatabaseRecipe(id); // automically fail when user does not own this reipe
+    if (isUserLoggedIn()) {
+        const userCreatedRecipe = await getUserCreatedRecipe(id);
+        if (userCreatedRecipe !== null) {
+            const responseUserRecipes = await deleteUserCreatedRecipe(id);
+            const responeDatabase = await deleteDatabaseRecipe(id); // automically fail when user does not own this reipe
+            return true;
+        }
+    } else {
+        if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) !== null) {
+            const createdRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
+            if (id in createdRecipes) {
+                delete createdRecipes[id];
+                localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(createdRecipes));
+            }
+        }
     }
-  } else if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) != null) {
-    const createdRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
-    delete createdRecipes[id] !== null;
-    localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(createdRecipes));
-  }
+    return false;
 }
 
+/**
+ * if the recipe id is ownber by the user and recipeid does not present in the whole database, that means it is able to be published. 
+ * always return false if the user is not logged in. 
+ * @param {recipdid} recipeid 
+ * @returns ture -> able to publish, false ->unable to publish
+ */
 export async function ableToPublishDatabase(recipeid) {
-  if (isUserLoggedIn()) {
-    const recipe = await getDatabaseRecipe(recipeid);
-    if (recipe === null) {
-      return true;
+    if (isUserLoggedIn()) {
+        const recipe = await getDatabaseRecipe(recipeid);
+        if (recipe === null) {
+            return true;
+        }
     }
-  }
-  return false;
+    return false;
 }
 
+/**
+ * publish an recipe, meaning the user's private created recipes are now copied over whole database. 
+ * does not work when user is not logged in. 
+ * @param {newRecipe} newRecipe object
+ * @returns recipeObj successful, null -> unsuccessful
+ */
 export async function publishRecipeDatabase(newRecipe) {
-  if (isUserLoggedIn()) {
-    return await putDatabaseRecipe(newRecipe);
-  }
-  return null;
+    if (isUserLoggedIn()) {
+        return await putDatabaseRecipe(newRecipe);
+    }
+    return null;
 }
 
+/**
+ * updates the contents of recipe into paramenter newRecipe from user created recipes. 
+ * update recipe is only called when editing page, therefore, update the whole database if the same recipe if presented. 
+ * @param {recipeObj} newRecipe - the recipe whose contents will be updated
+ * @returns recipe Obj if updates is successful, null if unsuccessful
+ */
 export async function updateRecipeDatabase(newRecipe) {
-  if (isUserLoggedIn()) {
-    const duplicateRecipe = await getUserCreatedRecipe(newRecipe.id);
-    if (duplicateRecipe !== null) { await putUserCreatedRecipe(newRecipe); } // overwrite duplicate recipes
-    else {
-      // no dulicate must not present in whole database
-      const generatedID = await generateKey(newRecipe.id);
-      newRecipe.id = generatedID;
-      return await putUserCreatedRecipe(newRecipe);
+    if (isUserLoggedIn()) {
+        const duplicateRecipe = await getUserCreatedRecipe(newRecipe.id);
+        if (duplicateRecipe !== null) { await putUserCreatedRecipe(newRecipe); } // overwrite duplicate recipes
+        else {
+            // no dulicate must not present in whole database
+            const generatedID = await generateKey(newRecipe.id);
+            newRecipe.id = generatedID;
+            return await putUserCreatedRecipe(newRecipe);
+        }
+        // check for if the recipe is in the big database(the user publish the recipe to the whole database, meaning the recipe is owned by one user), update if it exists
+        const databaseDuplicate = getDatabaseRecipe(newRecipe.id);
+        if (databaseDuplicate !== null) {
+            return await putDatabaseRecipe(newRecipe);
+        }
+    } else {
+        // update only at locally created when not logged in, do not sync with whole database
+        if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) !== null) {
+            const myRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
+            // when the new recipe already exists in local storage
+            myRecipes[newRecipe.id] = newRecipe;
+            localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(myRecipes))
+            return newRecipe;
+        }
     }
-    // check for if the recipe is in the big database(the user publish the recipe to the whole database, meaning the recipe is owned by one user), update if it exists
-    const databaseDuplicate = getDatabaseRecipe(newRecipe.id);
-    if (databaseDuplicate !== null) {
-      return await putDatabaseRecipe(newRecipe);
-    }
-  } else if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) !== null) {
-    const myRecipes = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
-    // when the new recipe already exists in local storage
-    myRecipes[newRecipe.id] = newRecipe;
-    return newRecipe;
-  }
+    return null;
 }

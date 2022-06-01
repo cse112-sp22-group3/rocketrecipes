@@ -1,4 +1,5 @@
 /* eslint-disable import/extensions */
+/* eslint-disable prefer-destructuring */
 import {
   readRecipe,
   updateRecipe,
@@ -7,7 +8,6 @@ import {
   purifyDOM,
   whitespaceTrimmer,
 } from './utils.js';
-/* eslint-disable prefer-destructuring */
 // const crypto = require('crypto');
 
 // const createRecipe = document.querySelector(document.getElementById('Create'));

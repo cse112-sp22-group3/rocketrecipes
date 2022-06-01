@@ -21,6 +21,7 @@ import {
   createRecipeDatabase,
   createId,
 } from './database.js';
+import './purify.js';
 
 const SPOONACULAR_API_KEY = 'c6ae2142af6b40ba99198aa307725180';
 

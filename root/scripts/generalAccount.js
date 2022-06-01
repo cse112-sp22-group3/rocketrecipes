@@ -28,7 +28,7 @@ async function createMyRecipes(userRecipes) {
   foodList.style.flexWrap = 'wrap';
 
   if (userRecipes !== null) {
-    for (const value of Object.values(userRecipes).keys) {
+    for (const value of Object.values(userRecipes)) {
       const recipeCard = document.createElement('recipe-card');
       recipeCard.data = value;
       foodList.appendChild(recipeCard);

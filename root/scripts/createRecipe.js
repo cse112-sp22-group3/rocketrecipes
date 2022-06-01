@@ -1,7 +1,8 @@
 /* eslint-disable no-alert */
 /* eslint-disable import/extensions */
 import {
-  getAllRecipes, createRecipe, createId, validateForm, trimRecipe, purifyDOM, whitespaceTrimmer, getRecipeByUrl,
+  getAllRecipes, createRecipe, createId, validateForm, trimRecipe, purifyDOM,
+  whitespaceTrimmer, getRecipeByUrl,
 } from './utils.js';
 /* eslint-disable prefer-destructuring */
 

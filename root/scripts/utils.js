@@ -372,7 +372,16 @@ export async function updateRecipe(newRecipe) {
         let tempArr = [];
         if (localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE) != null) {
             tempArr = JSON.parse(localStorage.getItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE));
-            tempArr.push(newRecipe);
+            // when the new recipe already exists in local storage
+            alreadyExistinLocal = False
+            for(let i = 0; i < tempArr.length; i ++){
+              if(tempArr[i].id == newRecipe.id){
+                tempArr[i] = newRecipe; 
+                alreadyExsitinLocal = true; 
+                break; 
+              }
+            }
+            if(alreadyExistinLocal == False){tempArr.push(newRecipe)};
         }
         localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(tempArr));
         return true;
@@ -382,19 +391,25 @@ export async function updateRecipe(newRecipe) {
         let duplicateRecipe = await fetch(urlCheckforDuplicate).then((response) => response.json());
         if (duplicateRecipe != null) { // duplicate exists already in userCreatedRecipes
             let updateRecipeResponse = await putData(urlCheckforDuplicate, newRecipe); // update inside userCreatedRecipes
-            return true;
+        // check for if the recipe is in the big database(the user publish the recipe to the whole database, meaning the recipe is owned by one user), update if it exists 
         } else { // duplicate does not exist
             let generatedID = generateKey(newRecipe.id);
             let urlNewRecipe = USER_CREATED_RECIPES_PATH + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + "/createdRecipes/" + generatedID + ".json" + SINGLE_RECIPE_AUTH;
             let newRecipe = await putData(urlCheckforDuplicate, newRecipe); // newly created recipe
-            return true;
         }
+        let urlDatabase = SINGLE_RECIPE + newRecipe.id + ".json" + SINGLE_RECIPE_AUTH; 
+        let recipeDatabase = await fetch(urlDatabase).then((response) => response.json()); 
+        if (recipeDatabase != null){
+          let recipeDatabaseResponse = await putData(urlDatabase, newRecipe); 
+        }
+        return true; 
     }
 }
 
 /**
  * Creates the given recipe object
- * create Recipes by default works like contribution, therefore, if the user is not logged in, the function does push to all databases
+ * create recipes based on user, therefore, user actually owns the recipe. In order to publish a recipe, has to use publish recipe method
+ * does not assume the newRecipe object already has an unique id, meaning use generatekey() function to get an unique id. 
  * @param {recipeObj} newRecipe - the recipe to be created
  * @returns true if the operation was successful, false otherwise
  */
@@ -408,24 +423,31 @@ export async function createRecipe(newRecipe) {
         localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(tempArr));
         return newRecipe;
     }
-    const url = USER_CREATED_RECIPES_PATH + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_RECIPES + SINGLE_RECIPE_AUTH;
-
-    const curData = await fetch(url).then((response) => response.json());
-    const allRecipes = await fetch(FIREBASE_ALL_RECIPES).then((response) => response.json());
-
-    // generate an id 32chars id for recipe 28 char for uuid
     const id = await generateKey(newRecipe.id);
     newRecipe.id = id;
-    curData[newRecipe.id] = newRecipe;
-    allRecipes[newRecipe.id] = newRecipe;
+    let urlCreatedRecipe = USER_CREATED_RECIPES_PATH + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + "/createdRecipes/" + newRecipe.id + ".json" + SINGLE_RECIPE_AUTH;
+    let craeteRecipe = await putData(urlCreatedRecipe, newRecipe); 
 
-    const response = await putData(url, curData);
-    const response2 = await putData(FIREBASE_ALL_RECIPES, allRecipes);
-    return newRecipe;
+}
+
+/**
+ * publish an recipe, meaning the user's private created recipes are now copied over whole database
+ * assumes the newRecipe already calls
+ * @param {newRecipe} newRecipe object
+ * @returns 
+ */
+export async function publishRecipe(newRecipe){
+  if (localStorage.getItem(LOCAL_STORAGE_USER_KEY) != null) { //user must be logged in to use this functionality
+    const id = await generateKey(newRecipe.id);
+    newRecipe.id = id;
+    let url = SINGLE_RECIPE + newRecipe.id + ".json" + SINGLE_RECIPE_AUTH; 
+    let respone = putData(url, newRecipe); 
+  }
 }
 
 /**
  * generate an ID that is not used in the whole database
+ * @TODO also need to check if the id colludes inside userCreatedRecipes
  * @param {id} userGeneratedID 
  * @returns 
  */

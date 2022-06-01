@@ -186,7 +186,7 @@ async function init() {
     const publishButton = document.getElementById('publishButton');
     if (await ableToPublish(recipeId)) {
         publishButton.addEventListener('click', async() => {
-            publishRecipe(recipeId);
+            await publishRecipe(currentRecipe);
             location.reload();
         });
     } else {

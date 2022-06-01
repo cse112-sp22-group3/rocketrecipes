@@ -383,8 +383,6 @@ export async function ableToPublishDatabase(recipeid) {
 
 export async function publishRecipeDatabase(newRecipe) {
     if (isUserLoggedIn()) {
-        const id = await generateKey(newRecipe.id);
-        newRecipe.id = id;
         return await putDatabaseRecipe(newRecipe);
     }
     return null;

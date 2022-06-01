@@ -1,7 +1,10 @@
 /** @module utils */
 /* eslint-disable no-mixed-operators */
 import {
-  getAllRecipesDatabase, getAllRecipeIDDatabase, readRecipeDatabase, getFavoritedRecipesDatabase, getUserAllCreatedRecipesDatabase, addFavoriteRecipeDatabase, deleteFavoriteRecipeDatabase, ableToDeleteDatabase, ableToPublishDatabase, publishRecipeDatabase, updateRecipeDatabase, isFavoritedDatabase, deleteRecipeDatabase,
+  getAllRecipesDatabase, getAllRecipeIDDatabase, readRecipeDatabase, getFavoritedRecipesDatabase,
+  getUserAllCreatedRecipesDatabase, addFavoriteRecipeDatabase, deleteFavoriteRecipeDatabase,
+  ableToDeleteDatabase, ableToPublishDatabase, publishRecipeDatabase, updateRecipeDatabase, 
+  isFavoritedDatabase, deleteRecipeDatabase, createRecipeDatabase,
 } from './database.js';
 
 /**
@@ -131,7 +134,7 @@ export async function updateRecipe(newRecipe) {
  * @returns true if the operation was successful, false otherwise
  */
 export async function createRecipe(newRecipe) {
-  return await createRecipeDatabawe(newRecipe);
+  return await createRecipeDatabase(newRecipe);
 }
 
 /**

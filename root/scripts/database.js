@@ -231,10 +231,15 @@ export async function isFavoritedDatabase(id) {
   }
   if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
     const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
-    if (favoritedRecipes[id] !== null) {
+    let containsRecipe = false;
+    favoritedRecipes.every((recipe) => {
+      if (recipe.id === id) {
+        containsRecipe = true;
+        return false;
+      }
       return true;
-    }
-    return false;
+    });
+    return containsRecipe;
   }
 }
 
@@ -247,7 +252,13 @@ export async function addFavoriteRecipeDatabase(id) {
   }
   if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
     const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
-    favoritedRecipes[recipe.id] = recipe;
+    favoritedRecipes.push(recipe);
+    localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
+    return recipe;
+  }
+  if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) === null) {
+    const favoritedRecipes = [];
+    favoritedRecipes.push(recipe);
     localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
     return recipe;
   }
@@ -260,7 +271,16 @@ export async function deleteFavoriteRecipeDatabase(id) {
   }
   if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
     const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
-    delete favoritedRecipes[recipe.id];
+    favoritedRecipes.every((recipe) => {
+      if (recipe.id === id) {
+        const index = favoritedRecipes.indexOf(recipe);
+        if (index > -1) {
+          favoritedRecipes.splice(index, 1);
+          return false;
+        }
+      }
+      return true;
+    });
     localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
     return true;
   }

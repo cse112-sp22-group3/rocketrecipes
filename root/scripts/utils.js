@@ -517,7 +517,8 @@ export async function getRecipeByUrl(url) {
   const response = await fetch(requestUrl);
   const json = await response.json();
   // parse response into our format
-  const recipe = await parseRecipe(json);
+  let recipe = await parseRecipe(json);
+  recipe = JSON.parse(JSON.stringify(recipe).replace(/:null/gi, ':""'));
   if (await createRecipe(recipe)) {
     return recipe.id;
   }

@@ -60,8 +60,8 @@ describe('navigate through pages', () => {
         expect(header).toBe('Create your recipe:');
     });
 
-    it('navigate to Search page', async () => {
-        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#search"));
+    it('navigate to Search page via empty search', async () => {
+        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#navbar-id > div.navbar-links-container-desktop > div > simple-custom-searchbar").shadowRoot.querySelector("#simple-search-bar-form > button"));
         await searchLink.click();
     });
 

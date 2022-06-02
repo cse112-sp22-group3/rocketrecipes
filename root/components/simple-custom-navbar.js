@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable import/extensions */
-// contained the original navbar, used in searchPage.html to remove search option in nav bar
+// contains the ability to search in the navbar, used in most html pages
 import { logOut } from '../scripts/authUtils.js';
 
 class Navbar extends HTMLElement {
@@ -41,7 +41,7 @@ class Navbar extends HTMLElement {
             position: fixed;
             top: 0;
             display: flex;
-            flex-direction: row;
+            // flex-direction: row;
             justify-content: space-between;
             font-size: 20px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
@@ -183,7 +183,9 @@ class Navbar extends HTMLElement {
             </h1>
         </div>
         <div class='navbar-links-container-desktop'> 
-            <a class='navbar-text-link' id='search' href='./searchpage.html'>Search</a>
+            <div class = 'simple-search'>
+              <simple-custom-searchbar />
+            </div>
             <a class='navbar-text-link' id='create' href='./CreateRecipe.html'>Create Recipe</a>
             <a class='navbar-text-link' id='account' href='./generalAccount.html'>My Account</a>
             <a class="navbar-text-link" id="sign-in" href="./entry.html">Sign In</a>
@@ -192,7 +194,9 @@ class Navbar extends HTMLElement {
             <div class='mobile-navbar-button'></div>
         </div>
         <div class='mobile-navbar-expanded'>
-            <a class='navbar-text-link mobile-link' id='search-mobile' href='./searchpage.html'>Search</a>
+            <div class = 'simple-search'>
+              <simple-custom-searchbar />
+            </div>
             <a class='navbar-text-link mobile-link' id='create-mobile' href='./CreateRecipe.html'>Create Recipe</a>
             <a class='navbar-text-link mobile-link' id='account-mobile' href='./generalAccount.html'>My Account</a>
             <a class="navbar-text-link mobile-link" id="account-mobile" href="./entry.html">Sign In</a>
@@ -243,10 +247,6 @@ class Navbar extends HTMLElement {
 
     const page = this.getAttribute('page');
     switch (page) {
-      case 'search':
-        navbarContainer.querySelector('#search').style.display = 'none';
-        navbarContainer.querySelector('#search-mobile').style.display = 'none';
-        break;
       case 'create':
         navbarContainer.querySelector('#create').style.textDecoration = 'underline';
         navbarContainer.querySelector('#create-mobile').style.textDecoration = 'underline';
@@ -264,4 +264,4 @@ class Navbar extends HTMLElement {
 }
 
 // Define the Class so you can use it as a custom element
-customElements.define('custom-navbar', Navbar);
+customElements.define('simple-custom-navbar', Navbar);

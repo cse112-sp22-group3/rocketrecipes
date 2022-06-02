@@ -1,5 +1,7 @@
 /* eslint-disable linebreak-style */
 // creates form with all checkboxes for filtering search
+// the search bar originally present on index.html and on the searchPage.html
+
 function createCheckboxes() {
   const tagProperties = [
     { id: 'cheap', name: 'Cheap' },

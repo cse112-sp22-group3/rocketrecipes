@@ -214,6 +214,24 @@ class Searchbar extends HTMLElement {
     searchInput.placeholder = 'Start typing...';
     searchInput.ariaLabel = 'Search through site content';
 
+    // element for ingredients INCLUDED
+    const ingInputi = document.createElement('input');
+    ingInputi.classList.add('searchbar');
+    ingInputi.type = 'text';
+    ingInputi.id = 'ss';
+    ingInputi.name = 's';
+    ingInputi.placeholder = 'Add ingredients to include';
+    ingInputi.ariaLabel = 'Search through site content';
+
+    // element for ingredients EXCLUDED
+    const ingInpute = document.createElement('input');
+    ingInpute.classList.add('searchbar');
+    ingInpute.type = 'text';
+    ingInpute.id = 'ss';
+    ingInpute.name = 's';
+    ingInpute.placeholder = 'Add ingredients to exclude';
+    ingInpute.ariaLabel = 'Search through site content';
+
     const searchButton = document.createElement('button');
     searchButton.innerHTML = `
         <a href="#"> 
@@ -227,10 +245,15 @@ class Searchbar extends HTMLElement {
     const checkboxContainer = createCheckboxContainer();
     searchbarContainer.appendChild(checkboxContainer);
 
+    form.appendChild(ingInputi);
+    form.appendChild(ingInpute);
+
     this.shadowRoot.append(style, searchbarContainer);
 
     function handleSearch() {
-      const searchInputValue = searchInput.value; // serach query
+      const searchInputValue = searchInput.value; // search query
+      const ingIncludeInputValue = ingInputi.value;
+      const ingExcludeInputValue = ingInpute.value;
 
       // get tags
       const tags = [];
@@ -242,11 +265,14 @@ class Searchbar extends HTMLElement {
       });
 
       const currentUrl = window.location;
+      // Create the url for search
       window.location = `${
         currentUrl.origin
       }/root/html/searchpage.html?searchQuery=${searchInputValue}${
         tags.length > 0 ? `&tags=${tags.join(',')}` : ''
-      }`;
+      }${ingIncludeInputValue !== '' ? `&IngIncl=${ingIncludeInputValue}` : ''
+      }${ingExcludeInputValue !== '' ? `&IngExcl=${ingExcludeInputValue}` : ''
+      } `;
     }
 
     form.addEventListener('submit', (e) => {

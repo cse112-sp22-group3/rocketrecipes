@@ -76,9 +76,18 @@ function fillSearchPage(searchResults) {
   const queryString = window.location.search;
   const searchParams = new URLSearchParams(queryString);
   const searchQuery = searchParams.get('searchQuery');
+  const ingredsIncluded = searchParams.get('IngIncl');
+  const ingredsExcluded = searchParams.get('IngExcl');
   const searchResultsContainer = document.getElementById('search-results-container');
   if (searchResults.length === 0) {
-    document.getElementById('searchHeader').innerHTML = `0 recipes found for ${searchQuery}`;
+    let noResMessage = `0 recipes found for ${searchQuery}`;
+    if (ingredsIncluded !== null) {
+      noResMessage += ` including ${ingredsIncluded}`;
+    }
+    if (ingredsExcluded !== null) {
+      noResMessage += ` excluding ${ingredsExcluded}`;
+    }
+    document.getElementById('searchHeader').innerHTML = noResMessage;
     searchResultsContainer.innerHTML = `
       <p>Sorry, no results were found for your search</p>
     `;
@@ -95,7 +104,6 @@ function fillSearchPage(searchResults) {
       recipeCard.data = recipe;
       currentPageDiv.appendChild(recipeCard);
       resultsCounter += 1;
-      document.getElementById('searchHeader').innerHTML = `${resultsCounter} recipes found for ${searchQuery}`;
 
       // turn on page buttons
       if (resultsCounter === resultsPerPage) {
@@ -127,6 +135,14 @@ function fillSearchPage(searchResults) {
       }
     });
 
+    let message = `${resultsCounter} recipes found for ${searchQuery}`;
+    if (ingredsIncluded !== null) {
+      message += ` including ${ingredsIncluded}`;
+    }
+    if (ingredsExcluded !== null) {
+      message += ` excluding ${ingredsExcluded}`;
+    }
+    document.getElementById('searchHeader').innerHTML = message;
     // page buttons moved to bottom of container
     if (resultsCounter >= resultsPerPage) {
       const pageButtons = document.getElementById('search-results-page-buttons');
@@ -137,10 +153,11 @@ function fillSearchPage(searchResults) {
 
 async function init() {
   const queryString = window.location.search;
-
   const searchParams = new URLSearchParams(queryString);
   const searchQuery = searchParams.get('searchQuery');
   const filterTags = searchParams.get('tags')?.split(',') || [];
+  const ingredsIncluded = searchParams.get('IngIncl');
+  const ingredsExcluded = searchParams.get('IngExcl');
 
   if (searchQuery === null || searchQuery === undefined || searchQuery.length === 0) {
     const searchResultsContainer = document.getElementById('search-results-container');
@@ -153,7 +170,7 @@ async function init() {
       <p>Enter your search term above!</p>
     `;
   } else {
-    const searchedRecipes = await search(searchQuery, filterTags);
+    const searchedRecipes = await search(searchQuery, filterTags, ingredsIncluded, ingredsExcluded);
     fillSearchPage(searchedRecipes);
     const searchbarRoot = document.querySelector('custom-searchbar').shadowRoot;
     searchbarRoot.querySelector('input').value = searchQuery;

@@ -476,7 +476,6 @@ async function parseRecipe(baseRecipe) {
   parsedRecipe.isFromInternet = true;
   parsedRecipe.vegetarian = scrapedRecipe.vegetarian;
   parsedRecipe.vegan = scrapedRecipe.vegan;
-  parsedRecipe.cheap = scrapedRecipe.cheap;
   parsedRecipe.glutenFree = scrapedRecipe.glutenFree;
   parsedRecipe.dairyFree = scrapedRecipe.dairyFree;
   parsedRecipe.quickEat = minutesToPrepare > 30;

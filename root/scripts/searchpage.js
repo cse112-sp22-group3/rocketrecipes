@@ -9,6 +9,7 @@ let totalPages = 1;
 let resultsFound = 0;
 let searchQuery = '';
 let filterTags = [];
+let filterMessage = '';
 
 function buttonReset() {
   const pageButtonFirst = document.getElementById('search-page-button-first');
@@ -53,7 +54,7 @@ function buttonReset() {
     pageButtonLast.disabled = true;
   }
 
-  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${searchQuery}${filterTags.length !== 0 ? ' with the applied filters' : ''}, page ${pageUserIsOn} of results`;
+  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${filterTags.length !== 0 ? filterMessage : ''} ${searchQuery}, page ${pageUserIsOn} of results`;
 }
 
 function clickNextSearchPage(currentPage) {
@@ -121,15 +122,26 @@ function clickLastSearchPage(currentPage) {
   window.scrollTo(0, 0);
 }
 
+// Sets the filter message text to human readable
+function cleanFilterMessage() {
+  filterMessage = filterMessage.replace('dairyFree', 'dairy-free');
+  filterMessage = filterMessage.replace('quickEat', 'quick eat');
+  filterMessage = filterMessage.replace('fiveIngredientsOrLess', 'easy');
+  filterMessage = filterMessage.replace('glutenFree', 'gluten-free');
+  filterMessage = filterMessage.replace(/,/g, ', ');
+}
+
 // takes the current recipe object and fills the html of the page with
 // the information within it
 function fillSearchPage(searchResults) {
+  filterMessage = filterTags.toString();
+  cleanFilterMessage();
   const queryString = window.location.search;
   const searchParams = new URLSearchParams(queryString);
   searchQuery = searchParams.get('searchQuery');
   const searchResultsContainer = document.getElementById('search-results-container');
   if (searchResults.length === 0) {
-    document.getElementById('searchHeader').innerHTML = `0 recipes found for ${searchQuery}${filterTags.length !== 0 ? ' with the applied filters' : ''}`;
+    document.getElementById('searchHeader').innerHTML = `0 ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery}`;
     searchResultsContainer.innerHTML = `
       <p>Sorry, no results were found for your search</p>
     `;
@@ -191,7 +203,7 @@ function fillSearchPage(searchResults) {
     }
 
     resultsFound = resultsCounter;
-    document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${searchQuery}${filterTags.length !== 0 ? ' with the applied filters' : ''}, page 1 of results`;
+    document.getElementById('searchHeader').innerHTML = `${resultsFound} ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery}, page 1 of results`;
   }
 }
 

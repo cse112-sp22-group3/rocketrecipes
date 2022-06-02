@@ -81,7 +81,7 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to search results', async () => {
-        const form = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > simple-custom-searchbar").shadowRoot.querySelector("#ss"));
+        const form = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#ss"));
         await form.type('deviled eggs');
 
         const but = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > simple-custom-searchbar").shadowRoot.querySelector("#search-bar-form > button"));

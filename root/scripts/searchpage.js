@@ -8,6 +8,7 @@ let pageUserIsOn = 1;
 let totalPages = 1;
 let resultsFound = 0;
 let searchQuery = '';
+let filterTags = [];
 
 function buttonReset() {
   const pageButtonFirst = document.getElementById('search-page-button-first');
@@ -52,7 +53,7 @@ function buttonReset() {
     pageButtonLast.disabled = true;
   }
 
-  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${searchQuery}, page ${pageUserIsOn} of results`;
+  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${searchQuery}${filterTags.length !== 0 ? ' with the applied filters' : ''}, page ${pageUserIsOn} of results`;
 }
 
 function clickNextSearchPage(currentPage) {
@@ -128,7 +129,7 @@ function fillSearchPage(searchResults) {
   searchQuery = searchParams.get('searchQuery');
   const searchResultsContainer = document.getElementById('search-results-container');
   if (searchResults.length === 0) {
-    document.getElementById('searchHeader').innerHTML = `0 recipes found for ${searchQuery}`;
+    document.getElementById('searchHeader').innerHTML = `0 recipes found for ${searchQuery}${filterTags.length !== 0 ? ' with the applied filters' : ''}`;
     searchResultsContainer.innerHTML = `
       <p>Sorry, no results were found for your search</p>
     `;
@@ -190,7 +191,7 @@ function fillSearchPage(searchResults) {
     }
 
     resultsFound = resultsCounter;
-    document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${searchQuery}, page 1 of results`;
+    document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${searchQuery}${filterTags.length !== 0 ? ' with the applied filters' : ''}, page 1 of results`;
   }
 }
 
@@ -199,7 +200,7 @@ async function init() {
 
   const searchParams = new URLSearchParams(queryString);
   searchQuery = searchParams.get('searchQuery');
-  const filterTags = searchParams.get('tags')?.split(',') || [];
+  filterTags = searchParams.get('tags')?.split(',') || [];
 
   if (searchQuery === null || searchQuery === undefined || searchQuery.length === 0) {
     const searchResultsContainer = document.getElementById('search-results-container');

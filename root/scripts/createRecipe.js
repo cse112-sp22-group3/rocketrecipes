@@ -90,18 +90,18 @@ async function createRecipeByUrl() {
 
 async function init() {
   // Error popup
-  const errPopup = document.getElementById("errDialog");
+  const errPopup = document.getElementById('errDialog');
   const errPrompt = document.createElement('form');
   const errHeader = document.createElement('h3');
   const errMsg = document.createElement('p');
   const errButt = document.createElement('button');
-  errHeader.innerText = "Oh no, there\'s an error!";
-  errButt.innerHTML = "Okay";
-  errPrompt.setAttribute("method", "dialog");
-  errHeader.setAttribute("id", "errHeader");
-  errMsg.setAttribute("id", "errMsg");
-  errButt.setAttribute("id", "errButt");
-  errButt.setAttribute("class", "buttons");
+  errHeader.innerText = 'Oh no, there\'s an error!';
+  errButt.innerHTML = 'Okay';
+  errPrompt.setAttribute('method', 'dialog');
+  errHeader.setAttribute('id', 'errHeader');
+  errMsg.setAttribute('id', 'errMsg');
+  errButt.setAttribute('id', 'errButt');
+  errButt.setAttribute('class', 'buttons');
 
   errPrompt.appendChild(errHeader);
   errPrompt.appendChild(errMsg);

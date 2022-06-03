@@ -62,6 +62,6 @@ signUpForm.addEventListener('submit', (e) => {
 surveyForm.addEventListener('submit', (e) => {
   // add firebase content here
   console.log(e);
-
+  e.preventDefault();
   window.location.href = '../html/index.html';
 });

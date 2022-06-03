@@ -89,6 +89,25 @@ async function createRecipeByUrl() {
 }
 
 async function init() {
+  // Error popup
+  const errPopup = document.getElementById("errDialog");
+  const errPrompt = document.createElement('form');
+  const errHeader = document.createElement('h3');
+  const errMsg = document.createElement('p');
+  const errButt = document.createElement('button');
+  errHeader.innerText = "Oh no, there\'s an error!";
+  errButt.innerHTML = "Okay";
+  errPrompt.setAttribute("method", "dialog");
+  errHeader.setAttribute("id", "errHeader");
+  errMsg.setAttribute("id", "errMsg");
+  errButt.setAttribute("id", "errButt");
+  errButt.setAttribute("class", "buttons");
+
+  errPrompt.appendChild(errHeader);
+  errPrompt.appendChild(errMsg);
+  errPrompt.appendChild(errButt);
+  errPopup.appendChild(errPrompt);
+
   const addIngredient = document.getElementById('addIngredient');
   addIngredient.addEventListener('click', addIng);
 
@@ -153,10 +172,8 @@ async function init() {
       await createRecipe(trimmedRecipe);
       window.location = `${window.location.origin}/root/html/RecipePage.html?id=${trimmedRecipe.id}`;
     } else {
-      // eslint-disable-next-line no-alert
-      alert(
-        `Your recipe was not created due to invalid inputs. \n\nError message: ${formValidateObject.errorMessage}`,
-      );
+      errMsg.innerText = formValidateObject.errorMessage;
+      errPopup.showModal();
     }
   });
 }

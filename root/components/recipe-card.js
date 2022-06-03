@@ -148,7 +148,6 @@ class RecipeCard extends HTMLElement {
 
     // Create tag buttons based on these tag properties
     const tagProperties = [
-      { id: 'cheap', name: 'Cheap' },
       { id: 'dairyFree', name: 'Dairy Free' },
       { id: 'fiveIngredientsOrLess', name: 'Easy' },
       { id: 'glutenFree', name: 'Gluten Free' },

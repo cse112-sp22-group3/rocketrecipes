@@ -119,7 +119,6 @@ async function init() {
     userGenRecipe.isFromInternet = false;
     userGenRecipe.vegetarian = document.getElementById('vegetarian').checked;
     userGenRecipe.vegan = document.getElementById('vegan').checked;
-    userGenRecipe.cheap = document.getElementById('cheap').checked;
     userGenRecipe.glutenFree = document.getElementById('glutenFree').checked;
     userGenRecipe.dairyFree = document.getElementById('dairyFree').checked;
     userGenRecipe.quickEat = document.getElementById('quickEat').checked;

@@ -5,20 +5,21 @@ import {
 } from './authUtils.js';
 
 const loginBtn = document.getElementById('login');
-const signupBtn = document.getElementById('signup');
+const signUpBtn = document.getElementById('signup');
 
 const loginForm = document.getElementById('login-user');
 const signUpForm = document.getElementById('signup-user');
+const surveyForm = document.getElementById('survey-user');
 
 const LOCAL_STORAGE_USER_KEY = 'uuid';
 
 loginBtn.addEventListener('click', (e) => {
   const parent = e.target.parentNode.parentNode;
-  signupBtn.parentNode.classList.add('slide-up');
+  signUpBtn.parentNode.classList.add('slide-up');
   parent.classList.remove('slide-up');
 });
 
-signupBtn.addEventListener('click', (e) => {
+signUpBtn.addEventListener('click', (e) => {
   const parent = e.target.parentNode;
   loginBtn.parentNode.parentNode.classList.add('slide-up');
   parent.classList.remove('slide-up');
@@ -47,7 +48,20 @@ signUpForm.addEventListener('submit', (e) => {
   signUp(email, password).then((response) => {
     if (response.localId) {
       localStorage.setItem(LOCAL_STORAGE_USER_KEY, response.localId);
-      window.location.href = '../html/index.html';
+      loginBtn.style.display = 'none';
+      signUpBtn.style.display = 'none';
+      loginForm.style.display = 'none';
+      signUpForm.style.display = 'none';
+
+      const survey = document.getElementsByClassName('survey')[0];
+      survey.style.display = 'inline';
     }
   });
+});
+
+surveyForm.addEventListener('submit', (e) => {
+  // add firebase content here
+  console.log(e);
+
+  window.location.href = '../html/index.html';
 });

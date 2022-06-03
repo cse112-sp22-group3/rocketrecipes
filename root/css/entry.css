@@ -269,3 +269,103 @@ body {
         width: 350px;
     }
 }
+
+.form-structor .survey {
+    display: none;
+    position: absolute;
+    top: 10%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fff;
+    z-index: 5;
+    transition: all 0.3s ease;
+}
+
+.form-structor .survey::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -20px;
+    transform: translate(-50%, 0);
+    background-color: #fff;
+    width: 200%;
+    height: 250px;
+    border-radius: 50%;
+    z-index: 4;
+    transition: all 0.3s ease;
+}
+
+.form-structor .survey .center {
+    position: absolute;
+    top: calc(40%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 70%;
+    z-index: 5;
+    transition: all 0.3s ease;
+}
+
+.form-structor .survey .center .form-title {
+    color: #000;
+    font-size: 1.7em;
+    text-align: center;
+    transform: translateX(-5%);
+}
+
+.form-structor .survey .center .form-title span {
+    color: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.form-structor .survey .center .form-holder {
+    border-radius: 15px;
+    background-color: #fff;
+    border: 1px solid #eee;
+    overflow: hidden;
+    /* margin-top: 50px; */
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.3s ease;
+}
+
+.form-structor .survey .center .form-holder .checkbox {
+    border: 0;
+    outline: none;
+    box-shadow: none;
+    display: block;
+    height: 30px;
+    line-height: 30px;
+    padding: 8px 15px;
+    border-bottom: 1px solid #eee;
+    width: 100%;
+    font-size: 12px;
+}
+
+.form-structor .survey .center .form-holder .checkbox:last-child {
+    border-bottom: 0;
+}
+
+.form-structor .survey .center .form-holder .checkbox::-webkit-input-placeholder {
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.form-structor .survey .center .submit-btn {
+    background-color: rgba(242, 78, 103, 1);
+    color: #ffffff;
+    border: 0;
+    border-radius: 15px;
+    display: block;
+    margin: 15px auto;
+    padding: 15px 45px;
+    width: 100%;
+    font-size: 13px;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.3s ease;
+}

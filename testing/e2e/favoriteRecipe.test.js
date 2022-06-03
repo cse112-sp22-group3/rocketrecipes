@@ -34,7 +34,7 @@ describe('favorite a recipe', () => {
     
 
     it('should display favorite recipe in my account', async () => {
-        const accLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#account"));
+        const accLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#account"));
         await accLink.click();
 
         await page.waitForSelector('body > main > div.FavoriteFood > recipe-card');

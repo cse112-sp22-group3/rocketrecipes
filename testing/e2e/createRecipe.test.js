@@ -14,7 +14,6 @@ beforeAll(async () => {
     }
 
 });
-rootUrl = 'deploy-preview-73--rocketrecipesv2.netlify.app';
 
 describe('create own recipe', () => {
     beforeAll(async () => {

@@ -14,7 +14,6 @@ beforeAll(async () => {
     }
 
 });
-
 describe('navigate through pages', () => {
     beforeAll(async () => {
         await page.goto(`http://${rootUrl}/root/html/index.html`);

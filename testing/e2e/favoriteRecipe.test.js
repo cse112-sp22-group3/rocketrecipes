@@ -12,7 +12,6 @@ beforeAll(async () => {
     else {
       console.log('not in pr');
     }
-
 });
 
 describe('favorite a recipe', () => {
@@ -54,7 +53,7 @@ describe('favorite a recipe', () => {
     });
 
     it('should remove recipe from my account', async () => {
-        const accLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#account"));
+        const accLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#account"));
         await accLink.click();
 
         await page.waitForSelector('body > main > div.FavoriteFood');

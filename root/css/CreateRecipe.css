@@ -80,6 +80,12 @@ label > input {
   border-radius: 15px;
 }
 
+.urlButton {
+    height: 35px;
+    border-radius: 5px;
+    font-size: 1em;
+  }
+
 @media only screen and (max-width: 999px) {
   input {
     font-size: 0.80em;
@@ -199,12 +205,20 @@ label > input {
   }
 
   .midPart h2 {
+    margin-top: 200px;
     font-size: 3em;
     text-align: left;
     clear: both;
   }
 
   .recipeName {
+    width: 60%;
+    height: 35px;
+    border-radius: 15px;
+    font-size: 1em;
+  }
+
+   .urlText {
     width: 60%;
     height: 35px;
     border-radius: 15px;

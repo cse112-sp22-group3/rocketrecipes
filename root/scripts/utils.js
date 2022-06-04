@@ -1,11 +1,16 @@
 /** @module utils */
+/* global DOMPurify */
 /* eslint-disable no-mixed-operators */
+// eslint-disable-next-line import/extensions
+import './purify.js';
+
 const COMMUNITY_HALF_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_2.json';
 const COMMUNITY_THIRD_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_3.json';
 const COMMUNITY_QUARTER_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_4.json';
 const COMMUNITY_TENTH_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_10.json';
 const LOCAL_STORAGE_ALL_RECIPES_KEY = 'allRecipes';
 const LOCAL_STORAGE_FAVORITED_RECIPES_KEY = 'favoritedRecipes';
+const SPOONACULAR_API_KEY = 'c6ae2142af6b40ba99198aa307725180';
 
 /**
  * @async
@@ -360,25 +365,71 @@ export function validURL(str) {
 }
 
 /**
+ * A helper function to purify potential HTML
+ * @param {String} dirty dirty code
+ * @returns {String} purified code
+ */
+export function purifyDOM(dirty) {
+  return DOMPurify.sanitize(dirty, { ALLOWED_TAGS: [] });
+}
+
+/**
+ * A helper function to remove whitespace
+ * @param {String} dirty dirty inputs
+ * @returns {String} whitespaced stripped text
+ */
+export function whitespaceTrimmer(dirty) {
+  return dirty.replace(/\s+/g, ' ').trim();
+}
+
+/**
  * A helper function to validate form contents
  * @param {Object} recipe recipe object to validate
  * @returns {Object} object containing values for if the form is valid, and error messages otherwise
  */
 export function validateForm(recipe) {
-  if (recipe.title === '' || recipe.summary === '') {
-    return { valid: false, errorMessage: 'Title is empty' };
+  if (!recipe.title || recipe.title === '' || /\d/.test(recipe.title)) {
+    return { valid: false, errorMessage: 'Title is invalid' };
   }
-  if (recipe.summary === '') {
-    return { valid: false, errorMessage: 'Summary is empty' };
+  if (!recipe.summary || recipe.summary === '') {
+    return { valid: false, errorMessage: 'Summary is invalid' };
   }
-  if (recipe.servings === '') {
-    return { valid: false, errorMessage: 'Servings field is empty' };
+  if (!recipe.servings || recipe.servings === '' || Number.isNaN(recipe.servings)) {
+    return { valid: false, errorMessage: 'Servings field is invalid' };
   }
-  if (recipe.readyInMinutes === '') {
-    return { valid: false, errorMessage: 'Time field is empty' };
+  if (!recipe.readyInMinutes || recipe.readyInMinutes === ''
+    || Number.isNaN(recipe.readyInMinutes)) {
+    return { valid: false, errorMessage: 'Time field is invalid' };
   }
   if (recipe.image !== '' && !validURL(recipe.image)) {
     return { valid: false, errorMessage: 'Image is not a valid link' };
+  }
+  if (!recipe.ingredients || recipe.ingredients.length === 0) {
+    return { valid: false, errorMessage: 'Must have at least 1 ingredient' };
+  }
+
+  let index = 0;
+  for (index = 0; index < recipe.ingredients.length; index += 1) {
+    const ingredient = recipe.ingredients[index];
+    if (!ingredient.amount || ingredient.amount === '' || Number.isNaN(ingredient.amount)) {
+      return { valid: false, errorMessage: `Ingredient ${index + 1} amount is not valid` };
+    }
+    if (!ingredient.name || ingredient.name.length === 0 || /\d/.test(ingredient.name)) {
+      return { valid: false, errorMessage: `Ingredient ${index + 1} name is not valid` };
+    }
+    if (!ingredient.unit || ingredient.unit.length === 0 || /\d/.test(ingredient.unit)) {
+      return { valid: false, errorMessage: `Ingredient ${index + 1} unit is not valid` };
+    }
+  }
+
+  if (!recipe.steps || recipe.steps.length === 0) {
+    return { valid: false, errorMessage: 'Must have at least 1 step' };
+  }
+  for (index = 0; index < recipe.steps.length; index += 1) {
+    const step = recipe.steps[index];
+    if (!step || step.length === 0) {
+      return { valid: false, errorMessage: `Step ${index + 1} cannot be empty` };
+    }
   }
 
   return { valid: true, errorMessage: '' };
@@ -405,4 +456,71 @@ export function trimRecipe(recipe) {
     adjustedRecipe.image = 'https://media.istockphoto.com/photos/white-plate-wooden-table-tablecloth-rustic-wooden-clean-copy-freepik-picture-id1170315961?k=20&m=1170315961&s=612x612&w=0&h=nCCDMyt_1sMF3PdDurLw2pcTPgu7YBzjCaZO6z78CxE=';
   }
   return adjustedRecipe;
+}
+
+async function parseRecipe(baseRecipe) {
+  const scrapedRecipe = baseRecipe;
+  const minutesToPrepare = scrapedRecipe.readyInMinutes;
+  const numIngredients = scrapedRecipe.extendedIngredients.length;
+
+  const numSteps = scrapedRecipe.analyzedInstructions[0].steps.length;
+  const isEasy = numSteps <= 5 && numIngredients <= 5 && minutesToPrepare <= 60;
+
+  const parsedRecipe = {};
+  parsedRecipe.id = createId();
+  parsedRecipe.title = scrapedRecipe.title;
+  parsedRecipe.readyInMinutes = scrapedRecipe.readyInMinutes;
+  parsedRecipe.servings = scrapedRecipe.servings;
+  parsedRecipe.image = scrapedRecipe.image;
+  parsedRecipe.uploader = 'From the Internet';
+  parsedRecipe.isFromInternet = true;
+  parsedRecipe.vegetarian = scrapedRecipe.vegetarian;
+  parsedRecipe.vegan = scrapedRecipe.vegan;
+  parsedRecipe.glutenFree = scrapedRecipe.glutenFree;
+  parsedRecipe.dairyFree = scrapedRecipe.dairyFree;
+  parsedRecipe.quickEat = minutesToPrepare > 30;
+  parsedRecipe.fiveIngredientsOrLess = numIngredients <= 5;
+  parsedRecipe.easyCook = isEasy;
+
+  parsedRecipe.ingredients = [];
+
+  const scrapedIngredients = scrapedRecipe.extendedIngredients;
+
+  for (let i = 0; i < scrapedIngredients.length; i += 1) {
+    const currIngredient = {};
+    currIngredient.name = scrapedIngredients[i].nameClean;
+    currIngredient.amount = scrapedIngredients[i].amount;
+    currIngredient.unit = scrapedIngredients[i].unit;
+
+    parsedRecipe.ingredients.push(currIngredient);
+  }
+
+  parsedRecipe.summary = scrapedRecipe.summary;
+  const scrapedSteps = scrapedRecipe.analyzedInstructions[0].steps;
+
+  parsedRecipe.steps = [];
+
+  for (let i = 0; i < scrapedSteps.length; i += 1) {
+    const currStep = {};
+
+    currStep.number = scrapedSteps[i].number;
+    currStep.step = scrapedSteps[i].step;
+
+    parsedRecipe.steps.push(currStep);
+  }
+  return parsedRecipe;
+}
+
+export async function getRecipeByUrl(url) {
+  const requestUrl = `https://api.spoonacular.com/recipes/extract?url=${url}&apiKey=${SPOONACULAR_API_KEY}`;
+  const response = await fetch(requestUrl);
+  const json = await response.json();
+  // parse response into our format
+  let recipe = await parseRecipe(json);
+  recipe = JSON.parse(JSON.stringify(recipe).replace(/:null/gi, ':""'));
+  if (await createRecipe(recipe)) {
+    return recipe.id;
+  }
+
+  return false;
 }

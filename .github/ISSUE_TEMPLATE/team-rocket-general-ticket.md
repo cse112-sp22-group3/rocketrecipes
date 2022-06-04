@@ -1,7 +1,7 @@
 ---
 name: Team Rocket General Ticket
 about: Describe the desired change/fix.
-title: 'TEAMROCKET: Generic Ticket'
+title: 'TEAMROCKET#X: Generic Ticket'
 labels: ''
 assignees: ''
 
@@ -23,7 +23,7 @@ A clear and concise description of a possible solution or even points of researc
 Add any other context or screenshots about the feature request here.
 
 **Reviewer**
-lmao you (or someone else if you don't want to)
+Pick 2 people who may have knowledge of the area of code the issue is in
 
 **Assignee**
-tbd at sprints
+TBD

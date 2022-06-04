@@ -1,7 +1,11 @@
+/* eslint-disable linebreak-style */
+/* eslint-disable import/extensions */
 // custom-navbar.js
+import { logOut } from '../scripts/authUtils.js';
 
 class Navbar extends HTMLElement {
   constructor() {
+    const LOCAL_STORAGE_USER_KEY = 'uuid';
     super(); // Inherit everything from HTMLElement
 
     // Attach the shadow DOM and append this markup / stlying inside
@@ -11,10 +15,25 @@ class Navbar extends HTMLElement {
     // create styles for navbar
     const style = document.createElement('style');
     style.innerHTML = `
+        .site-title {
+            padding-right: 20px;
+        }
+        #navbar-id {
+            position: fixed;
+            width: 100%;
+            transition: 0.4s; 
+            /* background
+            background-image: url('../media/nav_background.png');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-opacity: 60%;
+            */
+        }
         .navbar-container {
+            padding: 50px 10px;
             left: 0;
             right: 0;
-            padding: 0 15px;
             background-color: white;
             margin: 0 auto;
             width: 100%;
@@ -24,66 +43,121 @@ class Navbar extends HTMLElement {
             display: flex;
             flex-direciton: row;
             justify-content: space-between;
-            height: 80px;
             font-size: 20px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
             z-index: 1000;
+            height: 55px;
         }
         .navbar-container a{
-          background-color: white;
+          color: black;
+          text-decoration: none;
         }
         .navbar-image {
             text-decoration: none;
-            width: 75px;
-            height 75px;
-            padding: 5px 0 0 10px;
         }
         .navbar-image img{
             object-fit: cover;
+            width: 400px;
+            height: 80px;
         }
         .navbar-text-link {
-            background-color: #F48395;
             display: flex;
             text-align: center;
             align-items: center;
             justify-content: center;
             width: 130px;
-            padding: 0 20px;
-            height: 80px;
+            padding: 0 10px;
+            height: 50px;
             color: black;
             text-decoration: none;
-            background-color: white;
+            background-color: none;
+            text-transform: uppercase;
+            font-size: 15px;
         }
         .navbar-text-link:hover {
             cursor: pointer;
-            background-color: #F48395;
+            background-color: white;
+            opacity: 0.6;
+        }
+        .scrolling-active {
+            padding: 8px 10px;
+        }
+        .scrolling-active .navbar-image img{
+            object-fit: cover;
+            padding-top: 12px;
+            width: 55px;
+            height: 55px;
         }
         .mobile-navbar-expanded {
             position: absolute;
-            width: 100%;
-            top: 80px;
+            width: 30%;
+            top: 100px;
+            right: 0px;
             display: flex;
             flex-direction: column;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
+            background: white;
         }
         .mobile-link {
             width: 100%;
             padding: 0;
         }
         .mobile-navbar-button {
-            width: 48px;
-            height: 48px;
-            background: url('https://api.iconify.design/icon-park-outline/hamburger-button.svg?color=%23999&height=48') no-repeat center center / contain;
-            margin-right: 10px;
+          width: 36px;
+          height: 36px;
+          background: url('https://api.iconify.design/icon-park-outline/hamburger-button.svg?color=%23999&height=48') no-repeat center center / contain;
+          margin-right: 10px;
+        }
+        p.mobile { 
+          font-size: 10px;
+        }
+        @media (max-width: 1690px) {
+            .navbar-text-link {
+              width: 120px;
+              font-size: 15px;
+              padding: 5px;
+            }
+        }
+        /*
+        @media (max-width: 1300px) {
+            .site-title {
+              font-weight: 800;
+              text-align: left;
+              text-transform: uppercase;
+              top: 7%;
+              left: 231px;
+            }
+            .site-description {
+              margin: 5px;
+              left: 251px;
+            }
+        }
+        */
+        @media (max-width: 950px) {
+          .navbar-text-link {
+            font-size: 12px;
+            width: 90px;
+          }
+          .navbar-image img{
+            object-fit: cover;
+            width: 250px;
+            height: 50px;
+          }
         }
         @media (max-width: 650px) {
-            .navbar-links-container-desktop {
-                display: none;
-            }
-            .navbar-links-container-mobile {
-                display: flex;
-            }
-            
+          .navbar-links-container-desktop {
+              display: none;
+          }
+          .navbar-links-container-mobile {
+              display: flex;
+          }
+        } 
+        @media screen and (max-width: 640px) {
+          .navbar-image img{
+            object-fit: cover;
+            width: 250px;
+            height: 50px;
+        }
         }
         @media (min-width: 651px) {
             .navbar-links-container-desktop {
@@ -95,29 +169,46 @@ class Navbar extends HTMLElement {
                 display: none;
             }
         }
-        
     `;
 
     // create html for navbar
     const navbarContainer = document.createElement('div');
+    navbarContainer.setAttribute('id', 'navbar-id');
     navbarContainer.innerHTML = `
-        <a class="navbar-image" href="./index.html"> 
-            <img src="../media/teamLogo.png" width="68" height="68" > 
-        </a>
-        <div class="navbar-links-container-desktop"> 
-            <a class="navbar-text-link" id="search" href="./searchpage.html">Search</a>
-            <a class="navbar-text-link" id="create" href="./CreateRecipe.html">Create Recipe</a>
-            <a class="navbar-text-link" id="account" href="./generalAccount.html">My Account</a>
+        <div class='site-title'>
+            <h1 class='site-header'>
+                  <a class='navbar-image' href='./index.html'> 
+                      <img class='logo' src='../media/header-logo.png'> 
+                  </a>
+            </h1>
         </div>
-        <div class="navbar-links-container-mobile"> 
-            <div class="mobile-navbar-button"></div>
+        <div class='navbar-links-container-desktop'> 
+            <a class='navbar-text-link' id='search' href='./searchpage.html'>Search</a>
+            <a class='navbar-text-link' id='create' href='./CreateRecipe.html'>Create Recipe</a>
+            <a class='navbar-text-link' id='account' href='./generalAccount.html'>My Account</a>
+            <a class="navbar-text-link" id="sign-in" href="./entry.html">Sign In</a>
         </div>
-        <div class="mobile-navbar-expanded">
-            <a class="navbar-text-link mobile-link" id="search-mobile" href="./searchpage.html">Search</a>
-            <a class="navbar-text-link mobile-link" id="create-mobile" href="./CreateRecipe.html">Create Recipe</a>
-            <a class="navbar-text-link mobile-link" id="account-mobile" href="./generalAccount.html">My Account</a>
+        <div class='navbar-links-container-mobile'> 
+            <div class='mobile-navbar-button'></div>
+        </div>
+        <div class='mobile-navbar-expanded'>
+            <a class='navbar-text-link mobile-link' id='search-mobile' href='./searchpage.html'>Search</a>
+            <a class='navbar-text-link mobile-link' id='create-mobile' href='./CreateRecipe.html'>Create Recipe</a>
+            <a class='navbar-text-link mobile-link' id='account-mobile' href='./generalAccount.html'>My Account</a>
+            <a class="navbar-text-link mobile-link" id="account-mobile" href="./entry.html">Sign In</a>
         </div>
     `;
+
+    if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+      navbarContainer.querySelector('#sign-in').textContent = 'Logout';
+    }
+
+    navbarContainer.querySelector('#sign-in').addEventListener('click', () => {
+      if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+        navbarContainer.querySelector('#sign-in').textContent = 'Sign In';
+        logOut();
+      }
+    });
 
     const navbarLinksBody = navbarContainer.querySelector('.mobile-navbar-expanded');
     navbarLinksBody.style.display = 'none'; // hide mobile navbar links on new page
@@ -130,6 +221,7 @@ class Navbar extends HTMLElement {
       }
     });
 
+    // eslint-disable-next-line linebreak-style
     window.addEventListener('resize', () => {
       if (window.innerWidth >= 650) {
         navbarLinksBody.style.display = 'none';
@@ -137,6 +229,17 @@ class Navbar extends HTMLElement {
     });
 
     navbarContainer.classList.add('navbar-container');
+
+    const initialSrc = '../media/header-logo.png';
+    const scrollSrc = '../media/teamLogo.png';
+    const navLogo = navbarContainer.querySelector('.logo');
+    window.addEventListener('scroll', () => {
+      const windowPosition = window.scrollY > 0;
+      navbarContainer.classList.toggle('scrolling-active', windowPosition);
+      if (windowPosition) {
+        navLogo.setAttribute('src', scrollSrc);
+      } else navLogo.setAttribute('src', initialSrc);
+    });
 
     const page = this.getAttribute('page');
     switch (page) {

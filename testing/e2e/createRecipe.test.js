@@ -14,6 +14,7 @@ beforeAll(async () => {
     }
 
 });
+rootUrl = 'deploy-preview-73--rocketrecipesv2.netlify.app';
 
 describe('create own recipe', () => {
     beforeAll(async () => {
@@ -24,17 +25,17 @@ describe('create own recipe', () => {
         await page.click('#addIngredient');
         await page.type('#amount1', '1');
         await page.type('#units1', 'cup');
-        await page.type('#ing1', 'Ingredient 1');
+        await page.type('#ing1', 'Ingredient');
 
         await page.click('#addIngredient');
         await page.type('#amount2', '1');
         await page.type('#units2', 'cup');
-        await page.type('#ing2', 'Ingredient 2');
+        await page.type('#ing2', 'Ingredient');
 
         await page.click('#addIngredient');
         await page.type('#amount3', '1');
         await page.type('#units3', 'tbs');
-        await page.type('#ing3', 'Ingredient 3');
+        await page.type('#ing3', 'Ingredient');
 
         const ingredients = await page.$$('.Ingredient');
         expect(ingredients.length).toBe(3);
@@ -76,6 +77,7 @@ describe('create own recipe', () => {
     });
 
     it('should direct to recipe page', async () => {
+
         await page.waitForSelector('recipe-card');
         await expect(page.title()).resolves.toMatch('Recipe Name Example');
     });

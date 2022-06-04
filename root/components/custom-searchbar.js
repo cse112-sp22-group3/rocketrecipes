@@ -1,7 +1,7 @@
+/* eslint-disable linebreak-style */
 // creates form with all checkboxes for filtering search
 function createCheckboxes() {
   const tagProperties = [
-    { id: 'cheap', name: 'Cheap' },
     { id: 'dairyFree', name: 'Dairy Free' },
     { id: 'fiveIngredientsOrLess', name: 'Easy' },
     { id: 'glutenFree', name: 'Gluten Free' },
@@ -14,7 +14,6 @@ function createCheckboxes() {
   const checkboxContainer = document.createElement('div');
   checkboxContainer.id = 'checkboxes';
   checkboxContainer.classList.add('checkboxes');
-
   tagProperties.forEach((tag) => {
     const func = document.createElement('div');
     func.classList.add('checked');
@@ -92,15 +91,15 @@ class Searchbar extends HTMLElement {
               .button1{
                 margin-top: 2%;
                 margin-bottom: 3%;
-                float: center;
-                /* position: absolute; */
-                left: 0%;
+                float: left;
+                position: absolute; 
+                left: 2%;
                 border:none;
-                background-color: #FEF2E6;
-                text-decoration: underline;
-                font-size: 20px;
-                margin-left: 0%;
+                background-color: #DEDEDE;
+                font-size: 12px;
+                margin-left: 8%;
                 cursor: pointer;
+                font-family: 'Nunito', sans-serif !important;
               }
               .checked{
                 display: inline-block;
@@ -125,12 +124,12 @@ class Searchbar extends HTMLElement {
                 margin-top: 2%;
                 margin-bottom: 3%;
                 float: left;
-                /* position: absolute; */
+                position: absolute; 
                 left: 2%;
                 border:none;
                 background-color: #DEDEDE;
                 font-size: 12px;
-                margin-left: 8%;
+                margin-left: 20%;
                 cursor: pointer;
                 font-family: 'Nunito', sans-serif !important;
               }
@@ -153,10 +152,12 @@ class Searchbar extends HTMLElement {
               }
             }
             .bar{
-                margin:0 auto;
-                // width:700px;
-                border-radius:30px;
-                border:1px solid ;
+                margin: 0 auto;
+                // width: 700px;
+                height: 55px;
+                border-radius: 0px;
+                color: #D3D3D3;
+                border: 1px solid;
                 background-color: white;
             }
             .bar:hover{
@@ -172,12 +173,11 @@ class Searchbar extends HTMLElement {
                 width:80%;
                 font-size:16px;
                 outline: none;
-                padding-bottom:20px;
                 background-color: white;
 
             }
             .search{
-                padding-top:10px;
+                padding-top:7px;
                 height:16px;
                 position:relative;
                 display:inline-block;
@@ -224,6 +224,7 @@ class Searchbar extends HTMLElement {
             <img class="search" src="../media/search.png" alt="Search"/>
         </a>
     `;
+    // searchButton.style.paddingTop = 'auto';
 
     form.appendChild(searchInput);
     form.appendChild(searchButton);

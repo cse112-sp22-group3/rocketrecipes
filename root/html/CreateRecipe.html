@@ -18,6 +18,16 @@
     <main>
       <div class="midPart">
         <h2 id="header">Create your recipe:</h2>
+
+        <input
+          class="urlText"
+          type="text"
+          id="urlText"
+          placeholder="Website Link"
+        />
+        <button id="urlButton" class="urlButton">Import by URL</button>
+        <br />
+        <br />
         <input
           class="recipeName"
           type="text"
@@ -71,7 +81,6 @@
         </div>
 
         <form input="checkboxes" class="checkboxes">
-          <label class="container"><input id="cheap" name="Cheap" type="checkbox">Cheap</label>
           <label class="container"><input id="vegetarian" name="Vegetarian" type="checkbox">Vegetarian</label>
           <label class="container"><input id="vegan" name="Vegan" type="checkbox">Vegan</label>
           <label class="container"><input id="glutenFree" name="Gluten Free" type="checkbox">Gluten Free</label>

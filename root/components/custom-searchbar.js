@@ -2,7 +2,6 @@
 // creates form with all checkboxes for filtering search
 function createCheckboxes() {
   const tagProperties = [
-    { id: 'cheap', name: 'Cheap' },
     { id: 'dairyFree', name: 'Dairy Free' },
     { id: 'fiveIngredientsOrLess', name: 'Easy' },
     { id: 'glutenFree', name: 'Gluten Free' },

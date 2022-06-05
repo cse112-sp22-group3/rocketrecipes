@@ -51,7 +51,7 @@ async function validateRecipes() {
     let invalidRecipe = false;
     if (recipe.title == null || recipe.id == null || recipe.readyInMinutes == null
       || recipe.servings == null || recipe.image == null || recipe.uploader == null
-      || recipe.vegetarian == null || recipe.vegan || recipe.cheap == null
+      || recipe.vegetarian == null || recipe.vegan
       || recipe.glutenFree == null || recipe.isFromInternet == null || recipe.dairyFree == null
       || recipe.quickEat == null || recipe.fiveIngredientsOrLess == null
       || recipe.summary == null) {

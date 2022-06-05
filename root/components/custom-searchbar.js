@@ -127,7 +127,7 @@ class Searchbar extends HTMLElement {
                 border:none;
                 background-color: #DEDEDE;
                 font-size: 12px;
-                margin-left: 2%;
+                margin-left: 20%;
                 cursor: pointer;
                 font-family: 'Nunito', sans-serif !important;
                 z-index: 1;

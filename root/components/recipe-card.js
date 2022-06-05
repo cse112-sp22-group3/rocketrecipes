@@ -65,7 +65,7 @@ class RecipeCard extends HTMLElement {
           font-size: 11px;
         }
         .recipe-card .card-body p {
-          font-size: 11px;
+          font-size:11px;
         }
         .tag{
           font-size:8px;
@@ -154,6 +154,7 @@ class RecipeCard extends HTMLElement {
 
     const imageElement = card.querySelector('img');
     imageElement.src = data.image || '';
+    imageElement.alt = data.title || '';
 
     // Create tag buttons based on these tag properties
     const tagProperties = [

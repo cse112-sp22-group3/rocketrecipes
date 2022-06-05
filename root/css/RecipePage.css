@@ -104,14 +104,14 @@
   background-color: #222;
 }
 @media (max-width: 950px) {
-#recipe-title {
-  position:relative;
-  left:40px;
-  margin: 10px 0;
-  font-weight: bold;
-  font-size: 25px;
-  line-height: 55px;
-}
+  #recipe-title {
+    position:relative;
+    left:40px;
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 55px;
+  }
 }
 
 @media (min-width: 950px){

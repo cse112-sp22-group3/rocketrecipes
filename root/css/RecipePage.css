@@ -221,6 +221,11 @@ ul li.checkbox-checked {
   background-color: white;
   color: black;
 }
+
+.checkbox-box:checked::after {
+  
+  background-color: black;
+}
 /**
 ul li:hover {
   background: #ddd; 

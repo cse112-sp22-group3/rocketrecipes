@@ -29,12 +29,12 @@ class Navbar extends HTMLElement {
             background-size: cover;
             background-opacity: 60%;
             */
+            background-color: #white;
         }
         .navbar-container {
             padding: 50px 10px;
             left: 0;
             right: 0;
-            background-color: white;
             margin: 0 auto;
             width: 100%;
             align-items: center;
@@ -47,6 +47,7 @@ class Navbar extends HTMLElement {
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
             z-index: 1000;
             height: 55px;
+            background-color: #white;
         }
         .navbar-container a{
           color: black;

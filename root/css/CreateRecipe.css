@@ -99,7 +99,8 @@ label > input {
 
   .midPart h2 {
     font-size: 2em;
-    text-align: center;
+    text-align: left;
+    padding-top: 100px;
     clear: both;
   }
 

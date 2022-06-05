@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+* {
+  font-family: inherit;
+}
+
 @media only screen and (max-width: 700px) {
   .foodList {
     justify-content: center;
@@ -59,6 +65,11 @@ main {
     margin-left: 10%;
     text-align: left;
     margin-bottom: 2%;
+}
+#survey { 
+  margin-left: 10%;
+  text-align: left;
+  margin-bottom: 2%;
 }
 span {
   margin-top: center;
@@ -139,4 +150,11 @@ span {
 .foodPic {
     width: 90%;
     position: relative;
+}
+.survey-btn {
+  width: 200px;
+  height: 40px;
+  font-size: 16;
+  border-radius: 12px;
+  background-color: #white;
 }

@@ -5,18 +5,19 @@ const SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition
 const SpeechGrammarList = window.SpeechGrammarList || webkitSpeechGrammarList
 const SpeechRecognitionEvent = window.SpeechRecognitionEvent || webkitSpeechRecognitionEvent
 
-//const commands = [ 'search', 'next page', 'previous page', 'select', 'ingredients', 'steps'];
-//const grammar = '#JSGF V1.0; grammar colors; public <color> = ' + commands.join(' | ') + ' ;';
+export const ENABLE_VOICE_LOGGING = false;
 
 const recognition = new SpeechRecognition();
-//const speechRecognitionList = new SpeechGrammarList();
-//speechRecognitionList.addFromString(grammar, 1);
-//recognition.grammars = speechRecognitionList;
-recognition.continuous = false;
+recognition.continuous = true;
 recognition.lang = 'en-US';
 recognition.interimResults = true;
 recognition.maxAlternatives = 1;
 
+/**
+ * Callback function that handles all web speech API errors.
+ * 
+ * @param {SpeachRecognitionEvent} event object from Web Speech API
+ */
 recognition.onerror = function(event) {
   switch(event.error) {
     case 'no-speech':
@@ -26,7 +27,11 @@ recognition.onerror = function(event) {
     case 'aborted':
       // Speech input was aborted in some manner, perhaps by some user-agent-specific behavior like
       // a button the user can press to cancel speech input.
-      console.error('Speech Recognition Error Event: ' + event.error + ' ' + event.message);
+
+      // This does not indicate an error.
+      if(ENABLE_VOICE_LOGGING) {
+        console.log('Speech recogniton aborted.');
+      }
       break;
     case 'audio-capture':
       // Audio capture failed.
@@ -66,28 +71,79 @@ recognition.onerror = function(event) {
   }
 };
 
-var onSpeechEndCallbackFunc = () => { };
+var onSpeechEndCallbackFunc = null;
+var matchCallbackUtil = null;
+var voiceButtonPointerUtil = null;
 
+/**
+ * Calls the callback function provided by startVoiceRecogniton()
+ */
 recognition.onspeechend = function() {
   onSpeechEndCallbackFunc();
-  console.log('Speech recognition stopped.');
-  recognition.stop();
+  if(ENABLE_VOICE_LOGGING) {
+    console.log('Speech ended.');
+  }
 };
 
+/**
+ * Default callback function to handle noMatch events. These events should not happen
+ * becuase we are not using a grammer.
+ * 
+ * @param {SpeachRecognitionEvent} event object from Web Speech API
+ */
 export const defaultNoMatchCallback = function(event) {
-  console.log('Did not match a command.');
+  if(ENABLE_VOICE_LOGGING) {
+    console.log('Did not match a command.');
+  }
+}
+
+/**
+ * Stops voice recogniton when called. Web Speech still returns a final transcript. 
+ */
+export function stopVoiceRecognition() {
+  recognition.stop();
+  if(ENABLE_VOICE_LOGGING) {
+    console.log('Speech recogniton stopped.');
+  }
+}
+
+/**
+ * Stops voice recognition when called. Web Speech does not return a final transcript.
+ */
+export function abortVoiceRecognition() {
+  recognition.abort();
+  if(ENABLE_VOICE_LOGGING) {
+    console.log('Speech recogniton aborted.');
+  }
+}
+
+/**
+ * Callback function passed from startVoiceRecogniton(). Uses the provided Voice Button object.
+ *  
+ * @param {SpeachRecognitionEvent} event object from Web Speech API
+ */
+function onResultCallback(event) {
+  matchCallbackUtil(voiceButtonPointerUtil, event);
 }
 
 /**
  * Starts voice recognition. 
  * 
+* @param {VoiceButton} voiceButtonPointer a `this` object of type VoiceButton passed from
+* the VoiceButton constructor.   
  * @param {void func(event)} matchCallback function called when a result is recognized. 
  * @param {void func(event)} noMatchCallback function called when no result is recognized. 
+ * @param {void func()} noMatchCallback function called when speech detection is stopped. 
  */
-export function startVoiceRecognition(matchCallback, noMatchCallBack, onSpeechEndCallback) {
-  recognition.onresult = matchCallback;
+export function startVoiceRecognition(voiceButtonPointer, matchCallback, noMatchCallBack, 
+                                      onSpeechEndCallback) {
+  matchCallbackUtil = matchCallback;
+  voiceButtonPointerUtil = voiceButtonPointer;
+  recognition.onresult = onResultCallback;
   recognition.onnomatch = noMatchCallBack;
   onSpeechEndCallbackFunc= onSpeechEndCallback;
   recognition.start();
-  console.log('Speech recogniton activated.');
+  if(ENABLE_VOICE_LOGGING) {
+    console.log('Speech recogniton activated.');
+  }
 }

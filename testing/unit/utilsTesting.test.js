@@ -28,12 +28,6 @@ test('assert getAllRecipes() succeeds', async () => {
     expect(recipes.length).toBe(3);
 });
 
-test('assert readRecipe() returns correct recipe', async () => {
-    const recipe = await utilFunctions.readRecipe('b1ffbdfcc516588601f4ee651b5ed684');
-    expect(recipe.title).toBe('Slow Cooker Chicken and Dumplings');
-    expect(recipe.id).toBe('b1ffbdfcc516588601f4ee651b5ed684');
-});
-
 test('assert updateRecipe() does not create new recipe', async () => {
   const newRecipe = updatingRecipe;
   const allRecipesOriginal = await utilFunctions.getAllRecipes();
@@ -44,114 +38,6 @@ test('assert updateRecipe() does not create new recipe', async () => {
   expect(allRecipes.length).toBe(allRecipesOriginal.length);
 });
 
-test('assert updateRecipe() updates correct recipe', async () => {
-  const newRecipe = updatingRecipe;
-  newRecipe.id = 'b1ffbdfcc516588601f4ee651b5ed684';
-  await utilFunctions.updateRecipe(newRecipe);
-  
-  const allRecipes = await utilFunctions.getAllRecipes();
-
-  for (let i = 0; i < allRecipes.length; i += 1) {
-    if (allRecipes[i].id === newRecipe.id) {
-      expect(allRecipes[i]).toStrictEqual(newRecipe);
-    }
-  }
-});
-
-test('assert createRecipe() succeeds', async () => {
-  const originalRecipes = await utilFunctions.getAllRecipes();
-  await utilFunctions.createRecipe(creatingRecipe);
-  const newRecipes = await utilFunctions.getAllRecipes();
-
-  expect(originalRecipes.length).toBe(newRecipes.length-1);
-
-  for (let i = 0; i < newRecipes.length; i += 1) {
-    if (newRecipes[i].id === creatingRecipe.id) {
-      expect(newRecipes[i]).toStrictEqual(creatingRecipe);
-    }
-  }
-});
-
-test('assert createRecipe() with duplicate recipe fails', async () => {
-  const allRecipes = await utilFunctions.getAllRecipes();
-  const existingRecipe = allRecipes[1];
-
-  const created = await utilFunctions.createRecipe(existingRecipe);
-  expect(created).toBe(false);
-});
-
-test('assert deleteRecipe() succeeds', async () => {
-  const allRecipes = await utilFunctions.getAllRecipes();
-  const del = await utilFunctions.deleteRecipe('b1ffbdfcc516588601f4ee651b5ed684');
-  expect(del).toBe(true);
-
-  const newRecipes = await utilFunctions.getAllRecipes();
-  expect(newRecipes.length).toBe(allRecipes.length-1);
-
-  for (let i = 0; i < newRecipes.length; i += 1) {
-    expect(newRecipes[i].id).not.toBe('b1ffbdfcc516588601f4ee651b5ed684');
-  }
-});
-
-test('assert deleteRecipe() with invalid id fails', async () => {
-  const allRecipes = await utilFunctions.getAllRecipes();
-  const del = await utilFunctions.deleteRecipe('1');
-  expect(del).toBe(false);
-
-  const newRecipes = await utilFunctions.getAllRecipes();
-  expect(newRecipes.length).toBe(allRecipes.length);
-});
-
-test('assert favorited recipe initializes to empty', async () => {
-  const favoritedRecipes = await utilFunctions.getFavoriteRecipes();
-  expect(favoritedRecipes.length).toBe(0);
-});
-
-test('assert addFavoriteRecipe() on invalid id fails', async () => {
-  const favoritedRecipes = await utilFunctions.getFavoriteRecipes();
-  await utilFunctions.addFavoriteRecipe('1');
-  const newFavoritedRecipes = await utilFunctions.getFavoriteRecipes();
-
-  expect(newFavoritedRecipes).toStrictEqual(favoritedRecipes);
-});
-
-test('assert addFavoriteRecipe() on valid id succeeds', async () => {
-  const favoritedRecipes = await utilFunctions.getFavoriteRecipes();
-  const add = await utilFunctions.addFavoriteRecipe('ae94d68f70216f7017e6056291dc2682');
-  expect(add).toBe(true);
-
-  const newFavoritedRecipes = await utilFunctions.getFavoriteRecipes();
-  expect(newFavoritedRecipes.length).toBe(favoritedRecipes.length+1);
-  expect(newFavoritedRecipes).toStrictEqual(['ae94d68f70216f7017e6056291dc2682']);
-});
-
-test('assert deleteFavoriteRecipe() on invalid id fails', async () => {
-  const favoritedRecipes = await utilFunctions.getFavoriteRecipes();
-  const del = await utilFunctions.deleteFavoriteRecipe('1');
-  expect(del).toBe(false);
-
-  const newFavoritedRecipes = await utilFunctions.getFavoriteRecipes();
-  expect(newFavoritedRecipes).toStrictEqual(favoritedRecipes);
-});
-
-test('assert deleteFavoriteRecipe() on valid id succeeds', async () => {
-  const del = await utilFunctions.deleteFavoriteRecipe('ae94d68f70216f7017e6056291dc2682');
-  expect(del).toBe(true);
-
-  const newFavoritedRecipes = await utilFunctions.getFavoriteRecipes();
-  expect(newFavoritedRecipes).toStrictEqual([]);
-});
-
-test('assert getUserRecipes() succeeds', async () => {
-  const userRecipes = await utilFunctions.getUserRecipes();
-  expect(userRecipes.length).toBe(2);
-
-  await utilFunctions.createRecipe(creatingRecipe2);
-  const newUserRecipes = await utilFunctions.getUserRecipes();
-  expect(newUserRecipes.length).toBe(3);
-});
-// After all tests are done, restore the global fetch function
-// back to the original 
 afterAll(() => {
   global.fetch = unmockedFetch
 })

@@ -9,14 +9,19 @@ import { goToNextSearchPage, gotToPreviousSearchPage, getCurrentSearchResults }
 
 const MIC_INACTIVE_HTML = `
     <a href="#"> 
-        <img class="search" src="../media/mic_icon.svg" alt="Voice Control"/>
+        <img class="search" src="../media/mic_icon.svg" alt="Start voice control"/>
     </a>
 `;
 const MIC_ACTIVE_HTML = `
     <a href="#"> 
-        <img class="search" src="../media/sound_active.svg" alt="Voice Control"/>
+        <img class="search" src="../media/sound_active.svg" alt="Stop voice control"/>
     </a>
 `;
+
+const ENABLED_COMMANDS = {
+  'Home': ['search', 'stop', 'help'],
+  'Search': ['search', 'stop', 'next', 'previous', 'help', 'select']
+};
 
 // Name of the listening value in local storage.
 const LOCAL_STORAGE_VOICE_BUTTON_LISTENING_KEY = 'voice-button-listening';
@@ -71,7 +76,7 @@ function keywordInTranscript(keywords, transcript) {
 /**
  * Class that implements voice controls.
  */
-class VoiceButton extends HTMLElement {
+export class VoiceButton extends HTMLElement {
   /**
    * Creates a new instance of a VoiceButton.
    */
@@ -201,24 +206,48 @@ class VoiceButton extends HTMLElement {
       transcript = transcript.trim();
       let command = '';
 
+      const currentPage = document.title;
+      const enabledCommands = ENABLED_COMMANDS[currentPage];
+
       if (keywordInTranscript(SEARCH_COMMAND_KEYWORDS, transcript)) {
-        command = 'search';
-        handleSearchCommand(event);
+          command = 'search';
+          if(enabledCommands.includes(command)) {
+              handleSearchCommand(event);
+          } else {
+              command += ": not enabled on page " + currentPage;
+          }
       } else if (keywordInTranscript(NEXT_COMMAND_KEYWORDS, transcript)) {
-        command = 'next';
-        handleNextPage(event);
+          command = 'next';
+          if(enabledCommands.includes(command)) {
+              handleNextPage(event);
+          } else {
+              command += ": not enabled on page " + currentPage;
+          }
       } else if (keywordInTranscript(PREVIOUS_COMMAND_KEYWORDS, transcript)) {
-        command = 'previous';
-        handlePreviousPage(event);
+          command = 'previous';
+          if(enabledCommands.includes(command)) {
+              handlePreviousPage(event);
+          } else {
+              command += ": not enabled on page " + currentPage;
+          }
       } else if (keywordInTranscript(SELECT_COMMAND_KEYWORDS, transcript)) {
-        command = 'select';
-        handleSelectCommand(event);
+          command = 'select';
+          if(enabledCommands.includes(command)) {
+            handleSelectCommand(event);
+          } else {
+              command += ": not enabled on page " + currentPage;
+          }
       } else if (keywordInTranscript(STOP_COMMAND_KEYWORDS, transcript)) {
-        command = 'stop';
-        handleStopCommand(voiceButtonPointer, event);
+          command = 'stop';
+          if(enabledCommands.includes(command)) {
+              handleStopCommand(voiceButtonPointer, event);
+          } else {
+              command += ": not enabled on page " + currentPage;
+          }
       } else {
         command = `NO MATCH: ${transcript}`;
       }
+        console.log(command);
 
       if (ENABLE_VOICE_LOGGING) {
         console.log(command);
@@ -240,7 +269,6 @@ class VoiceButton extends HTMLElement {
     /** ****************************************
      *  START OF THE ACTUAL CONSTRUCTOR CODE  *
      ***************************************** */
-
     // Get the previous value of listening, if it was set
     const oldListening = localStorage.getItem(LOCAL_STORAGE_VOICE_BUTTON_LISTENING_KEY);
     if (oldListening != null) {

@@ -3,9 +3,6 @@ import {
 }
 // eslint-disable-next-line import/extensions
   from '../scripts/voiceUtils.js';
-import { goToNextSearchPage, gotToPreviousSearchPage, getCurrentSearchResults }
-// eslint-disable-next-line import/extensions
-  from '../scripts/searchpage.js';
 
 const MIC_INACTIVE_HTML = `
     <a href="#"> 
@@ -121,14 +118,16 @@ export class VoiceButton extends HTMLElement {
      *
      * @param {SpeechRecognitionEvent} event object from Web Speech onResult callback
      */
-    function handleSelectCommand(event) {
+    async function handleSelectCommand(event) {
       const result = event.results[event.resultIndex];
       let { transcript } = result[0];
 
       transcript = trimKeywordFromTranscript(SELECT_COMMAND_KEYWORDS, transcript);
 
       if (result.isFinal) {
-        const searchResults = getCurrentSearchResults();
+        // eslint-disable-next-line import/extensions
+        let searchPage = await import('../scripts/searchpage.js');
+        const searchResults = searchPage.getCurrentSearchResults();
         for (let i = 0; i < searchResults.length; i += 1) {
           const result1 = searchResults[i];
           if (result1.name.toLowerCase() === transcript) {
@@ -148,10 +147,12 @@ export class VoiceButton extends HTMLElement {
      *
      * @param {SpeechRecognitionEvent} event object from Web Speech onResult callback
      */
-    function handleNextPage(event) {
+    async function handleNextPage(event) {
       const result = event.results[event.resultIndex];
       if (result.isFinal) {
-        goToNextSearchPage();
+        // eslint-disable-next-line import/extensions
+        let searchPage = await import('../scripts/searchpage.js');
+        searchPage.goToNextSearchPage();
       }
     }
 
@@ -160,10 +161,12 @@ export class VoiceButton extends HTMLElement {
      *
      * @param {SpeechRecognitionEvent} event object from Web Speech onResult callback
      */
-    function handlePreviousPage(event) {
+    async function handlePreviousPage(event) {
       const result = event.results[event.resultIndex];
       if (result.isFinal) {
-        gotToPreviousSearchPage();
+        // eslint-disable-next-line import/extensions
+        let searchPage = await import('../scripts/searchpage.js');
+        searchPage.gotToPreviousSearchPage();
       }
     }
 

@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 // eslint-disable-next-line import/extensions
-import {VoiceButton} from "./voice-button.js";
+import { VoiceButton } from './voice-button.js';
 // creates form with all checkboxes for filtering search
 function createCheckboxes() {
   const tagProperties = [
@@ -227,9 +227,9 @@ class Searchbar extends HTMLElement {
 
     form.appendChild(searchInput);
     form.appendChild(searchButton);
-    
+
     // TODO: Make css for the button so it goes next to the search button in the search bar.
-    const voiceButton = new VoiceButton(); 
+    const voiceButton = new VoiceButton();
     searchbarContainer.appendChild(voiceButton);
 
     const checkboxContainer = createCheckboxContainer();

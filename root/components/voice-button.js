@@ -19,8 +19,8 @@ const MIC_ACTIVE_HTML = `
 `;
 
 const ENABLED_COMMANDS = {
-  'Home': ['search', 'stop', 'help'],
-  'Search': ['search', 'stop', 'next', 'previous', 'help', 'select']
+  Home: ['search', 'stop', 'help'],
+  Search: ['search', 'stop', 'next', 'previous', 'help', 'select'],
 };
 
 // Name of the listening value in local storage.
@@ -76,6 +76,7 @@ function keywordInTranscript(keywords, transcript) {
 /**
  * Class that implements voice controls.
  */
+// eslint-disable-next-line import/prefer-default-export
 export class VoiceButton extends HTMLElement {
   /**
    * Creates a new instance of a VoiceButton.
@@ -210,44 +211,43 @@ export class VoiceButton extends HTMLElement {
       const enabledCommands = ENABLED_COMMANDS[currentPage];
 
       if (keywordInTranscript(SEARCH_COMMAND_KEYWORDS, transcript)) {
-          command = 'search';
-          if(enabledCommands.includes(command)) {
-              handleSearchCommand(event);
-          } else {
-              command += ": not enabled on page " + currentPage;
-          }
+        command = 'search';
+        if (enabledCommands.includes(command)) {
+          handleSearchCommand(event);
+        } else {
+          command += `: not enabled on page ${currentPage}`;
+        }
       } else if (keywordInTranscript(NEXT_COMMAND_KEYWORDS, transcript)) {
-          command = 'next';
-          if(enabledCommands.includes(command)) {
-              handleNextPage(event);
-          } else {
-              command += ": not enabled on page " + currentPage;
-          }
+        command = 'next';
+        if (enabledCommands.includes(command)) {
+          handleNextPage(event);
+        } else {
+          command += `: not enabled on page ${currentPage}`;
+        }
       } else if (keywordInTranscript(PREVIOUS_COMMAND_KEYWORDS, transcript)) {
-          command = 'previous';
-          if(enabledCommands.includes(command)) {
-              handlePreviousPage(event);
-          } else {
-              command += ": not enabled on page " + currentPage;
-          }
+        command = 'previous';
+        if (enabledCommands.includes(command)) {
+          handlePreviousPage(event);
+        } else {
+          command += `: not enabled on page ${currentPage}`;
+        }
       } else if (keywordInTranscript(SELECT_COMMAND_KEYWORDS, transcript)) {
-          command = 'select';
-          if(enabledCommands.includes(command)) {
-            handleSelectCommand(event);
-          } else {
-              command += ": not enabled on page " + currentPage;
-          }
+        command = 'select';
+        if (enabledCommands.includes(command)) {
+          handleSelectCommand(event);
+        } else {
+          command += `: not enabled on page ${currentPage}`;
+        }
       } else if (keywordInTranscript(STOP_COMMAND_KEYWORDS, transcript)) {
-          command = 'stop';
-          if(enabledCommands.includes(command)) {
-              handleStopCommand(voiceButtonPointer, event);
-          } else {
-              command += ": not enabled on page " + currentPage;
-          }
+        command = 'stop';
+        if (enabledCommands.includes(command)) {
+          handleStopCommand(voiceButtonPointer, event);
+        } else {
+          command += `: not enabled on page ${currentPage}`;
+        }
       } else {
         command = `NO MATCH: ${transcript}`;
       }
-        console.log(command);
 
       if (ENABLE_VOICE_LOGGING) {
         console.log(command);

@@ -1,8 +1,10 @@
 import {
   startVoiceRecognition, defaultNoMatchCallback, stopVoiceRecognition, ENABLE_VOICE_LOGGING,
 }
+// eslint-disable-next-line import/extensions
   from '../scripts/voiceUtils.js';
 import { goToNextSearchPage, gotToPreviousSearchPage, getCurrentSearchResults }
+// eslint-disable-next-line import/extensions
   from '../scripts/searchpage.js';
 
 const MIC_INACTIVE_HTML = `
@@ -22,7 +24,7 @@ const LOCAL_STORAGE_VOICE_BUTTON_LISTENING_KEY = 'voice-button-listening';
 // These strings are the keywords that the user can use to invoke a command. Ensure that longer
 // strings are ordered before shorter ones.
 const SEARCH_COMMAND_KEYWORDS = ['search for', 'search'];
-const STOP_COMMAND_KEYWORDS = ['turn off', 'stop', 'off'];
+const STOP_COMMAND_KEYWORDS = ['turn off', 'quit', 'stop', 'off'];
 const NEXT_COMMAND_KEYWORDS = ['go to the next', 'go to next', 'next'];
 const PREVIOUS_COMMAND_KEYWORDS = ['go to the previous', 'go to previous', 'previous'];
 const SELECT_COMMAND_KEYWORDS = ['select the recipe', 'open the recipe', 'select recipe',

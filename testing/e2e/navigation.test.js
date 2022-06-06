@@ -24,10 +24,10 @@ describe('navigate through pages', () => {
         await expect(page.title()).resolves.toMatch('Home');
     });
 
-    it('home page should have 8 recommended recipes', async () => {
+    it('home page should have 1 recommended recipes', async () => {
         await page.waitForSelector('recipe-card');
         const recipes = await page.$$('recipe-card');
-        expect(recipes.length).toBe(8);
+        expect(recipes.length).toBe(1);
     });
 
     it('navigate to Account page', async () => {

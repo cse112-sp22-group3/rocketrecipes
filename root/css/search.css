@@ -27,10 +27,15 @@ main {
 }
 
 div#search-results-container {
+  position:relative;
   display: flex;
   max-width: 100%;
   justify-content: center;
   flex-wrap: wrap;
+}
+div#search-results-container p {
+  position:relative;
+  top:30px;
 }
 
 .search-page-result {

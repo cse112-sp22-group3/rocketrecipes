@@ -206,7 +206,7 @@ async function init() {
     const prevPage = new URL(document.referrer);
     const currentPage = new URL(window.location);
     if (prevPage.origin === currentPage.origin) {
-      window.history.back();
+      window.location = document.referrer;
     } else {
       window.location.href = new URL(window.location.origin);
     }

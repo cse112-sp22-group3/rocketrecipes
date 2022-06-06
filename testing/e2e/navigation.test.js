@@ -30,9 +30,8 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to Account page', async () => {
-        /*const accLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#account"));
-        await accLink.click();*/
-        await page.goto(`http://${rootUrl}/root/html/generalAccount.html`);
+        const accLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#account"));
+        await accLink.click();
     });
 
     it('account page should be titled My Account', async () => {
@@ -46,7 +45,7 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to Create Recipe page', async () => {
-        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#create"));
+        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#create"));
         await searchLink.click();
     });
 
@@ -61,7 +60,7 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to Search page via empty search', async () => {
-        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#navbar-id > div.navbar-links-container-desktop > div > custom-searchbar").shadowRoot.querySelector("#search-bar-form > button"));
+        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#navbar-id > div.navbar-links-container-desktop > div > simple-custom-searchbar").shadowRoot.querySelector("#simple-search-bar-form > button"));
         await searchLink.click();
     });
 
@@ -81,11 +80,11 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to search results', async () => {
-        await page.waitForSelector('custom-searchbar');
-        const form = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#ss"));
+        await page.waitForSelector('simple-custom-searchbar');
+        const form = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > simple-custom-searchbar").shadowRoot.querySelector("#ss"));
         await form.type('deviled eggs');
 
-        const but = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#search-bar-form > button"));
+        const but = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > simple-custom-searchbar").shadowRoot.querySelector("#simple-search-bar-form > button"));
         await but.click();
     });
 

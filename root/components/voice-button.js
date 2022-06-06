@@ -278,7 +278,7 @@ export class VoiceButton extends HTMLElement {
         command = `NO MATCH: ${transcript}`;
       }
 
-        console.log(command);
+      console.log(command);
       if (ENABLE_VOICE_LOGGING) {
         console.log(command);
       }
@@ -325,13 +325,13 @@ export class VoiceButton extends HTMLElement {
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      //show help if first time
+      // show help if first time
       const showTutorial = localStorage.getItem(LOCAL_STORAGE_VOICE_BUTTON_HELP_KEY);
-      if (showTutorial == null || showTutorial == 'false') {
+      if (showTutorial == null || showTutorial === 'false') {
         localStorage.setItem(LOCAL_STORAGE_VOICE_BUTTON_HELP_KEY, 'true');
         this.helpToast.showModal();
       }
-      //set state of voice correctly.
+      // set state of voice correctly.
       if (!this.listening) {
         activateVoice(this);
       } else {
@@ -353,14 +353,14 @@ export class VoiceButton extends HTMLElement {
     const helpHeader = document.createElement('h3');
     const helpMsg = document.createElement('p');
     const helpButt = document.createElement('button');
-    helpHeader.innerText = 'Voice Commands:'; 
-    helpMsg.innerText = 'Search for <search query>:    Searches for your query.\n' 
+    helpHeader.innerText = 'Voice Commands:';
+    helpMsg.innerText = 'Search for <search query>:    Searches for your query.\n'
           + 'Next page:   Navigates to the next page of search results.\n'
           + 'Previous page:   Navigates to the previous page of search results.\n'
           + 'Select <recipe name>:   Navigates to the specified recipe on the result page.\n'
           + 'Stop:   Stops voice recognition.\n'
           + 'Help:   Shows this message.\n';
-    helpMsg.setAttribute("align", "left");
+    helpMsg.setAttribute('align', 'left');
     helpButt.innerHTML = 'Okay';
     helpPrompt.setAttribute('method', 'dialog');
     helpHeader.setAttribute('id', 'helpHeader');
@@ -374,7 +374,6 @@ export class VoiceButton extends HTMLElement {
     helpPopup.appendChild(helpPrompt);
 
     this.helpToast = helpPopup;
-
   }
 }
 

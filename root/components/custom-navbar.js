@@ -178,7 +178,7 @@ class Navbar extends HTMLElement {
         <div class='site-title'>
             <h1 class='site-header'>
                   <a class='navbar-image' href='./index.html'> 
-                      <img class='logo' src='../media/header-logo.png'> 
+                      <img class='logo' src='../media/header-logo.png' alt="Rocket Recipes Logo"> 
                   </a>
             </h1>
         </div>

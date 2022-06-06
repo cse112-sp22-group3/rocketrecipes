@@ -40,7 +40,7 @@ class RecipeCard extends HTMLElement {
 
     card.innerHTML = `
         <div class="clickable-card">
-          <img src="../media/teamLogo.png" class="recipe-card-image">
+          <img src="../media/teamLogo.png" class="recipe-card-image" alt="Recipe Card">
           <div class="card-body">
             <h3></h3>
             <p></p>
@@ -60,6 +60,15 @@ class RecipeCard extends HTMLElement {
           margin: 10px;
           overflow: hidden;
           cursor: pointer;
+        }
+        .recipe-card .card-body h3 {
+          font-size: 11px;
+        }
+        .recipe-card .card-body p {
+          font-size:11px;
+        }
+        .tag{
+          font-size:8px;
         }
         .recipe-card-image {
           width: 100%;
@@ -145,6 +154,7 @@ class RecipeCard extends HTMLElement {
 
     const imageElement = card.querySelector('img');
     imageElement.src = data.image || '';
+    imageElement.alt = data.title || '';
 
     // Create tag buttons based on these tag properties
     const tagProperties = [

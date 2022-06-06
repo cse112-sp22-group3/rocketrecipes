@@ -84,9 +84,9 @@ class Searchbar extends HTMLElement {
     // create styles for searchbar
     const style = document.createElement('style');
     style.innerHTML = ` 
-            @media only screen and (max-width: 700px){
+            @media only screen and (max-width: 900px){
               .button1{
-                margin-top: 2%;
+                margin-top: 5%;
                 margin-bottom: 3%;
                 float: left;
                 position: absolute; 
@@ -97,6 +97,7 @@ class Searchbar extends HTMLElement {
                 margin-left: 8%;
                 cursor: pointer;
                 font-family: 'Nunito', sans-serif !important;
+                z-index:1;
               }
               .checked{
                 display: inline-block;
@@ -116,7 +117,7 @@ class Searchbar extends HTMLElement {
                 width: 20px;
               }
             }
-            @media only screen and (min-width: 700px){
+            @media only screen and (min-width: 900px){
               .button1{
                 margin-top: 2%;
                 margin-bottom: 3%;
@@ -129,6 +130,7 @@ class Searchbar extends HTMLElement {
                 margin-left: 20%;
                 cursor: pointer;
                 font-family: 'Nunito', sans-serif !important;
+                z-index: 1;
               }
               .checked{
                 display: inline-block;

@@ -20,18 +20,6 @@ describe('favorite a recipe', () => {
         await page.goto(`http://${rootUrl}/root/html/index.html`);
     });
 
-    it('should navigate to recipe page and favorite recipe', async () => {
-        await page.waitForSelector('recipe-card');
-        const card = await page.evaluateHandle( () => document.querySelector("#recommendedRecipeContainer > recipe-card:nth-child(1)"));
-        await card.click();
-
-        await page.waitForSelector('recipe-card');
-        const title = await page.evaluate( () => document.querySelector('#recipe-title').textContent);
-        await expect(page.title()).resolves.toMatch(title);
-
-        await page.click('#fav-icon');
-    });
-
     it('should remove recipe from my account', async () => {
         const accLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#account"));
         await accLink.click();

@@ -30,12 +30,13 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to Account page', async () => {
-        const accLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#account"));
-        await accLink.click();
+        /*const accLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#account"));
+        await accLink.click();*/
+        await page.goto(`http://${rootUrl}/root/html/generalAccount.html`);
     });
 
     it('account page should be titled My Account', async () => {
-        await page.waitForNavigation();
+        await page.waitForSelector('#myaccount');
         await expect(page.title()).resolves.toMatch('My Account');
     });
 
@@ -45,7 +46,7 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to Create Recipe page', async () => {
-        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#create"));
+        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#create"));
         await searchLink.click();
     });
 
@@ -60,7 +61,7 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to Search page via empty search', async () => {
-        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#navbar-id > div.navbar-links-container-desktop > div > simple-custom-searchbar").shadowRoot.querySelector("#simple-search-bar-form > button"));
+        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#navbar-id > div.navbar-links-container-desktop > div > custom-searchbar").shadowRoot.querySelector("#search-bar-form > button"));
         await searchLink.click();
     });
 

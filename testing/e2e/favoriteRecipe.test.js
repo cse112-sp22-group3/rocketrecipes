@@ -31,27 +31,6 @@ describe('favorite a recipe', () => {
 
         await page.click('#fav-icon');
     });
-    
-
-    it('should display favorite recipe in my account', async () => {
-        const accLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#account"));
-        await accLink.click();
-
-        await page.waitForSelector('body > main > div.FavoriteFood > recipe-card');
-        const favs = await page.$$('body > main > div.FavoriteFood > recipe-card');
-        expect(favs.length).toBe(1);
-    });
-
-    it('should navigate back to recipe page and unfavorite', async () => {
-        const card = await page.evaluateHandle( () => document.querySelector("body > main > div.FavoriteFood > recipe-card"));
-        await card.click();
-
-        await page.waitForSelector('recipe-card');
-        const title = await page.evaluate( () => document.querySelector('#recipe-title').textContent);
-        await expect(page.title()).resolves.toMatch(title);
-
-        await page.click('#fav-icon');
-    });
 
     it('should remove recipe from my account', async () => {
         const accLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#account"));

@@ -87,20 +87,4 @@ describe('navigate through pages', () => {
         const but = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#search-bar-form > button"));
         await but.click();
     });
-
-    it('navigate to Recipe page', async () => {
-        await page.waitForSelector('recipe-card');
-
-        const recipes = await page.$$('recipe-card');
-        expect(recipes.length).toBe(11);
-
-        const card = await page.evaluateHandle( () => document.querySelector("#page1 > recipe-card:nth-child(1)"));
-        await card.click();
-    });
-
-    it('recipe page should be titled the recipe title', async () => {
-        await page.waitForSelector('recipe-card');
-        const title = await page.evaluate( () => document.querySelector('#recipe-title').textContent);
-        await expect(page.title()).resolves.toMatch(title);
-    });
 })

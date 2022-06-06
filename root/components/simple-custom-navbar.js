@@ -87,15 +87,19 @@ class Navbar extends HTMLElement {
             width: 55px;
             height: 55px;
         }
+        .scrolling-active .mobile-navbar-expanded {
+            top: 70px;
+        }
         .mobile-navbar-expanded {
             position: absolute;
-            width: 30%;
+            width: 20ch;
             top: 100px;
-            right: 0px;
+            right: 1ch;
             display: flex;
             flex-direction: column;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
             background: white;
+            align-items: center;
         }
         .mobile-link {
             width: 100%;

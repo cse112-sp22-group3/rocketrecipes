@@ -28,9 +28,8 @@ class Searchbar extends HTMLElement {
             }
             @media (max-width: 820px) {
                 .bar {
-                    object-fit: cover;
+                    width: 32ch;
                     font-size: 12px;
-                    margin-left: 0;
                 }
             } 
             .bar{
@@ -75,6 +74,7 @@ class Searchbar extends HTMLElement {
     const searchbarContainer = document.createElement('div');
     const form = document.createElement('form');
     form.id = 'simple-search-bar-form';
+    searchbarContainer.classList.add('search-container');
     searchbarContainer.appendChild(form);
     form.classList.add('bar');
 

@@ -15,7 +15,7 @@ recognition.maxAlternatives = 1;
 /**
  * Callback function that handles all web speech API errors.
  *
- * @param {SpeachRecognitionEvent} event object from Web Speech API
+ * @param {SpeechRecognitionEvent} event object from Web Speech API
  */
 recognition.onerror = function (event) {
   switch (event.error) {
@@ -88,7 +88,7 @@ recognition.onspeechend = function () {
  * Default callback function to handle noMatch events. These events should not happen
  * becuase we are not using a grammer.
  *
- * @param {SpeachRecognitionEvent} event object from Web Speech API
+ * @param {SpeechRecognitionEvent} event object from Web Speech API
  */
 // eslint-disable-next-line no-unused-vars
 export const defaultNoMatchCallback = function (event) {
@@ -120,31 +120,55 @@ export function abortVoiceRecognition() {
 /**
  * Callback function passed from startVoiceRecogniton(). Uses the provided Voice Button object.
  *
- * @param {SpeachRecognitionEvent} event object from Web Speech API
+ * @param {SpeechRecognitionEvent} event object from Web Speech API
  */
 function onResultCallback(event) {
   matchCallbackUtil(voiceButtonPointerUtil, event);
 }
 
 /**
+ * This function is called when a result is recognized. It should have the signiture:
+ * void func(SpeechRecognitionEvent)
+ * 
+ * @callback matchCallback 
+ * @param {SpeechRecognitionEvent} event from web speech api
+ */
+
+/**
+ * This function is called when a result is not recognized. It should have the signiture:
+ * void func(SpeechRecognitionEvent)
+ * 
+ * @callback noMatchCallback
+ * @param {SpeechRecognitionEvent} event from web speech api
+ */
+
+/**
+ * This function is called when speech is ended. It should have the signiture:
+ * void func()
+ * 
+ * @callback onSpeechEndCallback
+ */
+
+
+/**
  * Starts voice recognition.
  *
-* @param {VoiceButton} voiceButtonPointer a `this` object of type VoiceButton passed from
-* the VoiceButton constructor.
- * @param {void func(event)} matchCallback function called when a result is recognized.
- * @param {void func(event)} noMatchCallback function called when no result is recognized.
- * @param {void func()} noMatchCallback function called when speech detection is stopped.
+ * @param {VoiceButton} voiceButtonPointer a `this` object of type VoiceButton passed from
+ * the VoiceButton constructor.
+ * @param {matchCallback} matchCallback function called when a result is recognized.
+ * @param {noMatchCallback} noMatchCallback function called when no result is recognized.
+ * @param {onSpeechEndCallback} onSpeechEndCallback function called when speech detection is stopped.
  */
 export function startVoiceRecognition(
   voiceButtonPointer,
   matchCallback,
-  noMatchCallBack,
+  noMatchCallback,
   onSpeechEndCallback,
 ) {
   matchCallbackUtil = matchCallback;
   voiceButtonPointerUtil = voiceButtonPointer;
   recognition.onresult = onResultCallback;
-  recognition.onnomatch = noMatchCallBack;
+  recognition.onnomatch = noMatchCallback;
   onSpeechEndCallbackFunc = onSpeechEndCallback;
   recognition.start();
   if (ENABLE_VOICE_LOGGING) {

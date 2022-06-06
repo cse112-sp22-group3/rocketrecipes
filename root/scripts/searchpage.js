@@ -118,8 +118,8 @@ export function getCurrentSearchResults() {
   const currentPageDiv = document.getElementById(`page${pageUserIsOn}`);
   const { children } = currentPageDiv;
   const output = [];
-  for(let i = 0; i < children.length; i += 1) {
-    let value = children[i];
+  for (let i = 0; i < children.length; i += 1) {
+    const value = children[i];
     // Check if the type of value is RecipeCard
     if (value.constructor.name === 'RecipeCard') {
       output.push(value);

@@ -36,7 +36,7 @@ const SELECT_COMMAND_KEYWORDS = ['select the recipe', 'open the recipe', 'select
  *
  * @param {String[]} keywords list of keywords that correspond to the detected command
  * @param {String} transcript transcript of voice command
- * @returns
+ * @returns a trimmed transcript (type String)
  */
 function trimKeywordFromTranscript(keywords, transcript) {
   const transcript1 = transcript.trim();
@@ -55,7 +55,7 @@ function trimKeywordFromTranscript(keywords, transcript) {
  *
  * @param {String[]} keywords list of keywords to check
  * @param {String} transcript transcript of voice command
- * @returns
+ * @returns true if transcript matches a keyword, false otherwise
  */
 function keywordInTranscript(keywords, transcript) {
   const transcript1 = transcript.trim();
@@ -93,7 +93,7 @@ class VoiceButton extends HTMLElement {
      * Writes the search query from the event transcript to the search bar. If the transcript
      * is final, this function executes the search.
      *
-     * @param {SpeachRecognitionEvent} event object from Web Speech onResult callback
+     * @param {SpeechRecognitionEvent} event object from Web Speech onResult callback
      */
     function handleSearchCommand(event) {
       const searchbar = document.getElementById('searchbar');
@@ -113,7 +113,7 @@ class VoiceButton extends HTMLElement {
      * If the transcript is final, navigates to the recipie requested in the transcript. Does
      * nothing if no result is found.
      *
-     * @param {SpeachRecognitionEvent} event object from Web Speech onResult callback
+     * @param {SpeechRecognitionEvent} event object from Web Speech onResult callback
      */
     function handleSelectCommand(event) {
       const result = event.results[event.resultIndex];
@@ -140,7 +140,7 @@ class VoiceButton extends HTMLElement {
     /**
      * If the transcript is final, navigates to to the next page, if it exists.
      *
-     * @param {SpeachRecognitionEvent} event object from Web Speech onResult callback
+     * @param {SpeechRecognitionEvent} event object from Web Speech onResult callback
      */
     function handleNextPage(event) {
       const result = event.results[event.resultIndex];
@@ -152,7 +152,7 @@ class VoiceButton extends HTMLElement {
     /**
      * If the transcript is final, navigates to the previous page, if it exists.
      *
-     * @param {SpeachRecognitionEvent} event object from Web Speech onResult callback
+     * @param {SpeechRecognitionEvent} event object from Web Speech onResult callback
      */
     function handlePreviousPage(event) {
       const result = event.results[event.resultIndex];
@@ -176,7 +176,7 @@ class VoiceButton extends HTMLElement {
     /**
      * If the transcript is final, stops voice recognition.
      *
-     * @param {SpeachRecognitionEvent} event object from Web Speech onResult callback
+     * @param {SpeechRecognitionEvent} event object from Web Speech onResult callback
      */
     function handleStopCommand(voiceButtonPointer, event) {
       const result = event.results[event.resultIndex];
@@ -193,7 +193,7 @@ class VoiceButton extends HTMLElement {
      *
      * @param {VoiceButton} voiceButtonPointer a `this` object of type VoiceButton passed from
      * the VoiceButton constructor.
-     * @param {SpeachRecognitionEvent} event object from webSpeach onResult callback
+     * @param {SpeechRecognitionEvent} event object from web speech onResult callback
      */
     function matchCallback(voiceButtonPointer, event) {
       const result = event.results[event.resultIndex];

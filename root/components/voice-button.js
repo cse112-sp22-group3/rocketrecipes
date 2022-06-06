@@ -126,7 +126,7 @@ export class VoiceButton extends HTMLElement {
 
       if (result.isFinal) {
         // eslint-disable-next-line import/extensions
-        let searchPage = await import('../scripts/searchpage.js');
+        const searchPage = await import('../scripts/searchpage.js');
         const searchResults = searchPage.getCurrentSearchResults();
         for (let i = 0; i < searchResults.length; i += 1) {
           const result1 = searchResults[i];
@@ -151,7 +151,7 @@ export class VoiceButton extends HTMLElement {
       const result = event.results[event.resultIndex];
       if (result.isFinal) {
         // eslint-disable-next-line import/extensions
-        let searchPage = await import('../scripts/searchpage.js');
+        const searchPage = await import('../scripts/searchpage.js');
         searchPage.goToNextSearchPage();
       }
     }
@@ -165,7 +165,7 @@ export class VoiceButton extends HTMLElement {
       const result = event.results[event.resultIndex];
       if (result.isFinal) {
         // eslint-disable-next-line import/extensions
-        let searchPage = await import('../scripts/searchpage.js');
+        const searchPage = await import('../scripts/searchpage.js');
         searchPage.gotToPreviousSearchPage();
       }
     }

@@ -1,4 +1,4 @@
-let rootUrl = 'rocketrecipesv2.netlify.app';
+let rootUrl = 'deploy-preview-79--rocketrecipesv2.netlify.app';
 const pullRequestId = process.env.GITHUB_PR_NUMBER;
 
 beforeAll(async () => {
@@ -30,8 +30,7 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to Account page', async () => {
-        const accLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#account"));
-        await accLink.click();
+        await page.goto(`http://${rootUrl}/root/html/generalAccount.html`);
     });
 
     it('account page should be titled My Account', async () => {
@@ -45,12 +44,11 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to Create Recipe page', async () => {
-        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#create"));
-        await searchLink.click();
+        await page.goto(`http://${rootUrl}/root/html/CreateRecipe.html`);
     });
 
     it('create recipe page should be titled Create Recipe', async () => {
-        await page.waitForNavigation();
+        await page.waitForSelector('#header');
         await expect(page.title()).resolves.toMatch('Create Recipe');
     });
 
@@ -60,12 +58,11 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to Search page via empty search', async () => {
-        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#navbar-id > div.navbar-links-container-desktop > div > simple-custom-searchbar").shadowRoot.querySelector("#simple-search-bar-form > button"));
-        await searchLink.click();
+        await page.goto(`http://${rootUrl}/root/html/searchpage.html?searchQuery=`);
     });
 
     it('search page should be titled Search', async () => {
-        await page.waitForNavigation();
+        await page.waitForSelector('.title');
         await expect(page.title()).resolves.toMatch('Search');
     });
 
@@ -80,12 +77,7 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to search results', async () => {
-        await page.waitForSelector('simple-custom-searchbar');
-        const form = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > simple-custom-searchbar").shadowRoot.querySelector("#ss"));
-        await form.type('deviled eggs');
-
-        const but = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > simple-custom-searchbar").shadowRoot.querySelector("#simple-search-bar-form > button"));
-        await but.click();
+        await page.goto(`http://${rootUrl}/root/html/searchpage.html?searchQuery=deviled%20eggs`);
     });
 
     it('navigate to Recipe page', async () => {

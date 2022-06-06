@@ -33,9 +33,7 @@ describe('favorite a recipe', () => {
     
 
     it('should display favorite recipe in my account', async () => {
-        await page.waitForSelector('body > header > simple-custom-navbar');
-        const accLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#account"));
-        await accLink.click();
+        await page.goto(`http://${rootUrl}/root/html/generalAccount.html`);
 
         await page.waitForSelector('body > main > div.FavoriteFood > recipe-card');
         const favs = await page.$$('body > main > div.FavoriteFood > recipe-card');
@@ -54,8 +52,7 @@ describe('favorite a recipe', () => {
     });
 
     it('should remove recipe from my account', async () => {
-        const accLink = await page.evaluateHandle( () => document.querySelector("body > header > simple-custom-navbar").shadowRoot.querySelector("#account"));
-        await accLink.click();
+        await page.goto(`http://${rootUrl}/root/html/generalAccount.html`);
 
         await page.waitForSelector('body > main > div.FavoriteFood');
         const favs = await page.$$('body > main > div.FavoriteFood > recipe-card');

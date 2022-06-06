@@ -19,6 +19,20 @@ class Searchbar extends HTMLElement {
                 padding: 5px;
                 }
             }
+            @media (max-width: 1100px) {
+                .bar {
+                width: 250px;
+                font-size: 12px;
+                padding: 3px;
+                }
+            }
+            @media (max-width: 820px) {
+                .bar {
+                    object-fit: cover;
+                    font-size: 12px;
+                    margin-left: 0;
+                }
+            } 
             .bar{
                 margin: 0 auto;
                 height: 55px;
@@ -41,7 +55,6 @@ class Searchbar extends HTMLElement {
                 font-size:16px;
                 outline: none;
                 background-color: white;
-                text-transform: uppercase;
             }
             .search{
                 padding-top:7px;
@@ -70,7 +83,7 @@ class Searchbar extends HTMLElement {
     searchInput.type = 'text';
     searchInput.id = 'ss';
     searchInput.name = 's';
-    searchInput.placeholder = 'Start typing...';
+    searchInput.placeholder = 'Search';
     searchInput.ariaLabel = 'Search through site content';
 
     const searchButton = document.createElement('button');

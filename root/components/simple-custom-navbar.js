@@ -41,7 +41,6 @@ class Navbar extends HTMLElement {
             position: fixed;
             top: 0;
             display: flex;
-            // flex-direction: row;
             justify-content: space-between;
             font-size: 20px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
@@ -133,7 +132,7 @@ class Navbar extends HTMLElement {
             }
         }
         */
-        @media (max-width: 950px) {
+        @media (max-width: 1100px) {
           .navbar-text-link {
             font-size: 12px;
             width: 90px;
@@ -144,7 +143,7 @@ class Navbar extends HTMLElement {
             height: 50px;
           }
         }
-        @media (max-width: 650px) {
+        @media (max-width: 820px) {
           .navbar-links-container-desktop {
               display: none;
           }
@@ -152,14 +151,14 @@ class Navbar extends HTMLElement {
               display: flex;
           }
         } 
-        @media screen and (max-width: 640px) {
+        @media screen and (max-width: 820px) {
           .navbar-image img{
             object-fit: cover;
             width: 250px;
             height: 50px;
           }
         }
-        @media (min-width: 651px) {
+        @media (min-width: 821px) {
             .navbar-links-container-desktop {
                 display: flex;
                 align-items: center;

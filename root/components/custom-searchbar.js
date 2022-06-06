@@ -232,7 +232,6 @@ class Searchbar extends HTMLElement {
     form.appendChild(searchInput);
     form.appendChild(searchButton);
 
-    // TODO: Make css for the button so it goes next to the search button in the search bar.
     const voiceButton = new VoiceButton();
     searchbarContainer.appendChild(voiceButton);
 

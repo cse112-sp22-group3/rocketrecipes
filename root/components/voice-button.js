@@ -15,17 +15,20 @@ const MIC_ACTIVE_HTML = `
     </a>
 `;
 
+// Map with page name as key and array of enabled commands as value
 const ENABLED_COMMANDS = {
   Home: ['search', 'stop', 'help'],
   Search: ['search', 'stop', 'next', 'previous', 'help', 'select'],
 };
 
-// Name of the listening value in local storage.
+// Local Storage keys.
 const LOCAL_STORAGE_VOICE_BUTTON_LISTENING_KEY = 'voice-button-listening';
+const LOCAL_STORAGE_VOICE_BUTTON_HELP_KEY = 'voice-button-first-time-use';
 
 // These strings are the keywords that the user can use to invoke a command. Ensure that longer
 // strings are ordered before shorter ones.
 const SEARCH_COMMAND_KEYWORDS = ['search for', 'search'];
+const HELP_COMMAND_KEYWORDS = ['help'];
 const STOP_COMMAND_KEYWORDS = ['turn off', 'quit', 'stop', 'off'];
 const NEXT_COMMAND_KEYWORDS = ['go to the next', 'go to next', 'next'];
 const PREVIOUS_COMMAND_KEYWORDS = ['go to the previous', 'go to previous', 'previous'];
@@ -174,7 +177,7 @@ export class VoiceButton extends HTMLElement {
       * Stops web speech voice detection, and updates the button to the inactive mic icon.
       *
       * @param {VoiceButton} voiceButtonPointer a `this` object of type VoiceButton passed from
-       * the VoiceButton constructor.
+      * the VoiceButton constructor.
       */
     function deactivateVoice(voiceButtonPointer) {
       const voiceButton = voiceButtonPointer.button;
@@ -185,6 +188,8 @@ export class VoiceButton extends HTMLElement {
     /**
      * If the transcript is final, stops voice recognition.
      *
+     * @param {VoiceButton} voiceButtonPointer a `this` object of type VoiceButton passed from
+     * the VoiceButton constructor.
      * @param {SpeechRecognitionEvent} event object from Web Speech onResult callback
      */
     function handleStopCommand(voiceButtonPointer, event) {
@@ -192,6 +197,20 @@ export class VoiceButton extends HTMLElement {
       if (result.isFinal) {
         voiceButtonPointer.setListening(false);
         deactivateVoice(voiceButtonPointer);
+      }
+    }
+
+    /**
+     * If the transcript is final, shows the help string
+     *
+     * @param {VoiceButton} voiceButtonPointer a `this` object of type VoiceButton passed from
+     * the VoiceButton constructor.
+     * @param {SpeechRecognitionEvent} event object from Web Speech onResult callback
+     */
+    function handleHelpCommand(voiceButtonPointer, event) {
+      const result = event.results[event.resultIndex];
+      if (result.isFinal) {
+        voiceButtonPointer.helpToast.showModal();
       }
     }
 
@@ -248,10 +267,18 @@ export class VoiceButton extends HTMLElement {
         } else {
           command += `: not enabled on page ${currentPage}`;
         }
+      } else if (keywordInTranscript(HELP_COMMAND_KEYWORDS, transcript)) {
+        command = 'help';
+        if (enabledCommands.includes(command)) {
+          handleHelpCommand(voiceButtonPointer, event);
+        } else {
+          command += `: not enabled on page ${currentPage}`;
+        }
       } else {
         command = `NO MATCH: ${transcript}`;
       }
 
+        console.log(command);
       if (ENABLE_VOICE_LOGGING) {
         console.log(command);
       }
@@ -298,6 +325,13 @@ export class VoiceButton extends HTMLElement {
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      //show help if first time
+      const showTutorial = localStorage.getItem(LOCAL_STORAGE_VOICE_BUTTON_HELP_KEY);
+      if (showTutorial == null || showTutorial == 'false') {
+        localStorage.setItem(LOCAL_STORAGE_VOICE_BUTTON_HELP_KEY, 'true');
+        this.helpToast.showModal();
+      }
+      //set state of voice correctly.
       if (!this.listening) {
         activateVoice(this);
       } else {
@@ -312,6 +346,35 @@ export class VoiceButton extends HTMLElement {
     } else {
       deactivateVoice(this);
     }
+
+    // help popup
+    const helpPopup = document.getElementById('helpDialog');
+    const helpPrompt = document.createElement('form');
+    const helpHeader = document.createElement('h3');
+    const helpMsg = document.createElement('p');
+    const helpButt = document.createElement('button');
+    helpHeader.innerText = 'Voice Commands:'; 
+    helpMsg.innerText = 'Search for <search query>:    Searches for your query.\n' 
+          + 'Next page:   Navigates to the next page of search results.\n'
+          + 'Previous page:   Navigates to the previous page of search results.\n'
+          + 'Select <recipe name>:   Navigates to the specified recipe on the result page.\n'
+          + 'Stop:   Stops voice recognition.\n'
+          + 'Help:   Shows this message.\n';
+    helpMsg.setAttribute("align", "left");
+    helpButt.innerHTML = 'Okay';
+    helpPrompt.setAttribute('method', 'dialog');
+    helpHeader.setAttribute('id', 'helpHeader');
+    helpMsg.setAttribute('id', 'helpMsg');
+    helpButt.setAttribute('id', 'helpButt');
+    helpButt.setAttribute('class', 'buttons');
+
+    helpPrompt.appendChild(helpHeader);
+    helpPrompt.appendChild(helpMsg);
+    helpPrompt.appendChild(helpButt);
+    helpPopup.appendChild(helpPrompt);
+
+    this.helpToast = helpPopup;
+
   }
 }
 

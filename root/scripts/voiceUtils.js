@@ -129,15 +129,15 @@ function onResultCallback(event) {
 /**
  * This function is called when a result is recognized. It should have the signiture:
  * void func(SpeechRecognitionEvent)
- * 
- * @callback matchCallback 
+ *
+ * @callback matchCallback
  * @param {SpeechRecognitionEvent} event from web speech api
  */
 
 /**
  * This function is called when a result is not recognized. It should have the signiture:
  * void func(SpeechRecognitionEvent)
- * 
+ *
  * @callback noMatchCallback
  * @param {SpeechRecognitionEvent} event from web speech api
  */
@@ -145,10 +145,9 @@ function onResultCallback(event) {
 /**
  * This function is called when speech is ended. It should have the signiture:
  * void func()
- * 
+ *
  * @callback onSpeechEndCallback
  */
-
 
 /**
  * Starts voice recognition.
@@ -157,7 +156,7 @@ function onResultCallback(event) {
  * the VoiceButton constructor.
  * @param {matchCallback} matchCallback function called when a result is recognized.
  * @param {noMatchCallback} noMatchCallback function called when no result is recognized.
- * @param {onSpeechEndCallback} onSpeechEndCallback function called when speech detection is stopped.
+ * @param {onSpeechEndCallback} onSpeechEndCallback function called when speech detection ends.
  */
 export function startVoiceRecognition(
   voiceButtonPointer,

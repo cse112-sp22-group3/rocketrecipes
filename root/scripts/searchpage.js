@@ -12,30 +12,6 @@ let searchQuery = '';
 let filterTags = [];
 let filterMessage = '';
 
-export function goToNextSearchPage() {
-  if(pageUserIsOn < Math.ceil(numResults / resultsPerPage)) {
-    clickNextSearchPage(pageUserIsOn);
-  }
-}
-
-export function gotToPreviousSearchPage() {
-  if(pageUserIsOn > 1) {
-    clickPreviousSearchPage(pageUserIsOn);
-  }
-}
-
-export function getCurrentSearchResults() {
-  const currentPageDiv = document.getElementById(`page${pageUserIsOn}`);
-  const children = currentPageDiv.children;
-  let output = [];
-  for(const child of children) {
-    if(child.constructor.name == 'RecipeCard') {
-      output.push(child);
-    }
-  }
-  return output;
-}
-
 function buttonReset() {
   const pageButtonFirst = document.getElementById('search-page-button-first');
   const pageButtonPrevious = document.getElementById('search-page-button-previous');
@@ -113,6 +89,43 @@ function clickPreviousSearchPage(currentPage) {
   pageUserIsOn -= 1;
   buttonReset();
   window.scrollTo(0, 0);
+}
+
+/**
+ * Navigates to the next search page, if it exists.
+ */
+export function goToNextSearchPage() {
+  if (pageUserIsOn < Math.ceil(numResults / resultsPerPage)) {
+    clickNextSearchPage(pageUserIsOn);
+  }
+}
+
+/**
+ * Navigates to the previous search page, if it exists.
+ */
+export function gotToPreviousSearchPage() {
+  if (pageUserIsOn > 1) {
+    clickPreviousSearchPage(pageUserIsOn);
+  }
+}
+
+/**
+ * Returns all RecipieCard objects on the current page of search results.
+ *
+ * @returns a list of RecipeCard objects from the current page
+ */
+export function getCurrentSearchResults() {
+  const currentPageDiv = document.getElementById(`page${pageUserIsOn}`);
+  const { children } = currentPageDiv;
+  const output = [];
+  const getAllRecipeCards = (value) => {
+    // Check if the type of value is RecipeCard
+    if (value.constructor.name === 'RecipeCard') {
+      output.push(value);
+    }
+  };
+  children.forEach(getAllRecipeCards);
+  return output;
 }
 
 function clickFirstSearchPage(currentPage) {

@@ -8,7 +8,7 @@ function minutesToTimeString(timeInMinutes) {
   const numMins = timeInMinutes % 60;
 
   let resultString = '';
-  //TODO: fix displays like '1 hours 1 minutes'
+  // TODO: fix displays like '1 hours 1 minutes'
   resultString += numHours > 0 ? `${numHours} hours ` : '';
   resultString += numMins > 0 ? `${numMins} minutes` : '';
 
@@ -16,8 +16,6 @@ function minutesToTimeString(timeInMinutes) {
 }
 
 class RecipeCard extends HTMLElement {
-  openPage;
-  name;
   constructor() {
     super(); // Inheret everything from HTMLElement
 

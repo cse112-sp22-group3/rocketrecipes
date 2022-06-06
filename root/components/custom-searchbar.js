@@ -75,9 +75,6 @@ function createCheckboxContainer() {
 }
 
 class Searchbar extends HTMLElement {
-  searchInput;
-  handleSearch;
-
   constructor() {
     super(); // Inheret everything from HTMLElement
 
@@ -233,7 +230,6 @@ class Searchbar extends HTMLElement {
     searchbarContainer.appendChild(checkboxContainer);
 
     this.shadowRoot.append(style, searchbarContainer);
-
 
     function handleSearch() {
       const searchInputValue = searchInput.value; // serach query

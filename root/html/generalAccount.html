@@ -18,7 +18,16 @@
         <custom-navbar page="account" />
     </header>
     <main>
-        <h1 id="myaccount">My Account</h1>
+        <div class="accountParent">
+            <div class="accountText">
+                <h1 id="myaccount">My Account</h1>
+            </div>
+            <div class="surveyButton">
+                <h2 id="survey">
+                    <button class="recipeButton" onclick="location.href='survey.html'" type="button">Recipe Preferences</button>
+                </h2>
+            </div>
+        </div>
         <h2 id="myrecipes">
             My Recipes
             <a href="CreateRecipe.html">
@@ -28,12 +37,6 @@
         <div class="foodList"></div>
         <h2 id="Favorite">Favorited Recipes</h2>
         <div class="FavoriteFood"></div>
-        <h2 id="survey">
-            <!-- <a href="survey.html">
-                <span>Recipe Preferences</span>
-            </a> -->
-            <button class="recipeButton" onclick="location.href='survey.html'" type="button">Recipe Preferences</button>
-        </h2>
     </main>
 </body>
 </html>

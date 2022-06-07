@@ -286,7 +286,7 @@ export function recipeIdArrayToObject(arr) {
  * @param {Array} tags - an array of tags (must correspond to the schema format)
  * @returns An array of recipeObjects that matches the search parameters
  */
-export async function search(searchQuery, tags) {
+export async function search(searchQuery, tags, ingredientsIncluded, ingredientsExcluded) {
   // Ignore recipe if query matches less than this percent of title
   const MIN_MATCHING_THRESHOLD = 0.5;
   const allRecipes = await getAllRecipes();
@@ -295,6 +295,15 @@ export async function search(searchQuery, tags) {
   const minNumMatchingTokens = Math.ceil(tokenizedQuery.length * MIN_MATCHING_THRESHOLD);
   const userPreferences = JSON.parse(localStorage.getItem('user-preferences'));
 
+  let splitIngredientsIncluded = [];
+  let splitIngredientsExcluded = [];
+  if (ingredientsExcluded) {
+    splitIngredientsExcluded = ingredientsExcluded.toLowerCase().split(',').map((item) => item.trim());
+  }
+
+  if (ingredientsIncluded) {
+    splitIngredientsIncluded = ingredientsIncluded.toLowerCase().split(',').map((item) => item.trim());
+  }
   let searchResults = [];
 
   for (let i = 0; i < allRecipes.length; i += 1) {
@@ -323,9 +332,33 @@ export async function search(searchQuery, tags) {
       let numMatchingCharacters = 0;
       let searchScore = 0;
       const { title } = recipe;
+      const { ingredients } = recipe;
       if (title) {
         for (let j = tokenizedQuery.length - 1; j >= 0; j -= 1) {
           if (title.toLowerCase().includes(tokenizedQuery[j])) {
+            const ingreds = JSON.stringify(ingredients);
+            // if ingredients are being filtered, check
+            let containsEveryIngredient = true;
+            splitIngredientsIncluded.every((currIngredient) => {
+              if (!ingreds.includes(currIngredient)) {
+                containsEveryIngredient = false;
+                return false;
+              }
+              return true;
+            });
+
+            let excludesAnyIngredient = true;
+            splitIngredientsExcluded.every((currentIngredient) => {
+              if (ingreds.includes(currentIngredient)) {
+                excludesAnyIngredient = false;
+                return false;
+              }
+              return true;
+            });
+
+            if (!containsEveryIngredient || !excludesAnyIngredient) {
+              recipeMatches = false;
+            }
             numMatchingTokens += 1;
             mostRecentMatch = j;
             numMatchingCharacters += tokenizedQuery[j].length;

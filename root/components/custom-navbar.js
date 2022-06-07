@@ -178,7 +178,7 @@ class Navbar extends HTMLElement {
     navbarContainer.innerHTML = `
         <div class='site-title'>
             <h1 class='site-header'>
-                  <a class='navbar-image' href='./index.html'> 
+                  <a class='navbar-image' href='./index.html' aria-label="Home Page"> 
                       <img class='logo' src='../media/header-logo.png' alt="Rocket Recipes Logo"> 
                   </a>
             </h1>

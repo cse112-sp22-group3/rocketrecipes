@@ -11,6 +11,8 @@ let resultsFound = 0;
 let searchQuery = '';
 let filterTags = [];
 let filterMessage = '';
+let ingredsIncluded = '';
+let ingredsExcluded = '';
 
 function buttonReset() {
   const pageButtonFirst = document.getElementById('search-page-button-first');
@@ -54,8 +56,9 @@ function buttonReset() {
     pageButtonLast.style.display = 'none';
     pageButtonLast.disabled = true;
   }
-
-  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${filterTags.length !== 0 ? filterMessage : ''} ${searchQuery}, page ${pageUserIsOn} of results`;
+  const includeMessage = ` including ${ingredsIncluded}`;
+  const excludeMessage = ` excluding ${ingredsExcluded}`;
+  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${filterTags.length !== 0 ? filterMessage : ''} ${searchQuery}${ingredsIncluded !== null ? includeMessage : ''}${ingredsExcluded !== null ? excludeMessage : ''}, page ${pageUserIsOn} of results`;
 }
 
 function clickNextSearchPage(currentPage) {
@@ -174,15 +177,21 @@ function cleanFilterMessage() {
 function fillSearchPage(searchResults) {
   filterMessage = filterTags.toString();
   cleanFilterMessage();
+
   const queryString = window.location.search;
   const searchParams = new URLSearchParams(queryString);
-  searchQuery = searchParams.get('searchQuery');
+  ingredsIncluded = searchParams.get('IngIncl');
+  ingredsExcluded = searchParams.get('IngExcl');
+  const includeMessage = ` including ${ingredsIncluded}`;
+  const excludeMessage = ` excluding ${ingredsExcluded}`;
   const searchResultsContainer = document.getElementById('search-results-container');
+
+  searchQuery = searchParams.get('searchQuery');
   numResults = searchResults.length;
   if (searchResults.length === 0) {
-    document.getElementById('searchHeader').innerHTML = `0 ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery}`;
+    document.getElementById('searchHeader').innerHTML = `0 ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery} ${ingredsIncluded !== null ? includeMessage : ''}  ${ingredsExcluded !== null ? excludeMessage : ''} `;
     searchResultsContainer.innerHTML = `
-      <p>Sorry, no results were found for your search</p>
+      <p>Sorry, no results were found for your search${ingredsIncluded !== null || ingredsExcluded !== null ? ' with the current ingredients filtered' : ''}</p>
     `;
   } else {
     let resultsCounter = 0;
@@ -242,14 +251,16 @@ function fillSearchPage(searchResults) {
     }
 
     resultsFound = resultsCounter;
-    document.getElementById('searchHeader').innerHTML = `${resultsFound} ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery}, page 1 of results`;
+    document.getElementById('searchHeader').innerHTML = `${resultsFound} ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery}${ingredsIncluded !== null ? includeMessage : ''}${ingredsExcluded !== null ? excludeMessage : ''}, page 1 of results`;
   }
 }
 
 async function init() {
   const queryString = window.location.search;
-
   const searchParams = new URLSearchParams(queryString);
+  ingredsIncluded = searchParams.get('IngIncl');
+  ingredsExcluded = searchParams.get('IngExcl');
+
   searchQuery = searchParams.get('searchQuery');
   filterTags = searchParams.get('tags')?.split(',') || [];
 
@@ -264,10 +275,12 @@ async function init() {
       <p>Enter your search term above!</p>
     `;
   } else {
-    const searchedRecipes = await search(searchQuery, filterTags);
+    const searchedRecipes = await search(searchQuery, filterTags, ingredsIncluded, ingredsExcluded);
     fillSearchPage(searchedRecipes);
     const searchbarRoot = document.querySelector('custom-searchbar').shadowRoot;
     searchbarRoot.querySelector('input').value = searchQuery;
+    searchbarRoot.getElementById('ingredients-included').value = ingredsIncluded;
+    searchbarRoot.getElementById('ingredients-excluded').value = ingredsExcluded;
     for (let i = 0; i < filterTags.length; i += 1) {
       searchbarRoot.getElementById(filterTags[i]).checked = true;
     }

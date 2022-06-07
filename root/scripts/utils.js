@@ -527,8 +527,18 @@ export async function getRecipeByUrl(url) {
   return false;
 }
 
-// export async function getAllPreferences() {
-//   const retrievedPrefs = localStorage.getItem('value');
-//   console.log('retrievedPrefs: ', JSON.parse(retrievedPrefs));
-//   return retrievedPrefs;
+// export async function getAllPreferences(elts) {
+  // const retrievedPrefs = localStorage.getItem('value');
+  // console.log('retrievedPrefs: ', JSON.parse(retrievedPrefs));
+  // return retrievedPrefs;
+  // eslint-disable-next-line one-var
+//   let checkStates = localStorage.getItem('value'), i;
+//   if (checkStates) {
+//     checkStates = JSON.parse(checkStates);
+//     for (i=0 ; i<elts.length ; i+=1) {
+//       if (checkStates.hasOwnProperty(elts[i].name)) {
+//         elts[i].checked = true;
+//       }
+//     }
+//   }
 // }

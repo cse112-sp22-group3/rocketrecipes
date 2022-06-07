@@ -6,12 +6,12 @@ import {
 
 const MIC_INACTIVE_HTML = `
     <a href="#"> 
-        <img class="search" src="../media/mic_icon.svg" alt="Start voice control"/>
+        <img height="25px" class="search" src="../media/mic_icon.svg" alt="Start voice control"/>
     </a>
 `;
 const MIC_ACTIVE_HTML = `
     <a href="#"> 
-        <img class="search" src="../media/sound_active.svg" alt="Stop voice control"/>
+        <img height="25px" class="search" src="../media/sound_active.svg" alt="Stop voice control"/>
     </a>
 `;
 
@@ -315,10 +315,13 @@ export class VoiceButton extends HTMLElement {
     const micButtonContainer = document.createElement('div');
     const form = document.createElement('form');
     form.id = 'voice-button-form';
+    form.style.marginTop = '10px';
     micButtonContainer.appendChild(form);
 
     const micButton = document.createElement('button');
     micButton.innerHTML = MIC_INACTIVE_HTML;
+    micButton.style.backgroundColor = '#fff';
+    micButton.style.border = 'none';
     micButton.id = 'voice-button-input';
     form.appendChild(micButton);
     this.button = micButton;

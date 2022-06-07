@@ -20,8 +20,11 @@ label > input {
 }
 .recipeButton {
   height: 40px;
-  border-radius: 10px;
-  background-color: #f24e67;
+  border-radius: 2px;
+  background-color: white;
+  border-color: #f24e67;
+  border-style: solid;
+  color: #f24e67;
   float: right;
   margin-right: 30px;
   width: 130px;
@@ -126,6 +129,7 @@ button:hover {
     border-radius: 2px;
     border-color: #f24e67;
     color: #f24e67;
+    border-style: solid;
     border-width: 1px;
     background-color: white;
     margin-left: 30px;
@@ -234,6 +238,10 @@ button:hover {
     background-color: white;
   }
   .recipeButton {
+    background-color: white;
+    border-color: #f24e67;
+    border-style: solid;
+    border-width: 1px;
     margin-right: 4%;
     width: 120px;
     font-size: 12px;
@@ -355,6 +363,7 @@ button:hover {
     border-width: 1px;
     background-color: white;
   }
+
   .recipeButton {
     margin-right: 30px;
     border-radius: 2px;
@@ -365,5 +374,3 @@ button:hover {
     background-color: white;
   }
 }
-
-

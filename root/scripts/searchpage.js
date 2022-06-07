@@ -5,9 +5,12 @@ import { search } from './utils.js';
 const resultsPerPage = 12;
 const activeColor = 'white';
 let pageUserIsOn = 1;
+let numResults = 0;
 let totalPages = 1;
 let resultsFound = 0;
 let searchQuery = '';
+let filterTags = [];
+let filterMessage = '';
 
 function buttonReset() {
   const pageButtonFirst = document.getElementById('search-page-button-first');
@@ -52,7 +55,7 @@ function buttonReset() {
     pageButtonLast.disabled = true;
   }
 
-  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${searchQuery}, page ${pageUserIsOn} of results`;
+  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${filterTags.length !== 0 ? filterMessage : ''} ${searchQuery}, page ${pageUserIsOn} of results`;
 }
 
 function clickNextSearchPage(currentPage) {
@@ -88,6 +91,43 @@ function clickPreviousSearchPage(currentPage) {
   window.scrollTo(0, 0);
 }
 
+/**
+ * Navigates to the next search page, if it exists.
+ */
+export function goToNextSearchPage() {
+  if (pageUserIsOn < Math.ceil(numResults / resultsPerPage)) {
+    clickNextSearchPage(pageUserIsOn);
+  }
+}
+
+/**
+ * Navigates to the previous search page, if it exists.
+ */
+export function gotToPreviousSearchPage() {
+  if (pageUserIsOn > 1) {
+    clickPreviousSearchPage(pageUserIsOn);
+  }
+}
+
+/**
+ * Returns all RecipieCard objects on the current page of search results.
+ *
+ * @returns a list of RecipeCard objects from the current page
+ */
+export function getCurrentSearchResults() {
+  const currentPageDiv = document.getElementById(`page${pageUserIsOn}`);
+  const { children } = currentPageDiv;
+  const output = [];
+  for (let i = 0; i < children.length; i += 1) {
+    const value = children[i];
+    // Check if the type of value is RecipeCard
+    if (value.constructor.name === 'RecipeCard') {
+      output.push(value);
+    }
+  }
+  return output;
+}
+
 function clickFirstSearchPage(currentPage) {
   const currentPageDiv = document.getElementById(`page${currentPage}`);
   const firstPageDiv = document.getElementById('page1');
@@ -120,15 +160,27 @@ function clickLastSearchPage(currentPage) {
   window.scrollTo(0, 0);
 }
 
+// Sets the filter message text to human readable
+function cleanFilterMessage() {
+  filterMessage = filterMessage.replace('dairyFree', 'dairy-free');
+  filterMessage = filterMessage.replace('quickEat', 'quick eat');
+  filterMessage = filterMessage.replace('fiveIngredientsOrLess', 'easy');
+  filterMessage = filterMessage.replace('glutenFree', 'gluten-free');
+  filterMessage = filterMessage.replace(/,/g, ', ');
+}
+
 // takes the current recipe object and fills the html of the page with
 // the information within it
 function fillSearchPage(searchResults) {
+  filterMessage = filterTags.toString();
+  cleanFilterMessage();
   const queryString = window.location.search;
   const searchParams = new URLSearchParams(queryString);
   searchQuery = searchParams.get('searchQuery');
   const searchResultsContainer = document.getElementById('search-results-container');
+  numResults = searchResults.length;
   if (searchResults.length === 0) {
-    document.getElementById('searchHeader').innerHTML = `0 recipes found for ${searchQuery}`;
+    document.getElementById('searchHeader').innerHTML = `0 ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery}`;
     searchResultsContainer.innerHTML = `
       <p>Sorry, no results were found for your search</p>
     `;
@@ -190,7 +242,7 @@ function fillSearchPage(searchResults) {
     }
 
     resultsFound = resultsCounter;
-    document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${searchQuery}, page 1 of results`;
+    document.getElementById('searchHeader').innerHTML = `${resultsFound} ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery}, page 1 of results`;
   }
 }
 
@@ -199,7 +251,7 @@ async function init() {
 
   const searchParams = new URLSearchParams(queryString);
   searchQuery = searchParams.get('searchQuery');
-  const filterTags = searchParams.get('tags')?.split(',') || [];
+  filterTags = searchParams.get('tags')?.split(',') || [];
 
   if (searchQuery === null || searchQuery === undefined || searchQuery.length === 0) {
     const searchResultsContainer = document.getElementById('search-results-container');

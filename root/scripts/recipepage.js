@@ -37,7 +37,6 @@ function fillRecipePage(currentRecipe) {
   // add categories
   // Create tag buttons based on these tag properties
   const tagProperties = [
-    { id: 'cheap', name: 'Cheap' },
     { id: 'dairyFree', name: 'Dairy Free' },
     { id: 'fiveIngredientsOrLess', name: 'Easy' },
     { id: 'glutenFree', name: 'Gluten Free' },
@@ -207,7 +206,7 @@ async function init() {
     const prevPage = new URL(document.referrer);
     const currentPage = new URL(window.location);
     if (prevPage.origin === currentPage.origin) {
-      window.history.back();
+      window.location = document.referrer;
     } else {
       window.location.href = new URL(window.location.origin);
     }

@@ -53,8 +53,6 @@ signUpForm.addEventListener('submit', (e) => {
       signUpForm.style.display = 'none';
 
       window.location.href = '../html/survey.html';
-      const survey = document.getElementsByClassName('survey')[0];
-      survey.style.display = 'inline';
     }
   });
 });

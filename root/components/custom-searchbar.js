@@ -1,8 +1,11 @@
 /* eslint-disable linebreak-style */
+// eslint-disable-next-line import/extensions
+import { VoiceButton } from './voice-button.js';
 // creates form with all checkboxes for filtering search
+// the search bar originally present on index.html and on the searchPage.html
+
 function createCheckboxes() {
   const tagProperties = [
-    { id: 'cheap', name: 'Cheap' },
     { id: 'dairyFree', name: 'Dairy Free' },
     { id: 'fiveIngredientsOrLess', name: 'Easy' },
     { id: 'glutenFree', name: 'Gluten Free' },
@@ -85,9 +88,9 @@ class Searchbar extends HTMLElement {
     // create styles for searchbar
     const style = document.createElement('style');
     style.innerHTML = ` 
-            @media only screen and (max-width: 700px){
+            @media only screen and (max-width: 900px){
               .button1{
-                margin-top: 2%;
+                margin-top: 5%;
                 margin-bottom: 3%;
                 float: left;
                 position: absolute; 
@@ -98,6 +101,7 @@ class Searchbar extends HTMLElement {
                 margin-left: 8%;
                 cursor: pointer;
                 font-family: 'Nunito', sans-serif !important;
+                z-index:1;
               }
               .checked{
                 display: inline-block;
@@ -117,7 +121,7 @@ class Searchbar extends HTMLElement {
                 width: 20px;
               }
             }
-            @media only screen and (min-width: 700px){
+            @media only screen and (min-width: 900px){
               .button1{
                 margin-top: 2%;
                 margin-bottom: 3%;
@@ -130,6 +134,7 @@ class Searchbar extends HTMLElement {
                 margin-left: 20%;
                 cursor: pointer;
                 font-family: 'Nunito', sans-serif !important;
+                z-index: 1;
               }
               .checked{
                 display: inline-block;
@@ -214,6 +219,7 @@ class Searchbar extends HTMLElement {
     searchInput.name = 's';
     searchInput.placeholder = 'Start typing...';
     searchInput.ariaLabel = 'Search through site content';
+    this.searchInput = searchInput;
 
     const searchButton = document.createElement('button');
     searchButton.innerHTML = `
@@ -225,6 +231,9 @@ class Searchbar extends HTMLElement {
 
     form.appendChild(searchInput);
     form.appendChild(searchButton);
+
+    const voiceButton = new VoiceButton();
+    searchbarContainer.appendChild(voiceButton);
 
     const checkboxContainer = createCheckboxContainer();
     searchbarContainer.appendChild(checkboxContainer);
@@ -250,6 +259,7 @@ class Searchbar extends HTMLElement {
         tags.length > 0 ? `&tags=${tags.join(',')}` : ''
       }`;
     }
+    this.handleSearch = handleSearch;
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();

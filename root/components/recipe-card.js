@@ -8,6 +8,7 @@ function minutesToTimeString(timeInMinutes) {
   const numMins = timeInMinutes % 60;
 
   let resultString = '';
+  // TODO: fix displays like '1 hours 1 minutes'
   resultString += numHours > 0 ? `${numHours} hours ` : '';
   resultString += numMins > 0 ? `${numMins} minutes` : '';
 
@@ -40,7 +41,7 @@ class RecipeCard extends HTMLElement {
 
     card.innerHTML = `
         <div class="clickable-card">
-          <img src="../media/teamLogo.png" class="recipe-card-image">
+          <img src="../media/teamLogo.png" class="recipe-card-image" alt="Recipe Card">
           <div class="card-body">
             <h3></h3>
             <p></p>
@@ -60,6 +61,15 @@ class RecipeCard extends HTMLElement {
           margin: 10px;
           overflow: hidden;
           cursor: pointer;
+        }
+        .recipe-card .card-body h3 {
+          font-size: 11px;
+        }
+        .recipe-card .card-body p {
+          font-size:11px;
+        }
+        .tag{
+          font-size:8px;
         }
         .recipe-card-image {
           width: 100%;
@@ -139,16 +149,17 @@ class RecipeCard extends HTMLElement {
     `;
     const titleElement = card.querySelector('h3');
     titleElement.innerText = data.title || '';
+    this.name = data.title || '';
 
     const timeElement = card.querySelector('p');
     timeElement.innerText = `${minutesToTimeString(data.readyInMinutes)}`;
 
     const imageElement = card.querySelector('img');
     imageElement.src = data.image || '';
+    imageElement.alt = data.title || '';
 
     // Create tag buttons based on these tag properties
     const tagProperties = [
-      { id: 'cheap', name: 'Cheap' },
       { id: 'dairyFree', name: 'Dairy Free' },
       { id: 'fiveIngredientsOrLess', name: 'Easy' },
       { id: 'glutenFree', name: 'Gluten Free' },
@@ -166,10 +177,14 @@ class RecipeCard extends HTMLElement {
       }
     });
     this.shadowRoot.append(style, card);
-    card.querySelector('.clickable-card').addEventListener('click', () => {
+
+    const openPage = () => {
       const currentUrl = window.location;
       window.location = `${currentUrl.origin}/root/html/RecipePage.html?id=${data.id}`;
-    });
+    };
+    this.openPage = openPage;
+
+    card.querySelector('.clickable-card').addEventListener('click', openPage);
   }
 
   get data() {

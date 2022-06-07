@@ -103,7 +103,6 @@ async function fillRecipePage(recipeId) {
     stepVal.value = recipe.steps[k - 1].step;
   }
 
-  document.getElementById('cheap').checked = recipe.cheap;
   document.getElementById('vegetarian').checked = recipe.vegetarian;
   document.getElementById('vegan').checked = recipe.vegan;
   document.getElementById('glutenFree').checked = recipe.glutenFree;
@@ -146,7 +145,6 @@ async function init() {
     userGenRecipe.isFromInternet = false;
     userGenRecipe.vegetarian = document.getElementById('vegetarian').checked;
     userGenRecipe.vegan = document.getElementById('vegan').checked;
-    userGenRecipe.cheap = document.getElementById('cheap').checked;
     userGenRecipe.glutenFree = document.getElementById('glutenFree').checked;
     userGenRecipe.dairyFree = document.getElementById('dairyFree').checked;
     userGenRecipe.quickEat = document.getElementById('quickEat').checked;

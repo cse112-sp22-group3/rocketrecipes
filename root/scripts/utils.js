@@ -401,23 +401,20 @@ export function whitespaceTrimmer(dirty) {
  */
 export function validateForm(recipe) {
   if (!recipe.title || recipe.title === '' || /\d/.test(recipe.title)) {
-    return { valid: false, errorMessage: 'Title is invalid' };
-  }
-  if (!recipe.summary || recipe.summary === '') {
-    return { valid: false, errorMessage: 'Summary is invalid' };
+    return { valid: false, errorMessage: 'Recipe title is invalid' };
   }
   if (!recipe.servings || recipe.servings === '' || Number.isNaN(recipe.servings)) {
-    return { valid: false, errorMessage: 'Servings field is invalid' };
+    return { valid: false, errorMessage: 'Recipe servings amount is invalid' };
   }
   if (!recipe.readyInMinutes || recipe.readyInMinutes === ''
     || Number.isNaN(recipe.readyInMinutes)) {
-    return { valid: false, errorMessage: 'Time field is invalid' };
+    return { valid: false, errorMessage: 'Recipe time field is invalid' };
   }
   if (recipe.image !== '' && !validURL(recipe.image)) {
-    return { valid: false, errorMessage: 'Image is not a valid link' };
+    return { valid: false, errorMessage: 'Reicpe image is not a valid link' };
   }
   if (!recipe.ingredients || recipe.ingredients.length === 0) {
-    return { valid: false, errorMessage: 'Must have at least 1 ingredient' };
+    return { valid: false, errorMessage: 'Recipe must have at least 1 ingredient' };
   }
 
   let index = 0;
@@ -435,11 +432,11 @@ export function validateForm(recipe) {
   }
 
   if (!recipe.steps || recipe.steps.length === 0) {
-    return { valid: false, errorMessage: 'Must have at least 1 step' };
+    return { valid: false, errorMessage: 'Recipe must have at least 1 step' };
   }
   for (index = 0; index < recipe.steps.length; index += 1) {
     const step = recipe.steps[index];
-    if (!step || step.length === 0) {
+    if (!step.step || step.step.length === 0) {
       return { valid: false, errorMessage: `Step ${index + 1} cannot be empty` };
     }
   }
@@ -488,7 +485,6 @@ async function parseRecipe(baseRecipe) {
   parsedRecipe.isFromInternet = true;
   parsedRecipe.vegetarian = scrapedRecipe.vegetarian;
   parsedRecipe.vegan = scrapedRecipe.vegan;
-  parsedRecipe.cheap = scrapedRecipe.cheap;
   parsedRecipe.glutenFree = scrapedRecipe.glutenFree;
   parsedRecipe.dairyFree = scrapedRecipe.dairyFree;
   parsedRecipe.quickEat = minutesToPrepare > 30;

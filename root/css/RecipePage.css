@@ -7,6 +7,7 @@
   left: 20px;
   background: url('https://api.iconify.design/eva/arrow-back-outline.svg?color=%23111&height=40') no-repeat center center / contain;
   cursor: pointer;
+  z-index: 1;
 }
 
 .recipe-container {
@@ -102,12 +103,24 @@
   color: white;
   background-color: #222;
 }
+@media (max-width: 950px) {
+  #recipe-title {
+    position:relative;
+    left:40px;
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 55px;
+  }
+}
 
-#recipe-title {
-  margin: 10px 0;
-  font-weight: bold;
-  font-size: 40px;
-  line-height: 55px;
+@media (min-width: 950px){
+  #recipe-title {
+    margin: 10px 0;
+    font-weight: bold;
+    font-size: 40px;
+    line-height: 55px;
+  }
 }
 
 #categories {
@@ -146,7 +159,7 @@
   border: none;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1350px) {
   .recipe-button-container {
     position: relative;
     top: 0;
@@ -220,11 +233,6 @@ ul li.checkbox-checked {
 .checkbox-box:checked::before {
   background-color: white;
   color: black;
-}
-
-.checkbox-box:checked::after {
-  
-  background-color: black;
 }
 /**
 ul li:hover {

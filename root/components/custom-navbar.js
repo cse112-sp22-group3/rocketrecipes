@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable import/extensions */
-// custom-navbar.js
+// contained the original navbar, used in searchPage.html to remove search option in nav bar
 import { logOut } from '../scripts/authUtils.js';
 
 class Navbar extends HTMLElement {
@@ -41,7 +41,7 @@ class Navbar extends HTMLElement {
             position: fixed;
             top: 0;
             display: flex;
-            flex-direciton: row;
+            flex-direction: row;
             justify-content: space-between;
             font-size: 20px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
@@ -158,7 +158,7 @@ class Navbar extends HTMLElement {
             object-fit: cover;
             width: 250px;
             height: 50px;
-        }
+          }
         }
         @media (min-width: 651px) {
             .navbar-links-container-desktop {
@@ -179,7 +179,7 @@ class Navbar extends HTMLElement {
         <div class='site-title'>
             <h1 class='site-header'>
                   <a class='navbar-image' href='./index.html'> 
-                      <img class='logo' src='../media/header-logo.png'> 
+                      <img class='logo' src='../media/header-logo.png' alt="Rocket Recipes Logo"> 
                   </a>
             </h1>
         </div>
@@ -245,8 +245,8 @@ class Navbar extends HTMLElement {
     const page = this.getAttribute('page');
     switch (page) {
       case 'search':
-        navbarContainer.querySelector('#search').style.textDecoration = 'underline';
-        navbarContainer.querySelector('#search-mobile').style.textDecoration = 'underline';
+        navbarContainer.querySelector('#search').style.display = 'none';
+        navbarContainer.querySelector('#search-mobile').style.display = 'none';
         break;
       case 'create':
         navbarContainer.querySelector('#create').style.textDecoration = 'underline';

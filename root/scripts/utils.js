@@ -295,13 +295,12 @@ export async function search(searchQuery, tags, ingredientsIncluded, ingredients
 
   let splitIngredientsIncluded = [];
   let splitIngredientsExcluded = [];
-
   if (ingredientsExcluded) {
-    splitIngredientsExcluded = ingredientsExcluded.split(',').map((item) => item.trim());
+    splitIngredientsExcluded = ingredientsExcluded.toLowerCase().split(',').map((item) => item.trim());
   }
 
   if (ingredientsIncluded) {
-    splitIngredientsIncluded = ingredientsIncluded.split(',').map((item) => item.trim());
+    splitIngredientsIncluded = ingredientsIncluded.toLowerCase().split(',').map((item) => item.trim());
   }
   let searchResults = [];
 

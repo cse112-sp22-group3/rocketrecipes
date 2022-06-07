@@ -10,6 +10,7 @@
         <script src="../scripts/searchpage.js" type="module"></script>
         <script src="../components/recipe-card.js" type="module"></script>
         <script src="../components/custom-searchbar.js" type="module"></script>
+        <script src="../components/voice-button.js" type="module"></script>
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
         <title>Search</title>
     </head>
@@ -24,8 +25,11 @@
                     <h2 id="searchHeader"> </h2>
                 </div>
                 <div class="bar">
-                    
-                    <custom-searchbar />
+                    <custom-searchbar id="searchbar"/>
+                </div>
+                <div>
+                    <dialog id="helpDialog">
+                    </dialog>
                 </div>
                 <div id="search-results-container">
                     <div id="search-results-page-buttons" > 

@@ -1,4 +1,4 @@
-let rootUrl = 'deploy-preview-66--rocketrecipesv2.netlify.app';
+let rootUrl = 'rocketrecipesv2.netlify.app';
 const pullRequestId = process.env.GITHUB_PR_NUMBER;
 
 beforeAll(async() => {

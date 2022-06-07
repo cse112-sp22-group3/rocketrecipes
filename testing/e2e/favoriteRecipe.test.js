@@ -1,4 +1,4 @@
-let rootUrl = 'rocketrecipesv2.netlify.app';
+let rootUrl = 'deploy-preview-66--rocketrecipesv2.netlify.app';
 const pullRequestId = process.env.GITHUB_PR_NUMBER;
 
 beforeAll(async() => {
@@ -26,12 +26,13 @@ describe('favorite a recipe', () => {
         const title = await page.evaluate(() => document.querySelector('#recipe-title').textContent);
         await expect(page.title()).resolves.toMatch(title);
 
+        await page.waitFor(1000);
         await page.click('#fav-icon');
     });
 
 
     it('should display favorite recipe in my account', async() => {
-        await page.goto(`http://${rootUrl}/root/html/generalAccount.html`);
+        await page.goto(`http://${rootUrl}/root/html/generalaccount`);
 
         await page.waitForSelector('body > main > div.FavoriteFood > recipe-card');
         const favs = await page.$$('body > main > div.FavoriteFood > recipe-card');
@@ -46,11 +47,12 @@ describe('favorite a recipe', () => {
         const title = await page.evaluate(() => document.querySelector('#recipe-title').textContent);
         await expect(page.title()).resolves.toMatch(title);
 
+        await page.waitFor(1000);
         await page.click('#fav-icon');
     });
 
     it('should remove recipe from my account', async() => {
-        await page.goto(`http://${rootUrl}/root/html/generalAccount.html`);
+        await page.goto(`http://${rootUrl}/root/html/generalaccount`);
 
         await page.waitForSelector('body > main > div.FavoriteFood');
         const favs = await page.$$('body > main > div.FavoriteFood > recipe-card');

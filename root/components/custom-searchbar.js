@@ -246,13 +246,19 @@ class Searchbar extends HTMLElement {
             }
 
             .collapsible:after {
+              content: '➕';
               font-size: 13px;
-              color: white;
+              color: black;
               float: right;
               margin-left: 5px;
             }
 
             .active:after {
+              content: '➖';
+              color: black;
+              float: right;
+              margin-left: 5px;
+              font-size: 13px;
             }
         `;
 
@@ -293,7 +299,7 @@ class Searchbar extends HTMLElement {
 
     const collapsible = document.createElement('button');
     collapsible.className = 'collapsible';
-    collapsible.textContent = 'Search by Ingredient +';
+    collapsible.textContent = 'Search by Ingredient';
     searchbarContainer.appendChild(collapsible);
 
     const content = document.createElement('div');
@@ -360,10 +366,10 @@ class Searchbar extends HTMLElement {
       const cont = this.nextElementSibling;
       if (cont.style.display === 'block') {
         cont.style.display = 'none';
-        coll.textContent = 'Search by Ingredient +';
+        coll.textContent = 'Search by Ingredient';
       } else {
         cont.style.display = 'block';
-        coll.textContent = 'Search by Ingredient -';
+        coll.textContent = 'Search by Ingredient';
       }
     });
   }

@@ -1,6 +1,6 @@
-/* eslint-disable linebreak-style */
 /** @module utils */
 /* global DOMPurify */
+/* eslint-disable linebreak-style */
 /* eslint-disable no-mixed-operators */
 // eslint-disable-next-line import/extensions
 import './purify.js';
@@ -526,3 +526,9 @@ export async function getRecipeByUrl(url) {
 
   return false;
 }
+
+// export async function getAllPreferences() {
+//   const retrievedPrefs = localStorage.getItem('value');
+//   console.log('retrievedPrefs: ', JSON.parse(retrievedPrefs));
+//   return retrievedPrefs;
+// }

@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /** @module utils */
 /* global DOMPurify */
 /* eslint-disable no-mixed-operators */

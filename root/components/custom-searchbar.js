@@ -155,9 +155,11 @@ class Searchbar extends HTMLElement {
               }
             }
             .bar{
+                display: flex;
                 margin: 0 auto;
+                padding: 5px;
                 width: 80%;
-                height: 50px;
+                height: 38px;
                 border-radius: 0px;
                 color: #D3D3D3;
                 border: 1px solid;
@@ -171,9 +173,8 @@ class Searchbar extends HTMLElement {
                 outline:none;
             }
             .searchbar{
-                height:16px;
+                flex-grow: 2;
                 border:none;    
-                width:90%;
                 font-size:16px;
                 outline: none;
                 background-color: white;
@@ -181,7 +182,6 @@ class Searchbar extends HTMLElement {
             .ingredients-included{
                 height:calc(5vh);
                 border:none;
-                padding-left: 40px;    
                 width:80%;
                 font-size:16px;
                 outline: none;
@@ -190,19 +190,13 @@ class Searchbar extends HTMLElement {
             .ingredients-excluded{
                 height:calc(5vh);
                 border:none;
-                padding-left: 40px;    
                 width:80%;
                 font-size:16px;
                 outline: none;
                 background-color: white;
             }
             .search{
-                padding-top:7px;
                 height:16px;
-                position:relative;
-                display:inline-block;
-                top:5px;
-                left:10px;
             }
             .bar button{
                 padding-top:10px;
@@ -223,17 +217,17 @@ class Searchbar extends HTMLElement {
             }
             /* Style the button that is used to open and close the collapsible content */
             .collapsible {
+              display: flex;
               font-family: 'Nunito', sans-serif !important;
-              margin-top: calc(1vh);
+              height: 50px;
+              margin: calc(1vh) auto;
               background-color: #eee;
               color: #444;
               cursor: pointer;
-              padding: 18px 26px;
-              width: 80%;
+              width: 81%;
               border: none;
-              text-align: left;
-              outline: none;
               font-size: 15px;
+              align-items: center;
             }
 
             /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
@@ -263,6 +257,12 @@ class Searchbar extends HTMLElement {
               margin-left: 5px;
               font-size: 13px;
             }
+            @media only screen and (max-width: 630px){
+              .collapsible {
+                width: 83%;
+              }
+            }
+
         `;
 
     const searchbarContainer = document.createElement('div');

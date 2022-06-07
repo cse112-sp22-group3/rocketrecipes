@@ -242,7 +242,7 @@ class Searchbar extends HTMLElement {
     ingInputi.type = 'text';
     ingInputi.id = 'ingredients-included';
     ingInputi.name = 's';
-    ingInputi.placeholder = 'Add an ingredient to include';
+    ingInputi.placeholder = 'Add ingredients to include as comma separated values';
     ingInputi.ariaLabel = 'Search through site content';
     ingInputi.style = 'position: relative; top:5px; right: 10px;';
 
@@ -252,7 +252,7 @@ class Searchbar extends HTMLElement {
     ingInpute.type = 'text';
     ingInpute.id = 'ingredients-excluded';
     ingInpute.name = 's';
-    ingInpute.placeholder = 'Add an ingredient to exclude';
+    ingInpute.placeholder = 'Add ingredients to exclude as comma separated values';
     ingInpute.ariaLabel = 'Search through site content';
     ingInpute.style = 'position: relative; top:10px;  right: 10px;';
 

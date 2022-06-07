@@ -221,6 +221,7 @@ class Searchbar extends HTMLElement {
             }
             /* Style the button that is used to open and close the collapsible content */
             .collapsible {
+              font-family: 'Nunito', sans-serif !important;
               margin-top: calc(1vh);
               background-color: #eee;
               color: #444;

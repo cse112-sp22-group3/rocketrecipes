@@ -226,7 +226,7 @@ export class VoiceButton extends HTMLElement {
     function matchCallback(voiceButtonPointer, event) {
       const result = event.results[event.resultIndex];
       let { transcript } = result[0];
-      transcript = transcript.replace(".", "");
+      transcript = transcript.replace('.', '');
       transcript = transcript.trim();
       transcript = transcript.toLowerCase();
 

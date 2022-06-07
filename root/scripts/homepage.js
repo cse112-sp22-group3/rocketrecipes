@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 // eslint-disable-next-line import/extensions
 import { getAllRecipes } from './utils.js';
 

@@ -29,3 +29,6 @@ body {
     visibility: visible;
     transition: all 0.3s ease;
 }
+.submit-btn:hover {
+    background-color: #cf4257;
+}

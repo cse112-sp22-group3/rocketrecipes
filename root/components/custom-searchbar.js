@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+// eslint-disable-next-line import/extensions
+import { VoiceButton } from './voice-button.js';
 // creates form with all checkboxes for filtering search
 // the search bar originally present on index.html and on the searchPage.html
 
@@ -217,6 +219,7 @@ class Searchbar extends HTMLElement {
     searchInput.name = 's';
     searchInput.placeholder = 'Start typing...';
     searchInput.ariaLabel = 'Search through site content';
+    this.searchInput = searchInput;
 
     const searchButton = document.createElement('button');
     searchButton.innerHTML = `
@@ -228,6 +231,9 @@ class Searchbar extends HTMLElement {
 
     form.appendChild(searchInput);
     form.appendChild(searchButton);
+
+    const voiceButton = new VoiceButton();
+    searchbarContainer.appendChild(voiceButton);
 
     const checkboxContainer = createCheckboxContainer();
     searchbarContainer.appendChild(checkboxContainer);
@@ -253,6 +259,7 @@ class Searchbar extends HTMLElement {
         tags.length > 0 ? `&tags=${tags.join(',')}` : ''
       }`;
     }
+    this.handleSearch = handleSearch;
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();

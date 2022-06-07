@@ -1,37 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/search.css" />
-    <link rel="stylesheet" href="../css/global.css" class="style">
-    <script src="../components/custom-navbar.js" type="module"></script>
-    <script src="../scripts/searchpage.js" type="module"></script>
-    <script src="../components/recipe-card.js" type="module"></script>
-    <script src="../components/custom-searchbar.js" type="module"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
-    <title>Search</title>
-</head>
-
-<body>
-    <header>
-        <custom-navbar page="search" />
-    </header>
-    <main>
-        <div class="midPart">
-            <div class="title">
-                <h1>Find Recipes</h1>
-                <h2 id="searchHeader"> </h2>
-            </div>
-            <div class="bar">
-
-                <custom-searchbar />
-            </div>
-            <div id="search-results-container">
-                <div id="search-results-page-buttons">
-                    <button id="search-page-button-first">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel = "stylesheet" href="../css/search.css"/>
+        <link rel="stylesheet" href="../css/global.css" class="style">
+        <script src="../components/custom-navbar.js" type="module"></script>
+        <script src="../scripts/searchpage.js" type="module"></script>
+        <script src="../components/recipe-card.js" type="module"></script>
+        <script src="../components/custom-searchbar.js" type="module"></script>
+        <script src="../components/voice-button.js" type="module"></script>
+        <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
+        <title>Search</title>
+    </head>
+    <body>
+        <header>
+            <custom-navbar page="search"/>
+        </header>    
+        <main>
+            <div class="midPart">
+                <div class="title">
+                    <h1>Find Recipes</h1>
+                    <h2 id="searchHeader"> </h2>
+                </div>
+                <div class="bar">
+                    <custom-searchbar id="searchbar"/>
+                </div>
+                <div>
+                    <dialog id="helpDialog">
+                    </dialog>
+                </div>
+                <div id="search-results-container">
+                    <div id="search-results-page-buttons" > 
+                        <button id="search-page-button-first">
                             <svg viewBox="0 0 60 55" preserveAspectRatio="xMidYMin slice" style="width: 1px; padding-bottom: 19%; padding-right: 6px; height:1px; overflow: visible" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                 <path d="M77.25 256l137.4-137.4c12.5-12.5 12.5-32.75 0-45.25s-32.75-12.5-45.25 0l-160 160c-12.5 12.5-12.5 32.75 0 45.25l160 160C175.6 444.9 183.8 448 192 448s16.38-3.125 22.62-9.375c12.5-12.5 12.5-32.75 0-45.25L77.25 256zM269.3 256l137.4-137.4c12.5-12.5 12.5-32.75 0-45.25s-32.75-12.5-45.25 0l-160 160c-12.5 12.5-12.5 32.75 0 45.25l160 160C367.6 444.9 375.8 448 384 448s16.38-3.125 22.62-9.375c12.5-12.5 12.5-32.75 0-45.25L269.3 256z"/>
                             </svg>

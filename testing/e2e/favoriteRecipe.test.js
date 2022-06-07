@@ -26,7 +26,7 @@ describe('favorite a recipe', () => {
         const title = await page.evaluate(() => document.querySelector('#recipe-title').textContent);
         await expect(page.title()).resolves.toMatch(title);
 
-        await page.waitFor(2000);
+        await page.waitFor(500);
         await page.click('#fav-icon');
     });
 
@@ -47,7 +47,7 @@ describe('favorite a recipe', () => {
         const title = await page.evaluate(() => document.querySelector('#recipe-title').textContent);
         await expect(page.title()).resolves.toMatch(title);
 
-        await page.waitFor(2000);
+        await page.waitFor(500);
         await page.click('#fav-icon');
     });
 

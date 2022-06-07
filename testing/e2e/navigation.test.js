@@ -38,11 +38,6 @@ describe('navigate through pages', () => {
         await expect(page.title()).resolves.toMatch('My Account');
     });
 
-    it('account page header should be My Account', async () => {
-        const header = await page.evaluate( () => document.querySelector('#myaccount').textContent);
-        expect(header).toBe('My Account');
-    });
-
     it('navigate to Create Recipe page', async () => {
         await page.goto(`http://${rootUrl}/root/html/CreateRecipe.html`);
     });

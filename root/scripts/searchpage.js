@@ -11,6 +11,8 @@ let resultsFound = 0;
 let searchQuery = '';
 let filterTags = [];
 let filterMessage = '';
+let ingredsIncluded = '';
+let ingredsExcluded = '';
 
 function buttonReset() {
   const pageButtonFirst = document.getElementById('search-page-button-first');
@@ -54,8 +56,9 @@ function buttonReset() {
     pageButtonLast.style.display = 'none';
     pageButtonLast.disabled = true;
   }
-
-  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${filterTags.length !== 0 ? filterMessage : ''} ${searchQuery}, page ${pageUserIsOn} of results`;
+  const includeMessage = ` including ${ingredsIncluded}`;
+  const excludeMessage = ` excluding ${ingredsExcluded}`;
+  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${filterTags.length !== 0 ? filterMessage : ''} ${searchQuery}${ingredsIncluded !== null ? includeMessage : ''} ${ingredsExcluded !== null ? excludeMessage : ''}, page ${pageUserIsOn} of results`;
 }
 
 function clickNextSearchPage(currentPage) {
@@ -174,16 +177,19 @@ function cleanFilterMessage() {
 function fillSearchPage(searchResults) {
   filterMessage = filterTags.toString();
   cleanFilterMessage();
+
   const queryString = window.location.search;
   const searchParams = new URLSearchParams(queryString);
-  const ingredsIncluded = searchParams.get('IngIncl');
-  const ingredsExcluded = searchParams.get('IngExcl');
+  ingredsIncluded = searchParams.get('IngIncl');
+  ingredsExcluded = searchParams.get('IngExcl');
+  const includeMessage = ` including ${ingredsIncluded}`;
+  const excludeMessage = ` excluding ${ingredsExcluded}`;
   const searchResultsContainer = document.getElementById('search-results-container');
 
   searchQuery = searchParams.get('searchQuery');
   numResults = searchResults.length;
   if (searchResults.length === 0) {
-    document.getElementById('searchHeader').innerHTML = `0 ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery}`;
+    document.getElementById('searchHeader').innerHTML = `0 ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery} ${ingredsIncluded !== null ? includeMessage : ''}  ${ingredsExcluded !== null ? excludeMessage : ''} `;
     searchResultsContainer.innerHTML = `
       <p>Sorry, no results were found for your search</p>
     `;
@@ -238,14 +244,6 @@ function fillSearchPage(searchResults) {
       }
     });
 
-    let message = `${resultsCounter} recipes found for ${searchQuery}`;
-    if (ingredsIncluded !== null) {
-      message += ` including ${ingredsIncluded}`;
-    }
-    if (ingredsExcluded !== null) {
-      message += ` excluding ${ingredsExcluded}`;
-    }
-    document.getElementById('searchHeader').innerHTML = message;
     // page buttons moved to bottom of container
     if (resultsCounter >= resultsPerPage) {
       const pageButtons = document.getElementById('search-results-page-buttons');
@@ -253,15 +251,16 @@ function fillSearchPage(searchResults) {
     }
 
     resultsFound = resultsCounter;
-    document.getElementById('searchHeader').innerHTML = `${resultsFound} ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery}, page 1 of results`;
+    document.getElementById('searchHeader').innerHTML = `${resultsFound} ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery}${ingredsIncluded !== null ? includeMessage : ''}${ingredsExcluded !== null ? excludeMessage : ''}, page 1 of results`;
   }
 }
 
 async function init() {
   const queryString = window.location.search;
   const searchParams = new URLSearchParams(queryString);
-  const ingredsIncluded = searchParams.get('IngIncl');
-  const ingredsExcluded = searchParams.get('IngExcl');
+  ingredsIncluded = searchParams.get('IngIncl');
+  ingredsExcluded = searchParams.get('IngExcl');
+
   searchQuery = searchParams.get('searchQuery');
   filterTags = searchParams.get('tags')?.split(',') || [];
 

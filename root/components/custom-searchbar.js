@@ -173,14 +173,15 @@ class Searchbar extends HTMLElement {
             .searchbar{
                 height:16px;
                 border:none;    
-                width:80%;
+                width:90%;
                 font-size:16px;
                 outline: none;
                 background-color: white;
             }
             .ingredients-included{
                 height:calc(5vh);
-                border:none;    
+                border:none;
+                padding-left: 40px;    
                 width:80%;
                 font-size:16px;
                 outline: none;
@@ -188,7 +189,8 @@ class Searchbar extends HTMLElement {
             }
             .ingredients-excluded{
                 height:calc(5vh);
-                border:none;    
+                border:none;
+                padding-left: 40px;    
                 width:80%;
                 font-size:16px;
                 outline: none;
@@ -226,7 +228,7 @@ class Searchbar extends HTMLElement {
               background-color: #eee;
               color: #444;
               cursor: pointer;
-              padding: 18px;
+              padding: 18px 26px;
               width: 80%;
               border: none;
               text-align: left;

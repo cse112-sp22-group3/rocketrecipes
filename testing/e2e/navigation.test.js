@@ -26,7 +26,7 @@ describe('navigate through pages', () => {
     it('home page should have 1 recommended recipes', async () => {
         await page.waitForSelector('recipe-card');
         const recipes = await page.$$('recipe-card');
-        expect(recipes.length).toBe(1);
+        expect(recipes.length).toBe(8);
     });
 
     it('navigate to Account page', async () => {

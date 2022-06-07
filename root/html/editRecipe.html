@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/CreateRecipe.css" class="style" />
-    <script src="../components/custom-navbar.js" type="module"></script>
+    <script src="../components/simple-custom-navbar.js" type="module"></script>
+    <script src="../components/simple-custom-searchbar.js" type="module"></script>
     <script src="../scripts/editRecipe.js" type="module"></script>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
     <link rel="stylesheet" href="../css/global.css" class="style">
@@ -13,7 +14,7 @@
   </head>
   <body>
     <header>
-      <custom-navbar />
+      <simple-custom-navbar />
     </header>
     <main>
       <div class="midPart">
@@ -72,7 +73,6 @@
         </div>
 
         <form input="checkboxes" class="checkboxes">
-          <label class="container"><input id="cheap" name="Cheap" type="checkbox">Cheap</label>
           <label class="container"><input id="vegetarian" name="Vegetarian" type="checkbox">Vegetarian</label>
           <label class="container"><input id="vegan" name="Vegan" type="checkbox">Vegan</label>
           <label class="container"><input id="glutenFree" name="Gluten Free" type="checkbox">Gluten Free</label>

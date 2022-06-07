@@ -1,9 +1,10 @@
+/* eslint-disable no-alert */
 /* eslint-disable import/extensions */
 import {
-  getAllRecipes, createRecipe, createId, validateForm, trimRecipe,
+  getAllRecipes, createRecipe, createId, validateForm, trimRecipe, purifyDOM,
+  whitespaceTrimmer, getRecipeByUrl,
 } from './utils.js';
 /* eslint-disable prefer-destructuring */
-// const crypto = require('crypto');
 
 let i = 1; // instructions counter
 let ingCount = 1; // Ingredient Counter
@@ -21,9 +22,6 @@ function addStep() {
 
 function deleteStep() {
   i -= 1;
-  if (i < 2) {
-    i = 2;
-  }
   const stepStr = `Step${i.toString()}`;
   const lastStep = document.getElementById(stepStr);
   lastStep.remove();
@@ -60,9 +58,6 @@ function addIng() {
 
 function deleteIng() {
   ingCount -= 1;
-  if (ingCount < 2) {
-    ingCount = 2;
-  }
   const ingStep = document.getElementById(`ing${ingCount.toString()}`);
   const amountStep = document.getElementById(`amount${ingCount.toString()}`);
   const unitStep = document.getElementById(`units${ingCount.toString()}`);
@@ -71,7 +66,48 @@ function deleteIng() {
   amountStep.remove();
 }
 
+async function createRecipeByUrl() {
+  const urlText = document.getElementById('urlText').value;
+  const regex = /^(ftp|http|https):\/\/[^ "]+$/;
+
+  const validUrl = regex.test(urlText);
+
+  if (!validUrl) {
+    alert('Please enter a valid website URL');
+  } else {
+    try {
+      const id = await getRecipeByUrl(document.getElementById('urlText').value);
+
+      if (id) {
+        window.location = `${window.location.origin}/root/html/RecipePage.html?id=${id}`;
+      }
+    } catch (e) {
+      alert('Error: Please try again with a different recipe.');
+    }
+  }
+  document.getElementById('urlText').value = '';
+}
+
 async function init() {
+  // Error popup
+  const errPopup = document.getElementById('errDialog');
+  const errPrompt = document.createElement('form');
+  const errHeader = document.createElement('h3');
+  const errMsg = document.createElement('p');
+  const errButt = document.createElement('button');
+  errHeader.innerText = 'Oh no, there\'s an error!';
+  errButt.innerHTML = 'Okay';
+  errPrompt.setAttribute('method', 'dialog');
+  errHeader.setAttribute('id', 'errHeader');
+  errMsg.setAttribute('id', 'errMsg');
+  errButt.setAttribute('id', 'errButt');
+  errButt.setAttribute('class', 'buttons');
+
+  errPrompt.appendChild(errHeader);
+  errPrompt.appendChild(errMsg);
+  errPrompt.appendChild(errButt);
+  errPopup.appendChild(errPrompt);
+
   const addIngredient = document.getElementById('addIngredient');
   addIngredient.addEventListener('click', addIng);
 
@@ -84,14 +120,17 @@ async function init() {
   const deleteButton = document.getElementById('Delete');
   deleteButton.addEventListener('click', deleteStep);
 
+  const urlButton = document.getElementById('urlButton');
+  urlButton.addEventListener('click', createRecipeByUrl);
+
   await getAllRecipes();
   document.getElementById('Create').addEventListener('click', async () => {
     const userGenRecipe = {};
-    userGenRecipe.id = createId(); // crypto.randomBytes(16).toString('hex');
-    userGenRecipe.title = document.getElementById('name').value;
-    userGenRecipe.readyInMinutes = document.getElementsByClassName('amount')[1].value;
-    userGenRecipe.servings = document.getElementsByClassName('amount')[0].value;
-    userGenRecipe.image = document.getElementById('image').value;
+    userGenRecipe.id = createId();
+    userGenRecipe.title = whitespaceTrimmer(purifyDOM(document.getElementById('name').value));
+    userGenRecipe.readyInMinutes = parseInt(whitespaceTrimmer(document.getElementsByClassName('amount')[1].value), 10);
+    userGenRecipe.servings = parseInt(whitespaceTrimmer(document.getElementsByClassName('amount')[0].value), 10);
+    userGenRecipe.image = purifyDOM(document.getElementById('image').value);
     userGenRecipe.uploader = 'From the User';
 
     // Need to add tags to CreateRecipe.html so that the user can manually select which tags
@@ -99,7 +138,6 @@ async function init() {
     userGenRecipe.isFromInternet = false;
     userGenRecipe.vegetarian = document.getElementById('vegetarian').checked;
     userGenRecipe.vegan = document.getElementById('vegan').checked;
-    userGenRecipe.cheap = document.getElementById('cheap').checked;
     userGenRecipe.glutenFree = document.getElementById('glutenFree').checked;
     userGenRecipe.dairyFree = document.getElementById('dairyFree').checked;
     userGenRecipe.quickEat = document.getElementById('quickEat').checked;
@@ -109,21 +147,22 @@ async function init() {
     let numIngredients = 0;
     for (let j = 0; j < document.getElementsByClassName('Ingre').length; j += 1) {
       const ingredientInfo = {};
-      ingredientInfo.name = document.getElementsByClassName('Ingredient')[j].value;
-      ingredientInfo.amount = document.getElementsByClassName('Ingre')[j].value;
-      ingredientInfo.unit = document.getElementsByClassName('unit')[j].value;
+      ingredientInfo.name = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('Ingredient')[j].value));
+      ingredientInfo.amount = parseInt(document.getElementsByClassName('Ingre')[j].value, 10);
+      ingredientInfo.unit = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('unit')[j].value));
       userGenRecipe.ingredients.push(ingredientInfo);
       numIngredients += 1;
     }
+    // console.log(userGenRecipe.ingredients);
 
     userGenRecipe.fiveIngredientsOrLess = numIngredients <= 5;
-    userGenRecipe.summary = document.getElementsByClassName('descrip')[0].value;
+    userGenRecipe.summary = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('descrip')[0].value));
 
     userGenRecipe.steps = [];
     for (let k = 0; k < document.getElementsByClassName('step').length; k += 1) {
       const currStep = {};
       currStep.number = k;
-      currStep.step = document.getElementsByClassName('step')[k].value;
+      currStep.step = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('step')[k].value));
       userGenRecipe.steps.push(currStep);
     }
     // validate form, if it is valid then create recipe
@@ -133,10 +172,8 @@ async function init() {
       await createRecipe(trimmedRecipe);
       window.location = `${window.location.origin}/root/html/RecipePage.html?id=${trimmedRecipe.id}`;
     } else {
-      // eslint-disable-next-line no-alert
-      alert(
-        `Your recipe was not created due to invalid inputs. \n\nError message: ${formValidateObject.errorMessage}`,
-      );
+      errMsg.innerText = formValidateObject.errorMessage;
+      errPopup.showModal();
     }
   });
 }

@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/RecipePage.css" class="style" />
     <link rel="stylesheet" href="../css/global.css" class="style">
-    <script src="../components/custom-navbar.js" type="module"></script>
+    <script src="../components/simple-custom-navbar.js" type="module"></script>
+    <script src="../components/simple-custom-searchbar.js" type="module"></script>
     <script src="../components/recipe-card.js" type="module"></script>
     <script src="../scripts/recipepage.js" type="module"></script>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
@@ -15,7 +16,7 @@
 
   <body>
     <header>
-      <custom-navbar />
+      <simple-custom-navbar />
     </header>
     <main>
       <button class="back-button" id="back-button"></button>
@@ -67,7 +68,7 @@
             </div>
             <p class="description" id="description"></p>
           </div>
-          <img src="" alt="" class="recipe-image" id="recipe-image" />
+          <img src="" alt="" class="recipe-image" id="recipe-image"/>
         </div>
         <div class="half-line"></div>
         <div class="recipe-body">
@@ -78,6 +79,10 @@
           <section class="section--ingredients">
             <h2>Ingredients</h2>
             <ul id="ingredients-list"></ul>
+            <!-- <div class="unit-conversion-container"> 
+              <button class="unit-conversion" id="us-customary">US Customary</button>
+              <button class="unit-conversion" id="metric">Metric</button>
+            </div> -->
           </section>
         </div>
       </div>

@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable import/named */
 /* eslint-disable import/extensions */
 import {
@@ -36,7 +37,6 @@ function fillRecipePage(currentRecipe) {
   // add categories
   // Create tag buttons based on these tag properties
   const tagProperties = [
-    { id: 'cheap', name: 'Cheap' },
     { id: 'dairyFree', name: 'Dairy Free' },
     { id: 'fiveIngredientsOrLess', name: 'Easy' },
     { id: 'glutenFree', name: 'Gluten Free' },
@@ -64,11 +64,22 @@ function fillRecipePage(currentRecipe) {
 
   const recipeIngredientsElement = document.getElementById('ingredients-list');
   currentRecipe.ingredients.forEach((ingredient) => {
-    // create new ingredient li
+    const check = document.createElement('input');
+    check.setAttribute('type', 'checkbox');
+    check.setAttribute('class', 'checkbox-box');
+
     const currentIngredientLi = document.createElement('li');
-    // round ingredient amount to 2 decimal places
+    const text = document.createElement('span');
     const roundedIngredient = Math.round(ingredient.amount * 100) / 100;
-    currentIngredientLi.innerText = `${roundedIngredient} ${ingredient.unit} ${ingredient.name}`;
+    text.innerHTML = `${roundedIngredient} ${ingredient.unit} ${ingredient.name}`;
+
+    const list = document.querySelector('li');
+    list.addEventListener('change', function () {
+      text.classList.toggle('checkbox-checked', this.checked);
+    });
+
+    currentIngredientLi.appendChild(check);
+    currentIngredientLi.appendChild(text);
     currentIngredientLi.setAttribute('class', 'ingred');
     recipeIngredientsElement.appendChild(currentIngredientLi);
   });
@@ -127,7 +138,7 @@ async function scaleIngredients() {
     const ingre = window.currentRecipe.ingredients[i];
     // round ingredient amount to 2 decimal places
     const roundedIngredient = Math.round(ingre.amount * scale.value * 100) / 100;
-    recipeIngredientsElement[i].innerText = `${roundedIngredient} ${ingre.unit} ${ingre.name}`;
+    recipeIngredientsElement[i].lastChild.innerText = `${roundedIngredient} ${ingre.unit} ${ingre.name}`;
   }
 }
 
@@ -185,6 +196,7 @@ async function init() {
       document.getElementById('shareContainer').style.display = 'flex';
     }
   });
+
   const backButton = document.getElementById('back-button');
   backButton.addEventListener('click', () => {
     if (document.referrer === '') {
@@ -194,11 +206,70 @@ async function init() {
     const prevPage = new URL(document.referrer);
     const currentPage = new URL(window.location);
     if (prevPage.origin === currentPage.origin) {
-      window.history.back();
+      window.location = document.referrer;
     } else {
       window.location.href = new URL(window.location.origin);
     }
   });
+
+  // measurement buttons
+  // let unitState = 'uscust';
+
+  // const unitUSCustomButton = document.getElementById('us-customary');
+  // unitUSCustomButton.addEventListener('click', () => {
+  //   const recipeIngredientsElement = document.getElementsByClassName('ingred');
+  //   unitState = 'uscust';
+  //   for (let i = 0; i < recipeIngredientsElement.length; i += 1) {
+  //     const ingre = window.currentRecipe.ingredients[i];
+
+  //     // ml -> oz
+  //     if (ingre.unit === 'ml') {
+  //       const converted = Math.round(ingre.amount * (1 / 29.5735) * 100) / 100;
+  //       recipeIngredientsElement[i].innerText = `${converted} ${'oz'} ${ingre.name}`;
+  //     }
+  //     // gr -> oz
+  //     if (ingre.unit === 'gr' || ingre.unit === 'g') {
+  //       const converted = Math.round(ingre.amount * (1 / 28.3495) * 100) / 100;
+  //       recipeIngredientsElement[i].innerText = `${converted} ${'oz'} ${ingre.name}`;
+  //     }
+  //     // kg -> lbs
+  //     if (ingre.unit === 'kg') {
+  //       const converted = Math.round(ingre.amount * (2.20462) * 100) / 100;
+  //       recipeIngredientsElement[i].innerText = `${converted} ${'pounds'} ${ingre.name}`;
+  //     }
+  //   }
+  // });
+
+  // const unitMetricButton = document.getElementById('metric');
+  // unitMetricButton.addEventListener('click', () => {
+  //   const recipeIngredientsElement = document.getElementsByClassName('ingred');
+  //   unitState = 'metric';
+  //   for (let i = 0; i < recipeIngredientsElement.length; i += 1) {
+  //     const ingre = window.currentRecipe.ingredients[i];
+  //     const liquids = ['stock', 'water', 'milk', 'cream', 'cooking oil'];
+  //     // oz -> ml
+  //     if ((ingre.unit === 'oz' || ingre.unit === 'ounces' || ingre.unit === 'ozs')
+  // && liquids.includes(ingre.name)) {
+  //       const converted = Math.round(ingre.amount * (29.5735) * 100) / 100;
+  //       recipeIngredientsElement[i].innerText = `${converted} ${'ml'} ${ingre.name}`;
+  //     }
+  //     // oz -> gr
+  //     if (ingre.unit === 'oz' || ingre.unit === 'ounces' || ingre.unit === 'ozs') {
+  //       const converted = Math.round(ingre.amount * (28.3495) * 100) / 100;
+  //       recipeIngredientsElement[i].innerText = `${converted} ${'gr'} ${ingre.name}`;
+  //     }
+  //     // lbs -> kg
+  //     if (ingre.unit === 'lbs' || ingre.unit === 'pounds') {
+  //       const converted = Math.round(ingre.amount * (1 / 2.20462) * 100) / 100;
+  //       recipeIngredientsElement[i].innerText = `${converted} ${'kg'} ${ingre.name}`;
+  //     }
+  //     // quarts -> liter
+  //     if (ingre.unit === 'quarts' || ingre.unit === 'quart' || ingre.unit === 'qt') {
+  //       const converted = Math.round(ingre.amount * (0.95) * 100) / 100;
+  //       recipeIngredientsElement[i].innerText = `${converted} ${'L'} ${ingre.name}`;
+  //     }
+  //   }
+  // });
 
   // fetch four random recipes (except the currently displayed recipe) and
   // display at bottom of page
@@ -209,8 +280,8 @@ async function init() {
   }
   const button = document.querySelector('#fav-icon');
   let isFav = await isFavorite(recipeId);
-  const outlinedStar = "background: url('https://api.iconify.design/ant-design/star-outlined.svg?color=%23c4c4c4&height=48') no-repeat center center / contain;";
-  const filledStar = "background: url('https://api.iconify.design/ant-design/star-filled.svg?color=%23ffc700&height=48') no-repeat center center / contain;";
+  const outlinedStar = 'background: url("https://api.iconify.design/ant-design/star-outlined.svg?color=%23c4c4c4&height=48") no-repeat center center / contain;';
+  const filledStar = 'background: url("https://api.iconify.design/ant-design/star-filled.svg?color=%23ffc700&height=48") no-repeat center center / contain;';
 
   button.addEventListener('click', async () => {
     // change icons based on favorite
@@ -240,7 +311,7 @@ async function init() {
   //   var js, fjs = d.getElementsByTagName(s)[0];
   //   if (d.getElementById(id)) return;
   //   js = d.createElement(s); js.id = id;
-  //   js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+  //   js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0';
   //   fjs.parentNode.insertBefore(js, fjs);
   //   }(document, 'script', 'facebook-jssdk'));
 }

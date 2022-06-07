@@ -7,7 +7,6 @@ const recipe = {
   uploader: 'username1',
   vegetarian: true,
   vegan: true,
-  cheap: true,
   glutenFree: false,
   dairyFree: true,
   quickEat: false,
@@ -81,7 +80,6 @@ for (let i = 0; i < 10000; i += 1) {
     recipeArr[i].dairyFree = true;
     recipeArr[i].quickEat = true;
     recipeArr[i].breakfast = true;
-    recipeArr[i].cheap = true;
     recipeArr[i].title = 'random title';
   }
 }

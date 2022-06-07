@@ -135,7 +135,7 @@ span {
     width: 130px;
     height: 40px;
     border-radius: 10px;
-    background-color: pink;
+    background-color: #f24e67;
     font-size: 15px;
 }
 .FavoriteFood div {
@@ -152,9 +152,12 @@ span {
     position: relative;
 }
 .survey-btn {
-  width: 200px;
+  width: 150px;
   height: 40px;
   font-size: 16;
   border-radius: 12px;
+  border-color: #f24e67;
+  color: #f24e67;
+  border-width: 1px;
   background-color: white;
 }

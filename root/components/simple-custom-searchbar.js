@@ -35,7 +35,7 @@ class Searchbar extends HTMLElement {
             .bar{
                 margin: 0 auto;
                 height: 55px;
-                border-radius: 0px;
+                border-radius: 2px;
                 color: #D3D3D3;
                 border: 1px solid;
                 background-color: white;

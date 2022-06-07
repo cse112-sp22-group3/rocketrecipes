@@ -110,7 +110,6 @@ async function createRecipeByUrl() {
 }
 
 async function init() {
-
   const addIngredient = document.getElementById('addIngredient');
   addIngredient.addEventListener('click', addIng);
 

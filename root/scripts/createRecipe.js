@@ -10,6 +10,25 @@ import {
 let i = 1; // instructions counter
 let ingCount = 1; // Ingredient Counter
 
+// Error popup
+const errPopup = document.getElementById('errDialog');
+const errPrompt = document.createElement('form');
+const errHeader = document.createElement('h3');
+const errMsg = document.createElement('p');
+const errButt = document.createElement('button');
+errHeader.innerText = 'Oh no, there\'s an error!';
+errButt.innerHTML = 'Okay';
+errPrompt.setAttribute('method', 'dialog');
+errHeader.setAttribute('id', 'errHeader');
+errMsg.setAttribute('id', 'errMsg');
+errButt.setAttribute('id', 'errButt');
+errButt.setAttribute('class', 'buttons');
+
+errPrompt.appendChild(errHeader);
+errPrompt.appendChild(errMsg);
+errPrompt.appendChild(errButt);
+errPopup.appendChild(errPrompt);
+
 function addStep() {
   const instructions = document.querySelector('.instructions');
   const steps = document.createElement('input');
@@ -78,7 +97,8 @@ async function createRecipeByUrl() {
   const validUrl = regex.test(urlText);
 
   if (!validUrl) {
-    alert('Please enter a valid website URL');
+    errMsg.innerText = 'Please enter a valid website URL';
+    errPopup.showModal();
   } else {
     try {
       const id = await getRecipeByUrl(document.getElementById('urlText').value);
@@ -87,32 +107,14 @@ async function createRecipeByUrl() {
         window.location = `${window.location.origin}/root/html/RecipePage.html?id=${id}`;
       }
     } catch (e) {
-      alert('Error: Please try again with a different recipe.');
+      errMsg.innerText = 'Please try again with a different recipe';
+      errPopup.showModal();
     }
   }
   document.getElementById('urlText').value = '';
 }
 
 async function init() {
-  // Error popup
-  const errPopup = document.getElementById('errDialog');
-  const errPrompt = document.createElement('form');
-  const errHeader = document.createElement('h3');
-  const errMsg = document.createElement('p');
-  const errButt = document.createElement('button');
-  errHeader.innerText = 'Oh no, there\'s an error!';
-  errButt.innerHTML = 'Okay';
-  errPrompt.setAttribute('method', 'dialog');
-  errHeader.setAttribute('id', 'errHeader');
-  errMsg.setAttribute('id', 'errMsg');
-  errButt.setAttribute('id', 'errButt');
-  errButt.setAttribute('class', 'buttons');
-
-  errPrompt.appendChild(errHeader);
-  errPrompt.appendChild(errMsg);
-  errPrompt.appendChild(errButt);
-  errPopup.appendChild(errPrompt);
-
   const addIngredient = document.getElementById('addIngredient');
   addIngredient.addEventListener('click', addIng);
 

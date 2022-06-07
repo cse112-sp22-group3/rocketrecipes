@@ -140,7 +140,7 @@ export class VoiceButton extends HTMLElement {
 
         if (ENABLE_VOICE_LOGGING) {
           console.log(`No results matched transcript. Num results${searchResults.length
-          } transcript: ${transcript}`);
+          } transcript: "${transcript}"`);
         }
       }
     }
@@ -226,7 +226,10 @@ export class VoiceButton extends HTMLElement {
     function matchCallback(voiceButtonPointer, event) {
       const result = event.results[event.resultIndex];
       let { transcript } = result[0];
+      transcript = transcript.replace(".", "");
       transcript = transcript.trim();
+      transcript = transcript.toLowerCase();
+
       let command = '';
 
       const currentPage = document.title;
@@ -275,10 +278,9 @@ export class VoiceButton extends HTMLElement {
           command += `: not enabled on page ${currentPage}`;
         }
       } else {
-        command = `NO MATCH: ${transcript}`;
+        command = `NO MATCH: "${transcript}"`;
       }
 
-      console.log(command);
       if (ENABLE_VOICE_LOGGING) {
         console.log(command);
       }

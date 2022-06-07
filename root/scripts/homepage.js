@@ -12,11 +12,40 @@ function createRecommendedRecipes() {
   const numRecipes = 8;
   const randomNumber = Math.floor(Math.random() * (allRecipes.length - numRecipes - 1));
 
-  for (let i = 0; i < numRecipes; i += 1) {
-    const recipeCard = document.createElement('recipe-card');
-    recipeCard.data = allRecipes[randomNumber + i];
+  // integrate user preferences
+  const userPreferences = JSON.parse(localStorage.getItem('user-preferences'));
+  let numAdded = 0;
 
-    recommendedRecipeContainer.appendChild(recipeCard);
+  if (userPreferences != null) {
+    const index = Math.floor(Math.random() * allRecipes.length - 1);
+    for (let i = index; i < allRecipes.length && numAdded < 8; i += 1) {
+      const recipe = allRecipes[i];
+      if (userPreferences.some((preference) => recipe[`${preference}`])) {
+        const recipeCard = document.createElement('recipe-card');
+        recipeCard.data = recipe;
+        recommendedRecipeContainer.appendChild(recipeCard);
+        numAdded += 1;
+      }
+    }
+
+    for (let i = 0; i < index && i < allRecipes.length && numAdded < 8; i += 1) {
+      const recipe = allRecipes[i];
+
+      if (userPreferences.some((preference) => recipe[`${preference}`])) {
+        const recipeCard = document.createElement('recipe-card');
+        recipeCard.data = recipe;
+        recommendedRecipeContainer.appendChild(recipeCard);
+        numAdded += 1;
+      }
+    }
+  } else if (numAdded < numRecipes) {
+    for (let i = 0; numAdded < 8; i += 1) {
+      const recipeCard = document.createElement('recipe-card');
+      recipeCard.data = allRecipes[randomNumber + i];
+
+      recommendedRecipeContainer.appendChild(recipeCard);
+      numAdded += 1;
+    }
   }
 }
 

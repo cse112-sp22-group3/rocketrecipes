@@ -293,6 +293,7 @@ export async function search(searchQuery, tags) {
   const query = searchQuery.toLowerCase();
   const tokenizedQuery = [...new Set(query.trim().split(/\s+/))]; // regex matches one or more spaces
   const minNumMatchingTokens = Math.ceil(tokenizedQuery.length * MIN_MATCHING_THRESHOLD);
+  const userPreferences = JSON.parse(localStorage.getItem('user-preferences'));
 
   let searchResults = [];
 
@@ -307,6 +308,15 @@ export async function search(searchQuery, tags) {
         }
       });
 
+      // integrate user preferences
+      let userMatchingTags = 0;
+      if (userPreferences != null) {
+        userPreferences.forEach((preference) => {
+          if (recipe[preference]) {
+            userMatchingTags += 1;
+          }
+        });
+      }
       // Create a search score for the title
       let numMatchingTokens = 0;
       let mostRecentMatch = tokenizedQuery.length;
@@ -326,7 +336,8 @@ export async function search(searchQuery, tags) {
         // 3rd: pick titles which have a large percentage of charaters that match with query
         searchScore = numMatchingTokens * (tokenizedQuery.length ** 2)
                     + (tokenizedQuery.length - mostRecentMatch - 1) * tokenizedQuery.length
-                    + (numMatchingCharacters / title.length) * tokenizedQuery.length;
+                    + (numMatchingCharacters / title.length) * tokenizedQuery.length
+                    + (userMatchingTags);
       }
       if (numMatchingTokens < minNumMatchingTokens) {
         recipeMatches = false;

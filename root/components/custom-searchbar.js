@@ -157,7 +157,7 @@ class Searchbar extends HTMLElement {
             .bar{
                 margin: 0 auto;
                 width: 80%;
-                height: 100px;
+                height: 50px;
                 border-radius: 0px;
                 color: #D3D3D3;
                 border: 1px solid;
@@ -179,7 +179,7 @@ class Searchbar extends HTMLElement {
                 background-color: white;
             }
             .ingredients-included{
-                height:16px;
+                height:calc(5vh);
                 border:none;    
                 width:80%;
                 font-size:16px;
@@ -187,7 +187,7 @@ class Searchbar extends HTMLElement {
                 background-color: white;
             }
             .ingredients-excluded{
-                height:16px;
+                height:calc(5vh);
                 border:none;    
                 width:80%;
                 font-size:16px;
@@ -218,6 +218,41 @@ class Searchbar extends HTMLElement {
                 text-align: left;
                 margin-left: 8%;
                 margin-top: 5%;
+            }
+            /* Style the button that is used to open and close the collapsible content */
+            .collapsible {
+              margin-top: calc(1vh);
+              background-color: #eee;
+              color: #444;
+              cursor: pointer;
+              padding: 18px;
+              width: 80%;
+              border: none;
+              text-align: left;
+              outline: none;
+              font-size: 15px;
+            }
+
+            /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+            .active, .collapsible:hover {
+              background-color: #ccc;
+            }
+
+            /* Style the collapsible content. Note: hidden by default */
+            .content {
+              padding: 0 18px;
+              display: none;
+              overflow: hidden;
+            }
+
+            .collapsible:after {
+              font-size: 13px;
+              color: white;
+              float: right;
+              margin-left: 5px;
+            }
+
+            .active:after {
             }
         `;
 
@@ -256,6 +291,15 @@ class Searchbar extends HTMLElement {
     ingInpute.ariaLabel = 'Search through site content';
     ingInpute.style = 'position: relative; top:10px;  right: 10px;';
 
+    const collapsible = document.createElement('button');
+    collapsible.className = 'collapsible';
+    collapsible.textContent = 'Search by Ingredient +';
+    searchbarContainer.appendChild(collapsible);
+
+    const content = document.createElement('div');
+    content.className = 'content';
+
+    searchbarContainer.appendChild(content);
     const searchButton = document.createElement('button');
     searchButton.innerHTML = `
         <a href="#"> 
@@ -273,8 +317,8 @@ class Searchbar extends HTMLElement {
     const checkboxContainer = createCheckboxContainer();
     searchbarContainer.appendChild(checkboxContainer);
 
-    form.appendChild(ingInputi);
-    form.appendChild(ingInpute);
+    content.appendChild(ingInputi);
+    content.appendChild(ingInpute);
 
     this.shadowRoot.append(style, searchbarContainer);
 
@@ -307,6 +351,20 @@ class Searchbar extends HTMLElement {
     form.addEventListener('submit', (e) => {
       e.preventDefault();
       handleSearch(e);
+    });
+
+    const coll = document.querySelector('#searchbar').shadowRoot.querySelector('div > button');
+
+    coll.addEventListener('click', function () {
+      this.classList.toggle('active');
+      const cont = this.nextElementSibling;
+      if (cont.style.display === 'block') {
+        cont.style.display = 'none';
+        coll.textContent = 'Search by Ingredient +';
+      } else {
+        cont.style.display = 'block';
+        coll.textContent = 'Search by Ingredient -';
+      }
     });
   }
 }

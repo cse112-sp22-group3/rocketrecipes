@@ -9,7 +9,6 @@ const signUpBtn = document.getElementById('signup');
 
 const loginForm = document.getElementById('login-user');
 const signUpForm = document.getElementById('signup-user');
-const surveyForm = document.getElementById('survey-user');
 
 const LOCAL_STORAGE_USER_KEY = 'uuid';
 
@@ -53,15 +52,9 @@ signUpForm.addEventListener('submit', (e) => {
       loginForm.style.display = 'none';
       signUpForm.style.display = 'none';
 
+      window.location.href = '../html/survey.html';
       const survey = document.getElementsByClassName('survey')[0];
       survey.style.display = 'inline';
     }
   });
-});
-
-surveyForm.addEventListener('submit', (e) => {
-  // add firebase content here
-  console.log(e);
-  e.preventDefault();
-  window.location.href = '../html/index.html';
 });

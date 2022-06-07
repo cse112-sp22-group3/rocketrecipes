@@ -22,29 +22,27 @@
         <div class="form-holder"> 
             <form id="survey-user">
                 <h3> What dietary prefences do you have?</h3>
-                <fieldset>
-                    <input id="veganPreference" type="checkbox" name="surveyPreference" placeholder="Vegan" />
+                <fieldset name="dietary-preference">
+                    <input value="vegan" id="vegan" type="checkbox" name="surveyPreference" placeholder="Vegan" />
                     <label for="veganPreference">Vegan</label><br>
-                    <input id="vegetarianPreference" type="checkbox" name="surveyPreference" placeholder="Vegetarian"/>
+                    <input value="vegetarian" id="vegetarian" type="checkbox" name="surveyPreference" placeholder="Vegetarian"/>
                     <label for="vegetarianPreference">Vegetarian</label><br>
-                    <input id="lactoseIntolerantPreference" type="checkbox" name="surveyPreference" placeholder="Lactose Intolerant"/>
+                    <input value="dairyFree" id="dairyFree" type="checkbox" name="surveyPreference" placeholder="Lactose Intolerant"/>
                     <label for="lactoseIntolerantPreference">Lactose Intolerant</label><br>
-                    <input id="glutenFreePreference" type="checkbox" name="surveyPreference" placeholder="Gluten Free"/>
+                    <input value="glutenFree" id="glutenFree" type="checkbox" name="surveyPreference" placeholder="Gluten Free"/>
                     <label for="glutenFreePreference">Gluten Free</label><br>
-                    <input id="dairyFreePreference" type="checkbox" name="surveyPreference" placeholder="Dairy Free"/>
-                    <label for="dairyFreePreference">Dairy Free</label><br>
                 </fieldset>
         
                 <h3> What are your goals in cooking?</h3>
-                <fieldset>
-                    <input id="easyRecipes" type="checkbox" name="surveyPreference" placeholder="Easy Recipes" />
-                    <label for="easyRecipes">Easy Recipes</label><br>
+                <fieldset name="goals">
+                    <input value="fiveIngredientsOrLess" id="fiveIngredientsOrLess" type="checkbox" name="surveyPreference" placeholder="Easy Recipes" />
+                    <label for="easyRecipes">I'm looking for recipes that are easy to make.</label><br>
                     <!-- <input id="cheapRecipes" type="checkbox" class="surveyGoal" placeholder="Cheap Recipes" />
                     <label for="cheapRecipes">Cheap Recipes</label><br> -->
-                    <input id="quickRecipes" type="checkbox" name="surveyPreference" placeholder="Quick Recipes" />
-                    <label for="quickRecipes">Quick Recipes</label><br>
+                    <input value="quickEat" id="quickEat" type="checkbox" name="surveyPreference" placeholder="Quick Recipes" />
+                    <label for="quickRecipes">I'm often in a hurry so I want quick recipes.</label><br>
                 </fieldset>
-                <button class="submit-btn" onclick="location.href='generalAccount.html'" type="submit" form="survey-user">Submit & explore recipes!</button>
+                <button class="submit-btn" type="submit" form="survey-user">Submit & explore recipes!</button>
             </form>
         </div>
         <!-- <div class="survey-submit-button"> -->

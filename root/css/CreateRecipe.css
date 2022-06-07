@@ -107,9 +107,12 @@ dialog {
 }
 
 .urlButton {
-    height: 35px;
-    border-radius: 5px;
+    height: 40px;
     font-size: 1em;
+    border-radius: 10px;
+    background-color: #F9A28B;
+    margin-left: 30px;
+    width: 130px;
   }
 
 @media only screen and (max-width: 999px) {

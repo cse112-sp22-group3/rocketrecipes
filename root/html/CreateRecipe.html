@@ -6,28 +6,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/CreateRecipe.css" class="style" />
     <link rel="stylesheet" href="../css/global.css" class="style">
-    <script src="../components/custom-navbar.js" type="module"></script>
+    <script src="../components/simple-custom-navbar.js" type="module"></script>
+    <script src="../components/simple-custom-searchbar.js" type="module"></script>
     <script src="../scripts/createRecipe.js" type="module"></script>
     <link rel="shortcut icon" type="image/x-icon" href="/favicon.png" />
     <title>Create Recipe</title>
   </head>
   <body>
     <header>
-      <custom-navbar page="create"/>
+      <simple-custom-navbar page="create"/>
     </header>
     <main>
       <div class="midPart">
         <h2 id="header">Create your recipe:</h2>
 
+        <h3>Import Recipe By URL</h3>
         <input
           class="urlText"
           type="text"
           id="urlText"
           placeholder="Website Link"
         />
-        <button id="urlButton" class="urlButton">Import by URL</button>
+        <button id="urlButton" class="urlButton">Import</button>
         <br />
         <br />
+        <hr>
+        <h3>Or Manually Add Your Recipe</h3>
         <input
           class="recipeName"
           type="text"

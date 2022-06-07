@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable import/extensions */
-// contained the original navbar, used in searchPage.html to remove search option in nav bar
+// contains the ability to search in the navbar, used in most html pages
 import { logOut } from '../scripts/authUtils.js';
 
 class Navbar extends HTMLElement {
@@ -41,7 +41,6 @@ class Navbar extends HTMLElement {
             position: fixed;
             top: 0;
             display: flex;
-            flex-direction: row;
             justify-content: space-between;
             font-size: 20px;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
@@ -88,15 +87,19 @@ class Navbar extends HTMLElement {
             width: 55px;
             height: 55px;
         }
+        .scrolling-active .mobile-navbar-expanded {
+            top: 70px;
+        }
         .mobile-navbar-expanded {
             position: absolute;
-            width: 30%;
+            width: 20ch;
             top: 100px;
-            right: 0px;
+            right: 1ch;
             display: flex;
             flex-direction: column;
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.15);
             background: white;
+            align-items: center;
         }
         .mobile-link {
             width: 100%;
@@ -133,7 +136,7 @@ class Navbar extends HTMLElement {
             }
         }
         */
-        @media (max-width: 950px) {
+        @media (max-width: 1100px) {
           .navbar-text-link {
             font-size: 12px;
             width: 90px;
@@ -144,7 +147,7 @@ class Navbar extends HTMLElement {
             height: 50px;
           }
         }
-        @media (max-width: 650px) {
+        @media (max-width: 820px) {
           .navbar-links-container-desktop {
               display: none;
           }
@@ -152,14 +155,14 @@ class Navbar extends HTMLElement {
               display: flex;
           }
         } 
-        @media screen and (max-width: 640px) {
+        @media screen and (max-width: 820px) {
           .navbar-image img{
             object-fit: cover;
             width: 250px;
             height: 50px;
           }
         }
-        @media (min-width: 651px) {
+        @media (min-width: 821px) {
             .navbar-links-container-desktop {
                 display: flex;
                 align-items: center;
@@ -178,12 +181,14 @@ class Navbar extends HTMLElement {
         <div class='site-title'>
             <h1 class='site-header'>
                   <a class='navbar-image' href='./index.html'> 
-                      <img class='logo' src='../media/header-logo.png' alt="Rocket Recipes Logo"> 
+                      <img class='logo' src='../media/header-logo.png'> 
                   </a>
             </h1>
         </div>
         <div class='navbar-links-container-desktop'> 
-            <a class='navbar-text-link' id='search' href='./searchpage.html'>Search</a>
+            <div class = 'simple-search'>
+              <simple-custom-searchbar />
+            </div>
             <a class='navbar-text-link' id='create' href='./CreateRecipe.html'>Create Recipe</a>
             <a class='navbar-text-link' id='account' href='./generalAccount.html'>My Account</a>
             <a class="navbar-text-link" id="sign-in" href="./entry.html">Sign In</a>
@@ -191,11 +196,13 @@ class Navbar extends HTMLElement {
         <div class='navbar-links-container-mobile'> 
             <div class='mobile-navbar-button'></div>
         </div>
-        <div class="mobile-navbar-expanded">
-            <a class="navbar-text-link mobile-link" id="search-mobile" href="./searchpage.html">Search</a>
-            <a class="navbar-text-link mobile-link" id="create-mobile" href="./CreateRecipe.html">Create Recipe</a>
-            <a class="navbar-text-link mobile-link" id="account-mobile" href="./generalAccount.html">My Account</a>
-            <a class="navbar-text-link mobile-link" id="sign-in-mobile" href="./entry.html">Sign In</a>
+        <div class='mobile-navbar-expanded'>
+            <div class = 'simple-search'>
+              <simple-custom-searchbar />
+            </div>
+            <a class='navbar-text-link mobile-link' id='create-mobile' href='./CreateRecipe.html'>Create Recipe</a>
+            <a class='navbar-text-link mobile-link' id='account-mobile' href='./generalAccount.html'>My Account</a>
+            <a class="navbar-text-link mobile-link" id="account-mobile" href="./entry.html">Sign In</a>
         </div>
     `;
 
@@ -203,9 +210,8 @@ class Navbar extends HTMLElement {
       navbarContainer.querySelector('#sign-in').textContent = 'Logout';
     }
 
-    navbarContainer.querySelector('#sign-in').addEventListener('click', (e) => {
+    navbarContainer.querySelector('#sign-in').addEventListener('click', () => {
       if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
-        e.preventDefault();
         navbarContainer.querySelector('#sign-in').textContent = 'Sign In';
         logOut();
       }
@@ -244,10 +250,6 @@ class Navbar extends HTMLElement {
 
     const page = this.getAttribute('page');
     switch (page) {
-      case 'search':
-        navbarContainer.querySelector('#search').style.display = 'none';
-        navbarContainer.querySelector('#search-mobile').style.display = 'none';
-        break;
       case 'create':
         navbarContainer.querySelector('#create').style.textDecoration = 'underline';
         navbarContainer.querySelector('#create-mobile').style.textDecoration = 'underline';
@@ -255,10 +257,6 @@ class Navbar extends HTMLElement {
       case 'account':
         navbarContainer.querySelector('#account').style.textDecoration = 'underline';
         navbarContainer.querySelector('#account-mobile').style.textDecoration = 'underline';
-        break;
-      case 'sign-in':
-        navbarContainer.querySelector('#sign-in').style.textDecoration = 'underline';
-        navbarContainer.querySelector('#sign-in-mobile').style.textDecoration = 'underline';
         break;
       default:
         break;
@@ -269,4 +267,4 @@ class Navbar extends HTMLElement {
 }
 
 // Define the Class so you can use it as a custom element
-customElements.define('custom-navbar', Navbar);
+customElements.define('simple-custom-navbar', Navbar);

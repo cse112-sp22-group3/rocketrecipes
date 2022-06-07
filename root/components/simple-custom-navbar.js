@@ -180,8 +180,8 @@ class Navbar extends HTMLElement {
     navbarContainer.innerHTML = `
         <div class='site-title'>
             <h1 class='site-header'>
-                  <a class='navbar-image' href='./index.html'> 
-                      <img class='logo' src='../media/header-logo.png'> 
+                  <a class='navbar-image' href='./index.html' aria-label="Home Page"> 
+                      <img class='logo' src='../media/header-logo.png' alt="Rocket Recipes Logo"> 
                   </a>
             </h1>
         </div>
@@ -189,9 +189,9 @@ class Navbar extends HTMLElement {
             <div class = 'simple-search'>
               <simple-custom-searchbar />
             </div>
-            <a class='navbar-text-link' id='create' href='./CreateRecipe.html'>Create Recipe</a>
-            <a class='navbar-text-link' id='account' href='./generalAccount.html'>My Account</a>
-            <a class="navbar-text-link" id="sign-in" href="./entry.html">Sign In</a>
+            <a class='navbar-text-link' id='create' aria-label="Search Page" href='./CreateRecipe.html'>Create Recipe</a>
+            <a class='navbar-text-link' id='account' aria-label="Account Page Page" href='./generalAccount.html'>My Account</a>
+            <a class="navbar-text-link" id="sign-in" aria-label="Sign In" href="./entry.html">Sign In</a>
         </div>
         <div class='navbar-links-container-mobile'> 
             <div class='mobile-navbar-button'></div>

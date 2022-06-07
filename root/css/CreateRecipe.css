@@ -28,8 +28,21 @@ label > input {
 }
 
 dialog {
-  border-radius: 10px;
   padding: 0;
+}
+
+button {
+  background-color: rgba(242, 78, 103, 1);
+  color: rgba(256, 256, 256, 0.9);
+  border: 0;
+  border-radius: 15px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+button:hover {
+  cursor: pointer;
+  opacity: 0.8;
 }
 
 #errHeader {
@@ -52,7 +65,6 @@ dialog {
   background-color: #f24e67;
   width: 30%;
   margin: 2ch 35% 2ch 35%;
-  color: #fff;
 }
 
 .buttons {

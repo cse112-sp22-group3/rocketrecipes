@@ -23,8 +23,8 @@ describe('navigate through pages', () => {
         await expect(page.title()).resolves.toMatch('Home');
     });
 
-    it('home page should have 1 recommended recipes', async () => {
-        await page.waitForSelector('recipe-card');
+    it('home page should have 8 recommended recipes', async () => {
+        await page.waitForSelector('#recommendedRecipeContainer > recipe-card:nth-child(8)');
         const recipes = await page.$$('recipe-card');
         expect(recipes.length).toBe(8);
     });

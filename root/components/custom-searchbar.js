@@ -156,8 +156,8 @@ class Searchbar extends HTMLElement {
             }
             .bar{
                 margin: 0 auto;
-                // width: 700px;
-                height: 95px;
+                width: 80%;
+                height: 100px;
                 border-radius: 0px;
                 color: #D3D3D3;
                 border: 1px solid;
@@ -254,7 +254,7 @@ class Searchbar extends HTMLElement {
     ingInpute.name = 's';
     ingInpute.placeholder = 'Add an ingredient to exclude';
     ingInpute.ariaLabel = 'Search through site content';
-    ingInpute.style = 'position: relative; top:5px;  right: 10px;';
+    ingInpute.style = 'position: relative; top:10px;  right: 10px;';
 
     const searchButton = document.createElement('button');
     searchButton.innerHTML = `

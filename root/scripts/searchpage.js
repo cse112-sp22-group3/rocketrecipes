@@ -58,7 +58,7 @@ function buttonReset() {
   }
   const includeMessage = ` including ${ingredsIncluded}`;
   const excludeMessage = ` excluding ${ingredsExcluded}`;
-  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${filterTags.length !== 0 ? filterMessage : ''} ${searchQuery}${ingredsIncluded !== null ? includeMessage : ''} ${ingredsExcluded !== null ? excludeMessage : ''}, page ${pageUserIsOn} of results`;
+  document.getElementById('searchHeader').innerHTML = `${resultsFound} recipes found for ${filterTags.length !== 0 ? filterMessage : ''} ${searchQuery}${ingredsIncluded !== null ? includeMessage : ''}${ingredsExcluded !== null ? excludeMessage : ''}, page ${pageUserIsOn} of results`;
 }
 
 function clickNextSearchPage(currentPage) {
@@ -191,7 +191,7 @@ function fillSearchPage(searchResults) {
   if (searchResults.length === 0) {
     document.getElementById('searchHeader').innerHTML = `0 ${filterTags.length !== 0 ? filterMessage : ''} recipes found for ${searchQuery} ${ingredsIncluded !== null ? includeMessage : ''}  ${ingredsExcluded !== null ? excludeMessage : ''} `;
     searchResultsContainer.innerHTML = `
-      <p>Sorry, no results were found for your search</p>
+      <p>Sorry, no results were found for your search${ingredsIncluded !== null || ingredsExcluded !== null ? ' with the current ingredients filtered' : ''}</p>
     `;
   } else {
     let resultsCounter = 0;

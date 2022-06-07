@@ -21,7 +21,7 @@ function addStep() {
 }
 
 function deleteStep() {
-  if(i > 1) {
+  if (i > 1) {
     i -= 1;
   }
   const stepStr = `Step${i.toString()}`;
@@ -59,7 +59,7 @@ function addIng() {
 }
 
 function deleteIng() {
-  if(ingCount > 1) {
+  if (ingCount > 1) {
     ingCount -= 1;
   }
   const ingStep = document.getElementById(`ing${ingCount.toString()}`);

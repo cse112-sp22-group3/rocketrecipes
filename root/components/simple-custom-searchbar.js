@@ -48,6 +48,7 @@ class Searchbar extends HTMLElement {
                 outline:none;
             }
             .searchbar{
+                text-indent: 10px;
                 height:16px;
                 border:none;
                 width:80%;

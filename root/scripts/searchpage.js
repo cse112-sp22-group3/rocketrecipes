@@ -262,7 +262,6 @@ async function init() {
   const searchParams = new URLSearchParams(queryString);
   const ingredsIncluded = searchParams.get('IngIncl');
   const ingredsExcluded = searchParams.get('IngExcl');
-  
   searchQuery = searchParams.get('searchQuery');
   filterTags = searchParams.get('tags')?.split(',') || [];
 
@@ -281,6 +280,8 @@ async function init() {
     fillSearchPage(searchedRecipes);
     const searchbarRoot = document.querySelector('custom-searchbar').shadowRoot;
     searchbarRoot.querySelector('input').value = searchQuery;
+    searchbarRoot.getElementById('ingredients-included').value = ingredsIncluded;
+    searchbarRoot.getElementById('ingredients-excluded').value = ingredsExcluded;
     for (let i = 0; i < filterTags.length; i += 1) {
       searchbarRoot.getElementById(filterTags[i]).checked = true;
     }

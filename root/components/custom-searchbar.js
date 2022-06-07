@@ -177,7 +177,22 @@ class Searchbar extends HTMLElement {
                 font-size:16px;
                 outline: none;
                 background-color: white;
-
+            }
+            .ingredients-included{
+                height:16px;
+                border:none;    
+                width:80%;
+                font-size:16px;
+                outline: none;
+                background-color: white;
+            }
+            .ingredients-excluded{
+                height:16px;
+                border:none;    
+                width:80%;
+                font-size:16px;
+                outline: none;
+                background-color: white;
             }
             .search{
                 padding-top:7px;
@@ -223,18 +238,18 @@ class Searchbar extends HTMLElement {
 
     // element for ingredients INCLUDED
     const ingInputi = document.createElement('input');
-    ingInputi.classList.add('searchbar');
+    ingInputi.classList.add('ingredients-included');
     ingInputi.type = 'text';
-    ingInputi.id = 'ss';
+    ingInputi.id = 'ingredients-included';
     ingInputi.name = 's';
     ingInputi.placeholder = 'Add ingredients to include';
     ingInputi.ariaLabel = 'Search through site content';
 
     // element for ingredients EXCLUDED
     const ingInpute = document.createElement('input');
-    ingInpute.classList.add('searchbar');
+    ingInpute.classList.add('ingredients-excluded');
     ingInpute.type = 'text';
-    ingInpute.id = 'ss';
+    ingInpute.id = 'ingredients-excluded';
     ingInpute.name = 's';
     ingInpute.placeholder = 'Add ingredients to exclude';
     ingInpute.ariaLabel = 'Search through site content';

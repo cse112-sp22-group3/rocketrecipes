@@ -293,6 +293,16 @@ export async function search(searchQuery, tags, ingredientsIncluded, ingredients
   const tokenizedQuery = [...new Set(query.trim().split(/\s+/))]; // regex matches one or more spaces
   const minNumMatchingTokens = Math.ceil(tokenizedQuery.length * MIN_MATCHING_THRESHOLD);
 
+  let splitIngredientsIncluded = [];
+  let splitIngredientsExcluded = [];
+
+  if (ingredientsExcluded) {
+    splitIngredientsExcluded = ingredientsExcluded.split(',').map((item) => item.trim());
+  }
+
+  if (ingredientsIncluded) {
+    splitIngredientsIncluded = ingredientsIncluded.split(',').map((item) => item.trim());
+  }
   let searchResults = [];
 
   for (let i = 0; i < allRecipes.length; i += 1) {
@@ -318,18 +328,30 @@ export async function search(searchQuery, tags, ingredientsIncluded, ingredients
           if (title.toLowerCase().includes(tokenizedQuery[j])) {
             const ingreds = JSON.stringify(ingredients);
             // if ingredients are being filtered, check
-            if (ingredientsIncluded !== null) {
-              if (!ingreds.includes(ingredientsExcluded) && ingreds.includes(ingredientsIncluded)) {
-                numMatchingTokens += 1;
-                mostRecentMatch = j;
-                numMatchingCharacters += tokenizedQuery[j].length;
+            let containsEveryIngredient = true;
+            splitIngredientsIncluded.every((currIngredient) => {
+              if (!ingreds.includes(currIngredient)) {
+                containsEveryIngredient = false;
+                return false;
               }
-            // This case is for when ingredients Included is empty
-            } else if (!ingreds.includes(ingredientsExcluded)) {
-              numMatchingTokens += 1;
-              mostRecentMatch = j;
-              numMatchingCharacters += tokenizedQuery[j].length;
+              return true;
+            });
+
+            let excludesAnyIngredient = true;
+            splitIngredientsExcluded.every((currentIngredient) => {
+              if (ingreds.includes(currentIngredient)) {
+                excludesAnyIngredient = false;
+                return false;
+              }
+              return true;
+            });
+
+            if (!containsEveryIngredient || !excludesAnyIngredient) {
+              recipeMatches = false;
             }
+            numMatchingTokens += 1;
+            mostRecentMatch = j;
+            numMatchingCharacters += tokenizedQuery[j].length;
           }
         }
         // 1st: pick titles with more matching tokens over less matching tokens

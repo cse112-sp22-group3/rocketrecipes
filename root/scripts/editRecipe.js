@@ -201,8 +201,8 @@ async function init() {
     const formValidateObject = validateForm(userGenRecipe);
     if (formValidateObject.valid) {
       const trimmedRecipe = trimRecipe(userGenRecipe);
-      await updateRecipe(trimmedRecipe);
-      window.location = `${window.location.origin}/root/html/RecipePage.html?id=${trimmedRecipe.id}`;
+      const response = await updateRecipe(trimmedRecipe);
+      window.location = `${window.location.origin}/root/html/RecipePage.html?id=${response.id}`;
     } else {
       // eslint-disable-next-line no-alert
       errMsg.innerText = formValidateObject.errorMessage;

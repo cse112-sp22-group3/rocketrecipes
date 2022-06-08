@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>utils - Documentation</title>
+    <title>database - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -29,7 +29,7 @@
 
 <div id="main">
     
-    <h1 class="page-title">utils</h1>
+    <h1 class="page-title">database</h1>
     
 
     
@@ -75,7 +75,7 @@
 
     
 
-    <h4 class="name" id=".ableToDelete"><span class="type-signature">(static) </span>ableToDelete<span class="signature">(id)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".ableToDeleteDatabase"><span class="type-signature">(static) </span>ableToDeleteDatabase<span class="signature">(id)</span><span class="type-signature"></span></h4>
 
     
 
@@ -120,7 +120,7 @@ when the user is not logged in, only delete at local storage, can not delete at 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line141">line 141</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line419">line 419</a>
     </li></ul></dd>
     
 
@@ -225,7 +225,7 @@ when the user is not logged in, only delete at local storage, can not delete at 
 
     
 
-    <h4 class="name" id=".ableToPublish"><span class="type-signature">(static) </span>ableToPublish<span class="signature">(recipeid)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".ableToPublishDatabase"><span class="type-signature">(static) </span>ableToPublishDatabase<span class="signature">(recipeid)</span><span class="type-signature"></span></h4>
 
     
 
@@ -270,7 +270,7 @@ always return false if the user is not logged in.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line165">line 165</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line468">line 468</a>
     </li></ul></dd>
     
 
@@ -375,7 +375,7 @@ always return false if the user is not logged in.
 
     
 
-    <h4 class="name" id=".addFavoriteRecipe"><span class="type-signature">(async, static) </span>addFavoriteRecipe<span class="signature">(id)</span><span class="type-signature"> &rarr; {recipeObj}</span></h4>
+    <h4 class="name" id=".addFavoriteRecipeDatabase"><span class="type-signature">(async, static) </span>addFavoriteRecipeDatabase<span class="signature">(id)</span><span class="type-signature"> &rarr; {recipeObj}</span></h4>
 
     
 
@@ -418,7 +418,7 @@ always return false if the user is not logged in.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line83">line 83</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line284">line 284</a>
     </li></ul></dd>
     
 
@@ -535,7 +535,115 @@ always return false if the user is not logged in.
 
     
 
-    <h4 class="name" id=".createRecipe"><span class="type-signature">(static) </span>createRecipe<span class="signature">(newRecipe)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".createId"><span class="type-signature">(static) </span>createId<span class="signature">()</span><span class="type-signature"> &rarr; {String}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Generates a unique id
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line365">line 365</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>String</code></span>
+
+
+    </dd>
+</dl>
+
+
+<div class="param-desc">
+    a unique id
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id=".createRecipeDatabase"><span class="type-signature">(static) </span>createRecipeDatabase<span class="signature">(newRecipe)</span><span class="type-signature"></span></h4>
 
     
 
@@ -582,7 +690,7 @@ meaning use generatekey() function to get an unique id.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line130">line 130</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line392">line 392</a>
     </li></ul></dd>
     
 
@@ -687,7 +795,7 @@ meaning use generatekey() function to get an unique id.
 
     
 
-    <h4 class="name" id=".deleteFavoriteRecipe"><span class="type-signature">(async, static) </span>deleteFavoriteRecipe<span class="signature">(id)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id=".deleteFavoriteRecipeDatabase"><span class="type-signature">(async, static) </span>deleteFavoriteRecipeDatabase<span class="signature">(id)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -730,7 +838,7 @@ meaning use generatekey() function to get an unique id.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line93">line 93</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line310">line 310</a>
     </li></ul></dd>
     
 
@@ -847,7 +955,7 @@ meaning use generatekey() function to get an unique id.
 
     
 
-    <h4 class="name" id=".deleteRecipe"><span class="type-signature">(static) </span>deleteRecipe<span class="signature">(id)</span><span class="type-signature"> &rarr; {recipeObj}</span></h4>
+    <h4 class="name" id=".deleteRecipeDatabase"><span class="type-signature">(static) </span>deleteRecipeDatabase<span class="signature">(id)</span><span class="type-signature"> &rarr; {recipeObj}</span></h4>
 
     
 
@@ -894,7 +1002,7 @@ if user not logged in, it will only delte at local storage.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line154">line 154</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line443">line 443</a>
     </li></ul></dd>
     
 
@@ -1011,200 +1119,7 @@ if user not logged in, it will only delte at local storage.
 
     
 
-    <h4 class="name" id=".getAllRecipeID"><span class="type-signature">(async, static) </span>getAllRecipeID<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-<div class="description">
-    get all recipes ID from local storage;
-if local storage has not been set, set local storage
-When user has created an recipe and publish this recipe, we want to refresh the ids. //@TODO
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line54">line 54</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".getAllRecipes"><span class="type-signature">(async, static) </span>getAllRecipes<span class="signature">()</span><span class="type-signature"> &rarr; {Array}</span></h4>
-
-    
-
-
-
-<div class="description">
-    This function gets an array of all recipes from database.
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line34">line 34</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Array</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    An array of recipe objects, following the given schema
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".getFavoriteRecipes"><span class="type-signature">(async, static) </span>getFavoriteRecipes<span class="signature">()</span><span class="type-signature"> &rarr; {RecipeObject}</span></h4>
+    <h4 class="name" id=".getFavoritedRecipesDatabase"><span class="type-signature">(async, static) </span>getFavoritedRecipesDatabase<span class="signature">()</span><span class="type-signature"> &rarr; {RecipeObject}</span></h4>
 
     
 
@@ -1247,7 +1162,7 @@ When user has created an recipe and publish this recipe, we want to refresh the 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line63">line 63</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line210">line 210</a>
     </li></ul></dd>
     
 
@@ -1312,7 +1227,7 @@ When user has created an recipe and publish this recipe, we want to refresh the 
 
     
 
-    <h4 class="name" id=".getUserRecipes"><span class="type-signature">(async, static) </span>getUserRecipes<span class="signature">()</span><span class="type-signature"> &rarr; {recipeObj}</span></h4>
+    <h4 class="name" id=".getUserAllCreatedRecipesDatabase"><span class="type-signature">(async, static) </span>getUserAllCreatedRecipesDatabase<span class="signature">()</span><span class="type-signature"> &rarr; {recipeObj}</span></h4>
 
     
 
@@ -1355,7 +1270,7 @@ When user has created an recipe and publish this recipe, we want to refresh the 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line102">line 102</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line331">line 331</a>
     </li></ul></dd>
     
 
@@ -1420,7 +1335,7 @@ When user has created an recipe and publish this recipe, we want to refresh the 
 
     
 
-    <h4 class="name" id=".isFavorite"><span class="type-signature">(async, static) </span>isFavorite<span class="signature">(id)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id=".isFavoritedDatabase"><span class="type-signature">(async, static) </span>isFavoritedDatabase<span class="signature">(id)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
 
     
 
@@ -1463,7 +1378,7 @@ When user has created an recipe and publish this recipe, we want to refresh the 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line73">line 73</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line228">line 228</a>
     </li></ul></dd>
     
 
@@ -1580,11 +1495,16 @@ When user has created an recipe and publish this recipe, we want to refresh the 
 
     
 
-    <h4 class="name" id=".publishRecipe"><span class="type-signature">(async, static) </span>publishRecipe<span class="signature">(newRecipe)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id=".publishRecipeDatabase"><span class="type-signature">(static) </span>publishRecipeDatabase<span class="signature">(newRecipe)</span><span class="type-signature"></span></h4>
 
     
 
 
+
+<div class="description">
+    publish an recipe, meaning the user's private created recipes are now copied over whole database.
+does not work when user is not logged in.
+</div>
 
 
 
@@ -1619,7 +1539,7 @@ When user has created an recipe and publish this recipe, we want to refresh the 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line176">line 176</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line484">line 484</a>
     </li></ul></dd>
     
 
@@ -1724,167 +1644,7 @@ When user has created an recipe and publish this recipe, we want to refresh the 
 
     
 
-    <h4 class="name" id=".purifyDOM"><span class="type-signature">(static) </span>purifyDOM<span class="signature">(dirty)</span><span class="type-signature"> &rarr; {String}</span></h4>
-
-    
-
-
-
-<div class="description">
-    A helper function to purify potential HTML
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line327">line 327</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>dirty</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>String</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                dirty code
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>String</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    purified code
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".readRecipe"><span class="type-signature">(async, static) </span>readRecipe<span class="signature">(recipeID)</span><span class="type-signature"> &rarr; {recipeObject}</span></h4>
+    <h4 class="name" id=".readRecipeDatabase"><span class="type-signature">(async, static) </span>readRecipeDatabase<span class="signature">(recipeID)</span><span class="type-signature"> &rarr; {recipeObject}</span></h4>
 
     
 
@@ -1930,7 +1690,7 @@ When user has created an recipe and publish this recipe, we want to refresh the 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line117">line 117</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line256">line 256</a>
     </li></ul></dd>
     
 
@@ -2032,7 +1792,7 @@ When user has created an recipe and publish this recipe, we want to refresh the 
 
 
 <div class="param-desc">
-    corresponding to the id that was passed in. If the recipe
+    recipeObject corresponding to the id that was passed in. If the recipe
 does not exist, returns null
 </div>
 
@@ -2048,184 +1808,16 @@ does not exist, returns null
 
     
 
-    <h4 class="name" id=".search"><span class="type-signature">(async, static) </span>search<span class="signature">(searchQuery, tags)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line199">line 199</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>searchQuery</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>String</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                a text query
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>tags</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Array</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                an array of tags (must correspond to the schema format)
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-
-<div class="param-desc">
-    An array of recipeObjects that matches the search parameters
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".trimRecipe"><span class="type-signature">(static) </span>trimRecipe<span class="signature">(recipe)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id=".updateRecipeDatabase"><span class="type-signature">(static) </span>updateRecipeDatabase<span class="signature">(newRecipe)</span><span class="type-signature"></span></h4>
 
     
 
 
 
 <div class="description">
-    A helper function to prune empty ingredients and steps from a recipe
+    updates the contents of recipe into paramenter newRecipe from user created recipes.
+update recipe is only called when editing page, therefore,
+update the whole database if the same recipe if presented.
 </div>
 
 
@@ -2261,163 +1853,7 @@ does not exist, returns null
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line394">line 394</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>recipe</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                recipe object to prune
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Object</code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    recipe object without unneeded steps and ingredients
-</div>
-
-    
-</div>
-
-
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".updateRecipe"><span class="type-signature">(async, static) </span>updateRecipe<span class="signature">(newRecipe)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line188">line 188</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line499">line 499</a>
     </li></ul></dd>
     
 
@@ -2522,14 +1958,14 @@ does not exist, returns null
 
     
 
-    <h4 class="name" id=".validateForm"><span class="type-signature">(static) </span>validateForm<span class="signature">(recipe)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id="~deleteDatabaseRecipe"><span class="type-signature">(async, inner) </span>deleteDatabaseRecipe<span class="signature">(id)</span><span class="type-signature"> &rarr; {promise}</span></h4>
 
     
 
 
 
 <div class="description">
-    A helper function to validate form contents
+    delete an recipe from the whole database
 </div>
 
 
@@ -2565,7 +2001,7 @@ does not exist, returns null
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line345">line 345</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line174">line 174</a>
     </li></ul></dd>
     
 
@@ -2609,13 +2045,13 @@ does not exist, returns null
 
         <tr>
             
-                <td class="name"><code>recipe</code></td>
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><code>Object</code></span>
+<span class="param-type"><code>id</code></span>
 
 
             
@@ -2626,7 +2062,7 @@ does not exist, returns null
             
 
             <td class="description last">
-                recipe object to validate
+                
                 
             </td>
         </tr>
@@ -2659,15 +2095,440 @@ does not exist, returns null
     </dt>
     <dd>
         
-<span class="param-type"><code>Object</code></span>
+<span class="param-type"><code>promise</code></span>
 
 
     </dd>
 </dl>
 
 
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~deleteUserCreatedRecipe"><span class="type-signature">(async, inner) </span>deleteUserCreatedRecipe<span class="signature">(id)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    delete an recipe from user created
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line104">line 104</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~deleteUserFavoriteRecipe"><span class="type-signature">(async, inner) </span>deleteUserFavoriteRecipe<span class="signature">(id)</span><span class="type-signature"> &rarr; {recipeObj}</span></h4>
+
+    
+
+
+
+<div class="description">
+    delete a recipe id from user's favorited
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line149">line 149</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>recipeObj</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~generateKey"><span class="type-signature">(async, inner) </span>generateKey<span class="signature">(userGeneratedID)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    generate an ID that is not used in the whole database
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line375">line 375</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>userGeneratedID</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>id</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
 <div class="param-desc">
-    object containing values for if the form is valid, and error messages otherwise
+    a key
 </div>
 
     
@@ -2682,14 +2543,14 @@ does not exist, returns null
 
     
 
-    <h4 class="name" id=".validURL"><span class="type-signature">(static) </span>validURL<span class="signature">(link)</span><span class="type-signature"> &rarr; {Boolean}</span></h4>
+    <h4 class="name" id="~getDatabaseRecipe"><span class="type-signature">(async, inner) </span>getDatabaseRecipe<span class="signature">(id)</span><span class="type-signature"> &rarr; {recipeObject}</span></h4>
 
     
 
 
 
 <div class="description">
-    A helper function to check if a string is a valid link
+    get recipe from database
 </div>
 
 
@@ -2725,7 +2586,7 @@ does not exist, returns null
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line309">line 309</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line164">line 164</a>
     </li></ul></dd>
     
 
@@ -2769,13 +2630,13 @@ does not exist, returns null
 
         <tr>
             
-                <td class="name"><code>link</code></td>
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><code>String</code></span>
+<span class="param-type"><code>id</code></span>
 
 
             
@@ -2819,7 +2680,215 @@ does not exist, returns null
     </dt>
     <dd>
         
-<span class="param-type"><code>Boolean</code></span>
+<span class="param-type"><code>recipeObject</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~getUserAllCreatedRecipes"><span class="type-signature">(async, inner) </span>getUserAllCreatedRecipes<span class="signature">()</span><span class="type-signature"> &rarr; {allRecipes}</span></h4>
+
+    
+
+
+
+<div class="description">
+    get all user created recipes
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line92">line 92</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>allRecipes</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~getUserAllFavoritedRecipes"><span class="type-signature">(async, inner) </span>getUserAllFavoritedRecipes<span class="signature">()</span><span class="type-signature"> &rarr; {allRecieps}</span></h4>
+
+    
+
+
+
+<div class="description">
+    get all favorited recipes from user
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line136">line 136</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>allRecieps</code></span>
 
 
     </dd>
@@ -2827,7 +2896,7 @@ does not exist, returns null
 
 
 <div class="param-desc">
-    true if the string is a link
+    Object
 </div>
 
     
@@ -2842,14 +2911,14 @@ does not exist, returns null
 
     
 
-    <h4 class="name" id=".whitespaceTrimmer"><span class="type-signature">(static) </span>whitespaceTrimmer<span class="signature">(dirty)</span><span class="type-signature"> &rarr; {String}</span></h4>
+    <h4 class="name" id="~getUserCreatedRecipe"><span class="type-signature">(async, inner) </span>getUserCreatedRecipe<span class="signature">(id)</span><span class="type-signature"> &rarr; {recipeObject}</span></h4>
 
     
 
 
 
 <div class="description">
-    A helper function to remove whitespace
+    get recipe from userCreatedRecipe
 </div>
 
 
@@ -2885,7 +2954,7 @@ does not exist, returns null
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="scripts_utils.js.html">scripts/utils.js</a>, <a href="scripts_utils.js.html#line336">line 336</a>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line83">line 83</a>
     </li></ul></dd>
     
 
@@ -2929,13 +2998,13 @@ does not exist, returns null
 
         <tr>
             
-                <td class="name"><code>dirty</code></td>
+                <td class="name"><code>id</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type"><code>String</code></span>
+<span class="param-type"><code>id</code></span>
 
 
             
@@ -2946,7 +3015,7 @@ does not exist, returns null
             
 
             <td class="description last">
-                dirty inputs
+                
                 
             </td>
         </tr>
@@ -2979,16 +3048,628 @@ does not exist, returns null
     </dt>
     <dd>
         
-<span class="param-type"><code>String</code></span>
+<span class="param-type"><code>recipeObject</code></span>
 
 
     </dd>
 </dl>
 
 
-<div class="param-desc">
-    whitespaced stripped text
+    
 </div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~getUserFavoritedRecipe"><span class="type-signature">(async, inner) </span>getUserFavoritedRecipe<span class="signature">(id)</span><span class="type-signature"> &rarr; {recipeObject}</span></h4>
+
+    
+
+
+
+<div class="description">
+    get recipe from userFavoritedRecipe
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line127">line 127</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>id</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>recipeObject</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~isConflict"><span class="type-signature">(async, inner) </span>isConflict<span class="signature">(id)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    check if the recipe id already exist in the whole database and user created recipes
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line347">line 347</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>id</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+
+<div class="param-desc">
+    true -> no conflict, false -> conflict
+</div>
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~putUserCreatedRecipe"><span class="type-signature">(async, inner) </span>putUserCreatedRecipe<span class="signature">(id)</span><span class="type-signature"> &rarr; {recipeObject}</span></h4>
+
+    
+
+
+
+<div class="description">
+    get recipe from userCreatedRecipe
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line73">line 73</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>id</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>recipeObject</code></span>
+
+
+    </dd>
+</dl>
+
+
+    
+</div>
+
+
+
+</div>
+        
+            
+<div class="section-method">
+
+    
+
+    <h4 class="name" id="~putUserFavoriteRecipe"><span class="type-signature">(async, inner) </span>putUserFavoriteRecipe<span class="signature">(recipeObj)</span><span class="type-signature"> &rarr; {recipeObj}</span></h4>
+
+    
+
+
+
+<div class="description">
+    insert a recipe object inside user's favorited
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="scripts_database.js.html">scripts/database.js</a>, <a href="scripts_database.js.html#line114">line 114</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>recipeObj</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><code>*</code></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">
+                
+                
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="section-returns">
+<h5>Returns:</h5>
+
+        
+
+<dl class="param-type">
+    <dt>
+        Type:
+    </dt>
+    <dd>
+        
+<span class="param-type"><code>recipeObj</code></span>
+
+
+    </dd>
+</dl>
+
 
     
 </div>

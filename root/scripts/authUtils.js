@@ -1,8 +1,12 @@
 /* eslint-disable import/extensions */
-import { }
+import {
+  putData, AUTH, FIREBASE_DATABASE_USER,
+} from './database.js';
+
 const FIREBASE_SIGNUP_URL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser';
 const FIREBASE_LOGIN_URL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword';
 const FIREBASE_KEY = 'AIzaSyCSXC0gS7gdHANxVdisyYg1eRg18znec_k';
+const USER_PREFERENCES_STRING = 'userPreferences.json';
 
 const LOCAL_STORAGE_USER_KEY = 'uuid';
 
@@ -45,6 +49,13 @@ export async function login(email, password) {
 
     // fetch user preferences if they exist
 
+    const userId = localStorage.getItem(LOCAL_STORAGE_USER_KEY);
+    const preferencesUrl = `${FIREBASE_DATABASE_USER}${userId}/${USER_PREFERENCES_STRING}${AUTH}`;
+    const preference = await fetch(preferencesUrl).then((preferences) => preferences.json());
+
+    if (preference != null) {
+      localStorage.setItem('user-preferences', JSON.stringify(preference));
+    }
   }
   return response;
 }

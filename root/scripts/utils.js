@@ -343,7 +343,7 @@ export function whitespaceTrimmer(dirty) {
  * @returns {Object} object containing values for if the form is valid, and error messages otherwise
  */
 export function validateForm(recipe) {
-  if (!recipe.title || recipe.title === '' || /\d/.test(recipe.title)) {
+  if (!recipe.title || recipe.title === '') {
     return { valid: false, errorMessage: 'Recipe title is invalid' };
   }
   if (!recipe.servings || recipe.servings === '' || Number.isNaN(recipe.servings)) {
@@ -367,9 +367,6 @@ export function validateForm(recipe) {
     }
     if (!ingredient.name || ingredient.name.length === 0 || /\d/.test(ingredient.name)) {
       return { valid: false, errorMessage: `Ingredient ${index + 1} name is not valid` };
-    }
-    if (!ingredient.unit || ingredient.unit.length === 0 || /\d/.test(ingredient.unit)) {
-      return { valid: false, errorMessage: `Ingredient ${index + 1} unit is not valid` };
     }
   }
 

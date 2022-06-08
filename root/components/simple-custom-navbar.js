@@ -212,7 +212,7 @@ class Navbar extends HTMLElement {
 
     navbarContainer.querySelector('#sign-in-mobile').addEventListener('click', () => {
       if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
-        navbarContainer.querySelector('#sign-in-moblie').textContent = 'Sign In';
+        navbarContainer.querySelector('#sign-in-mobile').textContent = 'Sign In';
         logOut();
       }
     });
@@ -234,7 +234,7 @@ class Navbar extends HTMLElement {
         navbarLinksBody.style.display = 'none';
       }
       if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
-        navbarContainer.querySelector('#account-mobile-sign-in').textContent = 'Logout';
+        navbarContainer.querySelector('#sign-in-mobile').textContent = 'Logout';
       }
     });
 

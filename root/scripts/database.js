@@ -107,9 +107,9 @@ async function getUserCreatedRecipe(id) {
 async function getUserAllCreatedRecipes() {
   const allRecipes = await fetch(
     FIREBASE_DATABASE_USER
-      + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
-      + USER_CREATED_RECIPES
-      + AUTH,
+        + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+        + USER_CREATED_RECIPES
+        + AUTH,
   ).then((response) => response.json());
   return allRecipes;
 }
@@ -172,9 +172,9 @@ async function getUserFavoritedRecipe(id) {
 async function getUserAllFavoritedRecipes() {
   const allRrecipes = await fetch(
     FIREBASE_DATABASE_USER
-      + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
-      + USER_FAVORITED_RECIPES
-      + AUTH,
+        + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+        + USER_FAVORITED_RECIPES
+        + AUTH,
   ).then((response) => response.json());
   return allRrecipes;
 }
@@ -573,7 +573,10 @@ export async function updateRecipeDatabase(newRecipe) {
       localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(myRecipes));
       return newRecipe2;
     }
-    return null;
+    const tempObj = {};
+    tempObj[newRecipe2.id] = newRecipe2;
+    localStorage.setItem(NO_LOGIN_MY_RECIPES_LOCAL_STORAGE, JSON.stringify(tempObj));
+    return newRecipe2;
   }
   return null;
 }

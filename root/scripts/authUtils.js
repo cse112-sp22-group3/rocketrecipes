@@ -1,6 +1,6 @@
 /* eslint-disable import/extensions */
 import {
-  putData, AUTH, FIREBASE_DATABASE_USER,
+  AUTH, FIREBASE_DATABASE_USER,
 } from './database.js';
 
 const FIREBASE_SIGNUP_URL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser';

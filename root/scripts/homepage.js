@@ -15,9 +15,9 @@ async function createRecommendedRecipes() {
     const userPreferences = JSON.parse(localStorage.getItem('user-preferences'));
     let numAdded = 0;
     if (userPreferences != null && userPreferences.length > 0) {
-        const index = Math.floor(Math.random() * allRecipes.length - 1);
-        for (let i = index; i < allRecipes.length && numAdded < 8; i += 1) {
-            const recipe = allRecipes[i];
+        const index = Math.floor(Math.random() * allRecipeIDS.length - 1);
+        for (let i = index; i < allRecipeIDS.length && numAdded < 8; i += 1) {
+            const recipe = await readRecipe(allRecipeIDS[i]);
             if (userPreferences.some((preference) => recipe[`${preference}`])) {
                 const recipeCard = document.createElement('recipe-card');
                 recipeCard.data = recipe;
@@ -27,7 +27,7 @@ async function createRecommendedRecipes() {
         }
 
         for (let i = 0; i < index && i < allRecipes.length && numAdded < 8; i += 1) {
-            const recipe = allRecipes[i];
+            const recipe = await readRecipe(allRecipeIDS[i]);
 
             if (userPreferences.some((preference) => recipe[`${preference}`])) {
                 const recipeCard = document.createElement('recipe-card');
@@ -40,7 +40,7 @@ async function createRecommendedRecipes() {
     if (numAdded < numRecipes) {
         for (let i = 0; numAdded < numRecipes; i += 1) {
             const recipeCard = document.createElement('recipe-card');
-            recipeCard.data = allRecipes[randomNumber + i];
+            recipeCard.data = await readRecipe(allRecipeIDS[randomNumber + i]);
 
             recommendedRecipeContainer.appendChild(recipeCard);
             numAdded += 1;

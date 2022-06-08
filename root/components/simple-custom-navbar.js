@@ -202,13 +202,20 @@ class Navbar extends HTMLElement {
             </div>
             <a class='navbar-text-link mobile-link' id='create-mobile' href='./CreateRecipe.html'>Create Recipe</a>
             <a class='navbar-text-link mobile-link' id='account-mobile' href='./generalAccount.html'>My Account</a>
-            <a class="navbar-text-link mobile-link" id="account-mobile" href="./entry.html">Sign In</a>
+            <a class="navbar-text-link mobile-link" id="account-mobile-sign-in" href="./entry.html">Sign In</a>
         </div>
     `;
 
     if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
       navbarContainer.querySelector('#sign-in').textContent = 'Logout';
     }
+
+    navbarContainer.querySelector('#account-mobile-sign-in').addEventListener('click', () => {
+      if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+        navbarContainer.querySelector('#account-mobile-sign-in').textContent = 'Sign In';
+        logOut();
+      }
+    });
 
     navbarContainer.querySelector('#sign-in').addEventListener('click', () => {
       if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
@@ -225,6 +232,9 @@ class Navbar extends HTMLElement {
         navbarLinksBody.style.display = 'flex';
       } else {
         navbarLinksBody.style.display = 'none';
+      }
+      if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+        navbarContainer.querySelector('#account-mobile-sign-in').textContent = 'Logout';
       }
     });
 

@@ -202,7 +202,7 @@ class Navbar extends HTMLElement {
             </div>
             <a class='navbar-text-link mobile-link' id='create-mobile' href='./CreateRecipe.html'>Create Recipe</a>
             <a class='navbar-text-link mobile-link' id='account-mobile' href='./generalAccount.html'>My Account</a>
-            <a class="navbar-text-link mobile-link" id="account-mobile-sign-in" href="./entry.html">Sign In</a>
+            <a class="navbar-text-link mobile-link" id="sign-in-mobile" href="./entry.html">Sign In</a>
         </div>
     `;
 
@@ -267,6 +267,10 @@ class Navbar extends HTMLElement {
       case 'account':
         navbarContainer.querySelector('#account').style.textDecoration = 'underline';
         navbarContainer.querySelector('#account-mobile').style.textDecoration = 'underline';
+        break;
+      case 'sign-in':
+        navbarContainer.querySelector('#sign-in').style.textDecoration = 'underline';
+        navbarContainer.querySelector('#sign-in-mobile').style.textDecoration = 'underline';
         break;
       default:
         break;

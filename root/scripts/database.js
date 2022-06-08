@@ -3,14 +3,14 @@
 /* eslint-disable  no-restricted-syntax */
 /* eslint-disable  no-await-in-loop */
 
-const AUTH = '?auth=DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
-const LOCAL_STORAGE_USER_KEY = 'uuid';
-const LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY = 'allRecipesKeys';
+export const AUTH = '?auth=DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
+export const LOCAL_STORAGE_USER_KEY = 'uuid';
+export const LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY = 'allRecipesKeys';
 
 // retrive all information about database
-const FIREBASE_ALL_RECIPES = 'https://rocketrecipes-6c192-default-rtdb.firebaseio.com/recipes.json?auth=DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
+export const FIREBASE_ALL_RECIPES = 'https://rocketrecipes-6c192-default-rtdb.firebaseio.com/recipes.json?auth=DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
 
-const FIREBASE_DATABASE_USER = 'https://rocketrecipes-6c192-default-rtdb.firebaseio.com/user/';
+export const FIREBASE_DATABASE_USER = 'https://rocketrecipes-6c192-default-rtdb.firebaseio.com/user/';
 
 // retrive favorited recipes
 const USER_FAVORITED_RECIPES = '/favoritedRecipes.json';
@@ -25,7 +25,7 @@ const USER_CREATED_RECIPES = '/createdRecipes.json';
 const USER_CREATED_SINGLE_RECIPE = '/createdRecipes/';
 const NO_LOGIN_MY_RECIPES_LOCAL_STORAGE = 'createdRecipes';
 
-async function putData(url = '', data = {}) {
+export async function putData(url = '', data = {}) {
   const response = await fetch(url, {
     method: 'PUT', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin

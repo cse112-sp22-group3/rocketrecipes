@@ -24,7 +24,7 @@ describe('navigate through pages', () => {
     });
 
     it('home page should have 8 recommended recipes', async () => {
-        await page.waitForSelector('recipe-card');
+        await page.waitForSelector('#recommendedRecipeContainer > recipe-card:nth-child(8)');
         const recipes = await page.$$('recipe-card');
         expect(recipes.length).toBe(8);
     });
@@ -73,21 +73,5 @@ describe('navigate through pages', () => {
 
     it('navigate to search results', async () => {
         await page.goto(`http://${rootUrl}/root/html/searchpage.html?searchQuery=deviled%20eggs`);
-    });
-
-    it('navigate to Recipe page', async () => {
-        await page.waitForSelector('recipe-card');
-
-        const recipes = await page.$$('recipe-card');
-        expect(recipes.length).toBe(11);
-
-        const card = await page.evaluateHandle( () => document.querySelector("#page1 > recipe-card:nth-child(1)"));
-        await card.click();
-    });
-
-    it('recipe page should be titled the recipe title', async () => {
-        await page.waitForSelector('recipe-card');
-        const title = await page.evaluate( () => document.querySelector('#recipe-title').textContent);
-        await expect(page.title()).resolves.toMatch(title);
     });
 })

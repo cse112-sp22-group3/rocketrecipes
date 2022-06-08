@@ -2,285 +2,195 @@
 /* global DOMPurify */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-mixed-operators */
-// eslint-disable-next-line import/extensions
+/* eslint-disable no-return-await */
+/* eslint-disable import/extensions */
+/* eslint-disable no-restricted-syntax */
+import {
+  getAllRecipesDatabase,
+  getAllRecipeIDDatabase,
+  readRecipeDatabase,
+  getFavoritedRecipesDatabase,
+  getUserAllCreatedRecipesDatabase,
+  addFavoriteRecipeDatabase,
+  deleteFavoriteRecipeDatabase,
+  ableToDeleteDatabase,
+  ableToPublishDatabase,
+  publishRecipeDatabase,
+  updateRecipeDatabase,
+  isFavoritedDatabase,
+  deleteRecipeDatabase,
+  createRecipeDatabase,
+  createId,
+} from './database.js';
 import './purify.js';
 
-const COMMUNITY_HALF_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_2.json';
-const COMMUNITY_THIRD_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_3.json';
-const COMMUNITY_QUARTER_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_4.json';
-const COMMUNITY_TENTH_RECIPE_URL = 'https://raw.githubusercontent.com/cse110-fa21-group34/rocketrecipes/main/root/scraper/recipes.json_10.json';
-const LOCAL_STORAGE_ALL_RECIPES_KEY = 'allRecipes';
-const LOCAL_STORAGE_FAVORITED_RECIPES_KEY = 'favoritedRecipes';
 const SPOONACULAR_API_KEY = 'c6ae2142af6b40ba99198aa307725180';
 
 /**
+ * This function gets an array of all recipes from database.
  * @async
- * This function gets all recipes from localStorage.
  * @returns {Array} An array of recipe objects, following the given schema
  */
 export async function getAllRecipes() {
-  if (localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY) !== null) {
-    const localStorageRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_ALL_RECIPES_KEY));
-    return localStorageRecipes;
+  const allRecipes = await getAllRecipesDatabase();
+  const tempArr = [];
+
+  // retrive all recipes from fireabse realtime datasbase put them into an array,
+  // since other functions calling it assuming recipes are stored in an array
+  for (const value of Object.values(allRecipes)) {
+    tempArr.push(value);
   }
-  let fetchedRecipes = await fetch(COMMUNITY_HALF_RECIPE_URL)
-    .then((response) => response.json())
-    .then((data) => data);
 
-  try {
-    localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-  } catch (fe) {
-    try {
-      fetchedRecipes = await fetch(COMMUNITY_THIRD_RECIPE_URL)
-        .then((response) => response.json())
-        .then((data) => data);
-
-      localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-    } catch (e) {
-      try {
-        fetchedRecipes = await fetch(COMMUNITY_QUARTER_RECIPE_URL)
-          .then((response) => response.json())
-          .then((data) => data);
-
-        localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-      } catch (se) {
-        try {
-          fetchedRecipes = await fetch(COMMUNITY_TENTH_RECIPE_URL)
-            .then((response) => response.json())
-            .then((data) => data);
-
-          localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(fetchedRecipes));
-        } catch (te) {
-          return null;
-        }
-      }
-    }
-  }
-  return fetchedRecipes;
+  return tempArr;
 }
 
 /**
+ *
+ * get all recipes ID from local storage;
+ * if local storage has not been set, set local storage
+ * When user has created an recipe and publish this recipe, we want to refresh the ids. //@TODO
  * @async
- * Gets all recipes a user has favorited from localStorage.
- * @returns {Array} An array of recipe objects, following the given schema
+ */
+export async function getAllRecipeID() {
+  return await getAllRecipeIDDatabase();
+}
+
+/**
+ * Gets all recipes a user has favorited from database.
+ * @async
+ * @returns {RecipeObject} an object contain all recipes, null when contain nothing
  */
 export async function getFavoriteRecipes() {
-  if (localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY) !== null) {
-    const favoritedRecipes = JSON.parse(localStorage.getItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY));
-    return favoritedRecipes;
-  }
-
-  const blankFavoritedRecipes = [];
-  try {
-    localStorage.setItem(
-      LOCAL_STORAGE_FAVORITED_RECIPES_KEY,
-      JSON.stringify(blankFavoritedRecipes),
-    );
-  } catch (e) {
-    return false;
-  }
-  return blankFavoritedRecipes;
+  return await getFavoritedRecipesDatabase();
 }
 
 /**
  * Determines if the given recipe in a user's favorite list
+ * @async
  * @param {recipeId} id - recipeId to check
- * @returns {Boolean}
+ * @returns {Boolean} true-> favorited, false -> not favorited
  */
 export async function isFavorite(id) {
-  const favoritedRecipes = await getFavoriteRecipes();
-  for (let i = 0; i < favoritedRecipes.length; i += 1) {
-    if (favoritedRecipes[i] === id) {
-      return true;
-    }
-  }
-  return false;
+  return await isFavoritedDatabase(id);
 }
 
 /**
+ * Adds recipe with given id to a user's of favorited recipes
  * @async
- * Gets all recipes a user has created
- * @returns {Array} An array of recipe objects, following the given schema
- */
-export async function getUserRecipes() {
-  const allRecipes = await getAllRecipes();
-  const userRecipes = [];
-  for (let i = 0; i < allRecipes.length; i += 1) {
-    if (!allRecipes[i].isFromInternet) {
-      userRecipes.push(allRecipes[i]);
-    }
-  }
-  return userRecipes;
-}
-
-/**
- * @async
- * Adds recipe with given id to a user's list of favorite recipes
  * @param {recipeId} id of recipe to add
- * @returns {Boolean} true if the operation was successful, false if it was not
+ * @returns {recipeObj} recipeObj when successful, null unsuccessful
  */
 export async function addFavoriteRecipe(id) {
-  const allRecipes = await getAllRecipes();
-  let recipeExists = false;
-
-  for (let i = 0; i < allRecipes.length; i += 1) {
-    if (allRecipes[i].id === id) {
-      recipeExists = true;
-    }
-  }
-
-  if (!recipeExists) {
-    return false;
-  }
-
-  const favoritedRecipes = await getFavoriteRecipes();
-
-  for (let i = 0; i < favoritedRecipes.length; i += 1) {
-    if (favoritedRecipes[i] === id) {
-      return false;
-    }
-  }
-  favoritedRecipes.push(id);
-  localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
-  return true;
+  return await addFavoriteRecipeDatabase(id);
 }
 
 /**
- * @async
  * Deletes recipe with given id from the user's list of favorite recipes
+ * @async
  * @param {recipeId} id of the recipe to be deleted
  * @returns {Boolean} true if the operation was successful, false if it was not
  */
 export async function deleteFavoriteRecipe(id) {
-  const favoritedRecipes = await getFavoriteRecipes();
-
-  for (let i = 0; i < favoritedRecipes.length; i += 1) {
-    if (favoritedRecipes[i] === id) {
-      favoritedRecipes.splice(i, 1);
-      localStorage.setItem(LOCAL_STORAGE_FAVORITED_RECIPES_KEY, JSON.stringify(favoritedRecipes));
-      return true;
-    }
-  }
-  return false;
+  return await deleteFavoriteRecipeDatabase(id);
 }
 
 /**
+ * Gets all recipes a user has created
  * @async
- * A faster method to read multiple recipes at once. Note: this method requires the input
- * to be an object with all desired recipeId's as keys. The function recipeIdArrayToObject()
- * can be used to convert an array of recipeIds into the desired format.
- *
- * @param {recipeIdObj} recipeIds of the form {'id1':true, 'id2':true,...}
- * @returns {Array} An array of recipe objects, following the given schema
+ * @returns {recipeObj} object containnin all user craeted recipes
  */
-export async function getBulkRecipes(recipeIds) {
-  const allRecipes = await getAllRecipes();
-  const recipes = [];
-
-  for (let i = 0; i < allRecipes.length; i += 1) {
-    if (recipeIds[allRecipes[i].id]) {
-      recipes.push(allRecipes[i]);
-    }
-  }
-  return recipes;
+export async function getUserRecipes() {
+  return await getUserAllCreatedRecipesDatabase();
 }
 
 /**
+ * Priority List:
+ * 1. user created recipe
+ * 2. user favorited recipe
+ * 3. database recipe
+ *
  * @async
- * Reads the recipe with the given id
- * @param {recipeId} id of the recipe to be read
- * @returns {recipeObject} corresponding to the id that was passed in. If the recipe
+ * @param {recipeID} recipeID id of the recipe
+ * @return {recipeObject} corresponding to the id that was passed in. If the recipe
  * does not exist, returns null
  */
 export async function readRecipe(id) {
-  const allRecipes = await getAllRecipes();
-  for (let i = 0; i < allRecipes.length; i += 1) {
-    if (allRecipes[i].id === id) {
-      return allRecipes[i];
-    }
-  }
-  // recipe id was not found, return null
-  return null;
-}
-
-/**
- * @async
- * Deletes the recipe corresponding to the given recipeId.
- * @param {recipeId} id of the recipe to be deleted
- * @returns {Boolean} true if the operation was successful, false otherwise
- */
-export async function deleteRecipe(id) {
-  const allRecipes = await getAllRecipes();
-
-  for (let i = 0; i < allRecipes.length; i += 1) {
-    if (allRecipes[i].id === id) {
-      allRecipes.splice(i, 1);
-      localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(allRecipes));
-      return true;
-    }
-  }
-  return false;
-}
-
-/**
- * Generates a unique id
- * @returns {String} a unique id
- */
-export function createId() {
-  // eslint-disable-next-line no-bitwise
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) => (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16));
-}
-
-/**
- * Updates the contents of the recipe corresponding to the given recipe's id
- * @param {recipeObj} newRecipe - the recipe whose contents will be updated
- * @returns true if this operation is successful, false otherwise
- */
-export async function updateRecipe(newRecipe) {
-  const allRecipes = await getAllRecipes();
-
-  for (let i = 0; i < allRecipes.length; i += 1) {
-    if (allRecipes[i].id === newRecipe.id) {
-      allRecipes[i] = newRecipe;
-      localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(allRecipes));
-      return true;
-    }
-  }
-  return false;
+  return await readRecipeDatabase(id);
 }
 
 /**
  * Creates the given recipe object
+ * create recipes based on user, therefore, user actually owns the recipe.
+ * In order to publish a recipe(push to whole database), has to use publish recipe method
+ * does not assume the newRecipe object already has an unique id,
+ * meaning use generatekey() function to get an unique id.
  * @param {recipeObj} newRecipe - the recipe to be created
- * @returns true if the operation was successful, false otherwise
+ * @returns recipeObj create successful. null create unsuccessful
  */
 export async function createRecipe(newRecipe) {
-  const allRecipes = await getAllRecipes();
-  for (let i = 0; i < allRecipes.length; i += 1) {
-    if (allRecipes[i].id === newRecipe.id) {
-      return false;
-    }
-  }
-
-  allRecipes.push(newRecipe);
-  localStorage.setItem(LOCAL_STORAGE_ALL_RECIPES_KEY, JSON.stringify(allRecipes));
-  return true;
+  return await createRecipeDatabase(newRecipe);
 }
 
 /**
- * A helper function to convert an array of recipe ids to an object with ids as keys
- * @param {Array} arr array of recipeIds
- * @returns an object with recipeIds as keys
+ * if the user owns a recipe, the use can delte it.
+ * if the user has already published recipe, it will also get deleted from whole database.
+ * when the user is not logged in, only delete at local storage, can not delete at whole database
+ * @param {recipdID} id
+ * @returns true-> able to delete, false-> unable to delete
  */
-export function recipeIdArrayToObject(arr) {
-  const obj = {};
-  for (let i = 0; i < arr.length; i += 1) {
-    obj[arr[i]] = true;
-  }
-  return obj;
+export async function ableToDelete(id) {
+  return await ableToDeleteDatabase(id);
 }
 
 /**
+ * Delete a recipe when the recipe belongs to the user.
+ * if user is logged in, and recipe is user created,
+ * it will delete recipe from user created recipes list and from the whole database if it exists.
+ * if user is logged in, and recipe is not user created, delete button would not work.
+ * if user not logged in, it will only delte at local storage.
+ * @param {recipeId} id of the recipe to be deleted
+ * @returns {recipeObj} true if the operation was successful, false otherwise
+ */
+export async function deleteRecipe(id) {
+  await deleteRecipeDatabase(id);
+}
+
+/**
+ * if the recipe id is ownber by the user and recipeid does not present in the whole database,
+ * that means it is able to be published.
+ * always return false if the user is not logged in.
+ * @param {recipdid} recipeid
+ * @returns ture -> able to publish, false ->unable to publish
+ */
+export async function ableToPublish(recipeid) {
+  return await ableToPublishDatabase(recipeid);
+}
+
+/**
+ * @async
+ * publish an recipe, meaning the user's private created recipes are now copied over whole database.
+ * does not work when user is not logged in.
+ * @param {newRecipe} newRecipe object
+ * @returns recipeObj successful, null -> unsuccessful
+ */
+export async function publishRecipe(newRecipe) {
+  return await publishRecipeDatabase(newRecipe);
+}
+
+/**
+ * @async
+ * updates the contents of recipe into paramenter newRecipe from user created recipes.
+ * update recipe is only called when editing page, therefore,
+ * update the whole database if the same recipe if presented.
+ * @param {recipeObj} newRecipe - the recipe whose contents will be updated
+ * @returns recipe Obj if updates is successful, null if unsuccessful
+ */
+export async function updateRecipe(newRecipe) {
+  return await updateRecipeDatabase(newRecipe);
+}
+
+/**
+ * @async
  * Searches all recipes, matches title/ingredients by query and tags
  * @param {String} searchQuery - a text query
  * @param {Array} tags - an array of tags (must correspond to the schema format)
@@ -399,11 +309,11 @@ export async function search(searchQuery, tags, ingredientsIncluded, ingredients
 export function validURL(str) {
   const pattern = new RegExp(
     '^(https?:\\/\\/)?' // protocol
-      + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' // domain name
-      + '((\\d{1,3}\\.){3}\\d{1,3}))' // OR ip (v4) address
-      + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
-      + '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
-      + '(\\#[-a-z\\d_]*)?$',
+        + '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' // domain name
+        + '((\\d{1,3}\\.){3}\\d{1,3}))' // OR ip (v4) address
+        + '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' // port and path
+        + '(\\?[;&a-z\\d%_.~+=-]*)?' // query string
+        + '(\\#[-a-z\\d_]*)?$',
     'i',
   ); // fragment locator
   return !!pattern.test(str);
@@ -439,8 +349,7 @@ export function validateForm(recipe) {
   if (!recipe.servings || recipe.servings === '' || Number.isNaN(recipe.servings)) {
     return { valid: false, errorMessage: 'Recipe servings amount is invalid' };
   }
-  if (!recipe.readyInMinutes || recipe.readyInMinutes === ''
-    || Number.isNaN(recipe.readyInMinutes)) {
+  if (!recipe.readyInMinutes || recipe.readyInMinutes === '' || Number.isNaN(recipe.readyInMinutes)) {
     return { valid: false, errorMessage: 'Recipe time field is invalid' };
   }
   if (recipe.image !== '' && !validURL(recipe.image)) {

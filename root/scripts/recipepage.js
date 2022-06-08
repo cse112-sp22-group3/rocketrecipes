@@ -1,17 +1,21 @@
 /* eslint-disable linebreak-style */
-/* eslint-disable import/named */
+/* eslint-disable no-await-in-loop */
+/* eslint-disable no-restricted-globals */
 /* eslint-disable import/extensions */
 import {
   readRecipe,
   addFavoriteRecipe,
   isFavorite,
   deleteFavoriteRecipe,
-  getAllRecipes,
+  getAllRecipeID,
   deleteRecipe,
+  ableToPublish,
+  publishRecipe,
+  ableToDelete,
 } from './utils.js';
 
 // holds recipes from localStorage
-let allRecipes = {};
+let allRecipeID = {};
 
 // holds recipe ID of currently displayed recipe
 let recipeId;
@@ -55,34 +59,38 @@ function fillRecipePage(currentRecipe) {
   categoriesElement.innerText = `Categories: ${categoryArray.join(', ')}`;
 
   const recipeInstructionsElement = document.getElementById('instructions-list');
-  currentRecipe.steps.forEach((step) => {
-    // create new ingredient li
-    const currentIngredientLi = document.createElement('li');
-    currentIngredientLi.innerText = `${step.step}`;
-    recipeInstructionsElement.appendChild(currentIngredientLi);
-  });
+  if (currentRecipe.steps != null) {
+    currentRecipe.steps.forEach((step) => {
+      // create new ingredient li
+      const currentIngredientLi = document.createElement('li');
+      currentIngredientLi.innerText = `${step.step}`;
+      recipeInstructionsElement.appendChild(currentIngredientLi);
+    });
+  }
 
   const recipeIngredientsElement = document.getElementById('ingredients-list');
-  currentRecipe.ingredients.forEach((ingredient) => {
-    const check = document.createElement('input');
-    check.setAttribute('type', 'checkbox');
-    check.setAttribute('class', 'checkbox-box');
+  if (currentRecipe.ingredients !== null) {
+    currentRecipe.ingredients.forEach((ingredient) => {
+      const check = document.createElement('input');
+      check.setAttribute('type', 'checkbox');
+      check.setAttribute('class', 'checkbox-box');
 
-    const currentIngredientLi = document.createElement('li');
-    const text = document.createElement('span');
-    const roundedIngredient = Math.round(ingredient.amount * 100) / 100;
-    text.innerHTML = `${roundedIngredient} ${ingredient.unit} ${ingredient.name}`;
+      const currentIngredientLi = document.createElement('li');
+      const text = document.createElement('span');
+      const roundedIngredient = Math.round(ingredient.amount * 100) / 100;
+      text.innerHTML = `${roundedIngredient} ${ingredient.unit} ${ingredient.name}`;
 
-    const list = document.querySelector('li');
-    list.addEventListener('change', function () {
-      text.classList.toggle('checkbox-checked', this.checked);
+      const list = document.querySelector('li');
+      list.addEventListener('change', function () {
+        text.classList.toggle('checkbox-checked', this.checked);
+      });
+
+      currentIngredientLi.appendChild(check);
+      currentIngredientLi.appendChild(text);
+      currentIngredientLi.setAttribute('class', 'ingred');
+      recipeIngredientsElement.appendChild(currentIngredientLi);
     });
-
-    currentIngredientLi.appendChild(check);
-    currentIngredientLi.appendChild(text);
-    currentIngredientLi.setAttribute('class', 'ingred');
-    recipeIngredientsElement.appendChild(currentIngredientLi);
-  });
+  }
 
   const text = `Check out this recipe for ${document.getElementById('recipe-title').innerText}:`;
 
@@ -100,7 +108,7 @@ function fillRecipePage(currentRecipe) {
 }
 
 // grabs four random recipes from localStorage and displays them at the bottom of the page
-function createRecommendedRecipes() {
+async function createRecommendedRecipes() {
   const recommendedRecipeContainer = document.getElementById('recommendedRecipeContainer');
   recommendedRecipeContainer.style.display = 'flex';
   recommendedRecipeContainer.style.maxWidth = '100%';
@@ -108,13 +116,13 @@ function createRecommendedRecipes() {
 
   let numReccRecipes = 0;
   while (numReccRecipes < 4) {
-    const randomNumber = Math.floor(Math.random() * (allRecipes.length - 5));
-    const recipe = allRecipes[randomNumber];
+    const randomNumber = Math.floor(Math.random() * (allRecipeID.length - 5));
+    const curRecipeID = allRecipeID[randomNumber];
 
     // if current id does not match random recipe id, create recipe card
-    if (recipeId !== recipe.id) {
+    if (recipeId !== curRecipeID) {
       const recipeCard = document.createElement('recipe-card');
-      recipeCard.data = recipe;
+      recipeCard.data = await readRecipe(curRecipeID);
       recommendedRecipeContainer.appendChild(recipeCard);
       numReccRecipes += 1;
     }
@@ -153,8 +161,8 @@ async function init() {
   if (currentRecipe === null) {
     // handle bad request
     // show empty page with note that we can't find that id
-    document.getElementsByClassName('recipe-info')[0].remove();
-    document.querySelector('main').innerHTML = 'The recipe could not be found.';
+    document.querySelector('.recipe-header-info').children[0].textContent = 'The recipe could not be found.';
+    // document.querySelector('main').innerHTML = 'The recipe could not be found.';
   } else {
     // fill the recipe page
     document.title = currentRecipe.title;
@@ -163,7 +171,7 @@ async function init() {
 
   const shareButton = document.getElementById('shareButton');
   const printSoloButton = document.getElementById('print-solo');
-  if (currentRecipe.isFromInternet) {
+  if (currentRecipe != null) {
     // show share buttons
     shareButton.style.display = 'block';
     printSoloButton.style.display = 'none';
@@ -175,23 +183,36 @@ async function init() {
   }
 
   const deleteButton = document.getElementById('deleteButton');
-  deleteButton.addEventListener('click', () => {
-    deleteRecipe(recipeId);
-    window.location = `${window.location.origin}/root/html/index.html`;
-  });
+  if (await ableToDelete(recipeId)) {
+    deleteButton.addEventListener('click', async () => {
+      await deleteRecipe(recipeId);
+      window.location = `${window.location.origin}/root/html/index.html`;
+    });
+  } else {
+    deleteButton.style.display = 'none';
+  }
+
+  const publishButton = document.getElementById('publishButton');
+  if (await ableToPublish(recipeId)) {
+    publishButton.addEventListener('click', async () => {
+      await publishRecipe(currentRecipe);
+      location.reload();
+    });
+  } else {
+    publishButton.style.display = 'none';
+  }
 
   const editRecipeButton = document.getElementById('editButton');
-
   editRecipeButton.addEventListener('click', () => {
     const currentUrl = window.location;
     window.location = `${currentUrl.origin}/root/html/editRecipe.html?id=${recipeId}`;
   });
 
-  shareButton.addEventListener('click', () => {
+  shareButton.addEventListener('click', async () => {
     const isShown = document.getElementById('shareContainer').style.display !== 'none';
     if (isShown) {
       document.getElementById('shareContainer').style.display = 'none';
-      deleteFavoriteRecipe(recipeId);
+      await deleteFavoriteRecipe(recipeId);
     } else {
       document.getElementById('shareContainer').style.display = 'flex';
     }
@@ -274,9 +295,9 @@ async function init() {
   // fetch four random recipes (except the currently displayed recipe) and
   // display at bottom of page
   try {
-    allRecipes = await getAllRecipes();
+    allRecipeID = await getAllRecipeID();
   } finally {
-    createRecommendedRecipes();
+    await createRecommendedRecipes();
   }
   const button = document.querySelector('#fav-icon');
   let isFav = await isFavorite(recipeId);
@@ -290,10 +311,10 @@ async function init() {
     isFav = await isFavorite(recipeId);
     if (isFav) {
       button.style = outlinedStar;
-      deleteFavoriteRecipe(recipeId);
+      await deleteFavoriteRecipe(recipeId);
     } else {
       button.style = filledStar;
-      addFavoriteRecipe(recipeId);
+      await addFavoriteRecipe(recipeId);
     }
   });
   // not favorited, user clicks
@@ -303,7 +324,7 @@ async function init() {
     button.style = outlinedStar;
   }
 
-  window.currentRecipe = await readRecipe(recipeId);
+  window.currentRecipe = await readRecipe(recipeId); // not sure what this line is doing?
   const scaleButton = document.getElementById('servings');
   scaleButton.addEventListener('change', scaleIngredients);
 

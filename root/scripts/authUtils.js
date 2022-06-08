@@ -1,7 +1,8 @@
-/* eslint-disable import/prefer-default-export */
+/* eslint-disable import/extensions */
 const FIREBASE_SIGNUP_URL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser';
 const FIREBASE_LOGIN_URL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword';
 const FIREBASE_KEY = 'AIzaSyCSXC0gS7gdHANxVdisyYg1eRg18znec_k';
+
 const LOCAL_STORAGE_USER_KEY = 'uuid';
 
 async function postData(url = '', data = {}) {
@@ -27,7 +28,9 @@ export async function signUp(email, password) {
   const body = { email, password, returnSecureKey: true };
 
   const response = await postData(url, body);
-
+  if (response.localId) {
+    localStorage.setItem(LOCAL_STORAGE_USER_KEY, response.localId);
+  }
   return response;
 }
 
@@ -36,11 +39,13 @@ export async function login(email, password) {
   const body = { email, password, returnSecureKey: true };
 
   const response = await postData(url, body);
-
+  if (response.localId) {
+    localStorage.setItem(LOCAL_STORAGE_USER_KEY, response.localId);
+  }
   return response;
 }
 
-export function logOut() {
+export async function logOut() {
   localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
   localStorage.removeItem('user-preferences');
   window.location.href = '../html/index.html';

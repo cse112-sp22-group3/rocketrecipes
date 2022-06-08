@@ -192,11 +192,11 @@ class Navbar extends HTMLElement {
         <div class='navbar-links-container-mobile'> 
             <div class='mobile-navbar-button'></div>
         </div>
-        <div class='mobile-navbar-expanded'>
-            <a class='navbar-text-link mobile-link' id='search-mobile' href='./searchpage.html'>Search</a>
-            <a class='navbar-text-link mobile-link' id='create-mobile' href='./CreateRecipe.html'>Create Recipe</a>
-            <a class='navbar-text-link mobile-link' id='account-mobile' href='./generalAccount.html'>My Account</a>
-            <a class="navbar-text-link mobile-link" id="account-mobile" href="./entry.html">Sign In</a>
+        <div class="mobile-navbar-expanded">
+            <a class="navbar-text-link mobile-link" id="search-mobile" href="./searchpage.html">Search</a>
+            <a class="navbar-text-link mobile-link" id="create-mobile" href="./CreateRecipe.html">Create Recipe</a>
+            <a class="navbar-text-link mobile-link" id="account-mobile" href="./generalAccount.html">My Account</a>
+            <a class="navbar-text-link mobile-link" id="sign-in-mobile" href="./entry.html">Sign In</a>
         </div>
     `;
 
@@ -204,8 +204,9 @@ class Navbar extends HTMLElement {
       navbarContainer.querySelector('#sign-in').textContent = 'Logout';
     }
 
-    navbarContainer.querySelector('#sign-in').addEventListener('click', () => {
+    navbarContainer.querySelector('#sign-in').addEventListener('click', (e) => {
       if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
+        e.preventDefault();
         navbarContainer.querySelector('#sign-in').textContent = 'Sign In';
         logOut();
       }
@@ -255,6 +256,10 @@ class Navbar extends HTMLElement {
       case 'account':
         navbarContainer.querySelector('#account').style.textDecoration = 'underline';
         navbarContainer.querySelector('#account-mobile').style.textDecoration = 'underline';
+        break;
+      case 'sign-in':
+        navbarContainer.querySelector('#sign-in').style.textDecoration = 'underline';
+        navbarContainer.querySelector('#sign-in-mobile').style.textDecoration = 'underline';
         break;
       default:
         break;

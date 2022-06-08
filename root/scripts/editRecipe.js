@@ -1,8 +1,13 @@
 /* eslint-disable import/extensions */
-import {
-  getAllRecipes, readRecipe, updateRecipe, validateForm, trimRecipe, purifyDOM, whitespaceTrimmer,
-} from './utils.js';
 /* eslint-disable prefer-destructuring */
+import {
+  readRecipe,
+  updateRecipe,
+  validateForm,
+  trimRecipe,
+  purifyDOM,
+  whitespaceTrimmer,
+} from './utils.js';
 // const crypto = require('crypto');
 
 // const createRecipe = document.querySelector(document.getElementById('Create'));
@@ -130,7 +135,8 @@ async function init() {
   const deleteButton = document.getElementById('Delete');
   deleteButton.addEventListener('click', deleteStep);
 
-  await getAllRecipes();
+  // await getAllRecipes();
+
   document.getElementById('edit-button').addEventListener('click', async () => {
     const userGenRecipe = {};
     userGenRecipe.id = recipeId;

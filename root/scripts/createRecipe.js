@@ -2,9 +2,14 @@
 /* eslint-disable no-alert */
 /* eslint-disable import/extensions */
 import {
-  getAllRecipes, createRecipe, createId, validateForm, trimRecipe, purifyDOM,
-  whitespaceTrimmer, getRecipeByUrl,
+  createRecipe,
+  validateForm,
+  trimRecipe,
+  purifyDOM,
+  whitespaceTrimmer,
+  getRecipeByUrl,
 } from './utils.js';
+import { createId } from './database.js';
 /* eslint-disable prefer-destructuring */
 
 let i = 1; // instructions counter
@@ -130,7 +135,7 @@ async function init() {
   const urlButton = document.getElementById('urlButton');
   urlButton.addEventListener('click', createRecipeByUrl);
 
-  await getAllRecipes();
+  // await getAllRecipes();
   document.getElementById('Create').addEventListener('click', async () => {
     const userGenRecipe = {};
     userGenRecipe.id = createId();
@@ -176,8 +181,8 @@ async function init() {
     const formValidateObject = validateForm(userGenRecipe);
     if (formValidateObject.valid) {
       const trimmedRecipe = trimRecipe(userGenRecipe);
-      await createRecipe(trimmedRecipe);
-      window.location = `${window.location.origin}/root/html/RecipePage.html?id=${trimmedRecipe.id}`;
+      const response = await createRecipe(trimmedRecipe);
+      window.location = `${window.location.origin}/root/html/RecipePage.html?id=${response.id}`;
     } else {
       errMsg.innerText = formValidateObject.errorMessage;
       errPopup.showModal();

@@ -47,5 +47,6 @@ export async function login(email, password) {
 
 export async function logOut() {
   localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
+  localStorage.removeItem('user-preferences');
   window.location.href = '../html/index.html';
 }

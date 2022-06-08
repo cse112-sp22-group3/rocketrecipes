@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /**
  * This file contains various methods for voice controls
  */

@@ -1,4 +1,5 @@
 /* eslint-disable import/extensions */
+import { }
 const FIREBASE_SIGNUP_URL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser';
 const FIREBASE_LOGIN_URL = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword';
 const FIREBASE_KEY = 'AIzaSyCSXC0gS7gdHANxVdisyYg1eRg18znec_k';
@@ -41,6 +42,9 @@ export async function login(email, password) {
   const response = await postData(url, body);
   if (response.localId) {
     localStorage.setItem(LOCAL_STORAGE_USER_KEY, response.localId);
+
+    // fetch user preferences if they exist
+
   }
   return response;
 }

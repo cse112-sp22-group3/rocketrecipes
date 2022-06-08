@@ -1,6 +1,8 @@
 /* eslint-disable import/extensions */
 /* eslint-disable linebreak-style */
-import { putData, AUTH, FIREBASE_DATABASE_USER, LOCAL_STORAGE_USER_KEY } from './database.js';
+import {
+  putData, AUTH, FIREBASE_DATABASE_USER, LOCAL_STORAGE_USER_KEY,
+} from './database.js';
 
 const USER_PREFERENCES_STRING = 'userPreferences.json';
 

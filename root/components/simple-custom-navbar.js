@@ -210,9 +210,9 @@ class Navbar extends HTMLElement {
       navbarContainer.querySelector('#sign-in').textContent = 'Logout';
     }
 
-    navbarContainer.querySelector('#account-mobile-sign-in').addEventListener('click', () => {
+    navbarContainer.querySelector('#sign-in-mobile').addEventListener('click', () => {
       if (localStorage.getItem(LOCAL_STORAGE_USER_KEY)) {
-        navbarContainer.querySelector('#account-mobile-sign-in').textContent = 'Sign In';
+        navbarContainer.querySelector('#sign-in-moblie').textContent = 'Sign In';
         logOut();
       }
     });

@@ -3,14 +3,14 @@
 /* eslint-disable  no-restricted-syntax */
 /* eslint-disable  no-await-in-loop */
 
-const AUTH = '?auth=DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
-const LOCAL_STORAGE_USER_KEY = 'uuid';
-const LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY = 'allRecipesKeys';
+export const AUTH = '?auth=DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
+export const LOCAL_STORAGE_USER_KEY = 'uuid';
+export const LOCAL_STORAGE_ALL_RECIPES_KEY_ONLY = 'allRecipesKeys';
 
 // retrive all information about database
-const FIREBASE_ALL_RECIPES = 'https://rocketrecipes-6c192-default-rtdb.firebaseio.com/recipes.json?auth=DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
+export const FIREBASE_ALL_RECIPES = 'https://rocketrecipes-6c192-default-rtdb.firebaseio.com/recipes.json?auth=DkCjtMgbGLJNFLVxTMzfZdrXGGiDbZPwKhn8yKMo';
 
-const FIREBASE_DATABASE_USER = 'https://rocketrecipes-6c192-default-rtdb.firebaseio.com/user/';
+export const FIREBASE_DATABASE_USER = 'https://rocketrecipes-6c192-default-rtdb.firebaseio.com/user/';
 
 // retrive favorited recipes
 const USER_FAVORITED_RECIPES = '/favoritedRecipes.json';
@@ -25,7 +25,7 @@ const USER_CREATED_RECIPES = '/createdRecipes.json';
 const USER_CREATED_SINGLE_RECIPE = '/createdRecipes/';
 const NO_LOGIN_MY_RECIPES_LOCAL_STORAGE = 'createdRecipes';
 
-async function putData(url = '', data = {}) {
+export async function putData(url = '', data = {}) {
   const response = await fetch(url, {
     method: 'PUT', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, *cors, same-origin
@@ -71,7 +71,15 @@ function isUserLoggedIn() {
  * @returns {recipeObject}
  */
 async function putUserCreatedRecipe(recipeObj) {
-  const response = await putData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + recipeObj.id}.json${AUTH}`, recipeObj);
+  const response = await putData(
+    `${
+      FIREBASE_DATABASE_USER
+      + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+      + USER_CREATED_SINGLE_RECIPE
+      + recipeObj.id
+    }.json${AUTH}`,
+    recipeObj,
+  );
   return response;
 }
 
@@ -81,7 +89,14 @@ async function putUserCreatedRecipe(recipeObj) {
  * @returns {recipeObject}
  */
 async function getUserCreatedRecipe(id) {
-  const recipe = await fetch(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + id}.json${AUTH}`).then((response) => response.json());
+  const recipe = await fetch(
+    `${
+      FIREBASE_DATABASE_USER
+      + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+      + USER_CREATED_SINGLE_RECIPE
+      + id
+    }.json${AUTH}`,
+  ).then((response) => response.json());
   return recipe;
 }
 
@@ -90,10 +105,12 @@ async function getUserCreatedRecipe(id) {
  * @returns {allRecipes}
  */
 async function getUserAllCreatedRecipes() {
-  const allRecipes = await fetch(FIREBASE_DATABASE_USER
-            + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
-            + USER_CREATED_RECIPES + AUTH)
-    .then((response) => response.json());
+  const allRecipes = await fetch(
+    FIREBASE_DATABASE_USER
+      + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+      + USER_CREATED_RECIPES
+      + AUTH,
+  ).then((response) => response.json());
   return allRecipes;
 }
 
@@ -102,7 +119,14 @@ async function getUserAllCreatedRecipes() {
  * @param {} id
  */
 async function deleteUserCreatedRecipe(id) {
-  const response = await deleteData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_CREATED_SINGLE_RECIPE + id}.json${AUTH}`);
+  const response = await deleteData(
+    `${
+      FIREBASE_DATABASE_USER
+      + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+      + USER_CREATED_SINGLE_RECIPE
+      + id
+    }.json${AUTH}`,
+  );
   return response;
 }
 
@@ -112,10 +136,15 @@ async function deleteUserCreatedRecipe(id) {
  * @returns {recipeObj}
  */
 async function putUserFavoriteRecipe(recipeObj) {
-  const response = await putData(`${FIREBASE_DATABASE_USER
+  const response = await putData(
+    `${
+      FIREBASE_DATABASE_USER
       + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
       + USER_FAVORITED_SINGLE_RECIPE
-      + recipeObj.id}.json${AUTH}`, recipeObj);
+      + recipeObj.id
+    }.json${AUTH}`,
+    recipeObj,
+  );
   return response;
 }
 
@@ -125,7 +154,14 @@ async function putUserFavoriteRecipe(recipeObj) {
  * @returns {recipeObject}
  */
 async function getUserFavoritedRecipe(id) {
-  const recipe = await fetch(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_SINGLE_RECIPE + id}.json${AUTH}`).then((response) => response.json());
+  const recipe = await fetch(
+    `${
+      FIREBASE_DATABASE_USER
+      + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+      + USER_FAVORITED_SINGLE_RECIPE
+      + id
+    }.json${AUTH}`,
+  ).then((response) => response.json());
   return recipe;
 }
 
@@ -134,10 +170,12 @@ async function getUserFavoritedRecipe(id) {
  * @returns {allRecieps} Object
  */
 async function getUserAllFavoritedRecipes() {
-  const allRrecipes = await fetch(FIREBASE_DATABASE_USER
-            + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
-            + USER_FAVORITED_RECIPES + AUTH)
-    .then((response) => response.json());
+  const allRrecipes = await fetch(
+    FIREBASE_DATABASE_USER
+      + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+      + USER_FAVORITED_RECIPES
+      + AUTH,
+  ).then((response) => response.json());
   return allRrecipes;
 }
 
@@ -147,7 +185,14 @@ async function getUserAllFavoritedRecipes() {
  * @returns {recipeObj}
  */
 async function deleteUserFavoriteRecipe(id) {
-  const response = await deleteData(`${FIREBASE_DATABASE_USER + localStorage.getItem(LOCAL_STORAGE_USER_KEY) + USER_FAVORITED_SINGLE_RECIPE + id}.json${AUTH}`);
+  const response = await deleteData(
+    `${
+      FIREBASE_DATABASE_USER
+      + localStorage.getItem(LOCAL_STORAGE_USER_KEY)
+      + USER_FAVORITED_SINGLE_RECIPE
+      + id
+    }.json${AUTH}`,
+  );
   return response;
 }
 
@@ -283,7 +328,9 @@ export async function readRecipeDatabase(recipeID) {
  */
 export async function addFavoriteRecipeDatabase(id) {
   const recipe = await readRecipeDatabase(id);
-  if (recipe === null) { return null; }
+  if (recipe === null) {
+    return null;
+  }
 
   if (isUserLoggedIn()) {
     const response = await putUserFavoriteRecipe(recipe);
@@ -502,7 +549,8 @@ export async function updateRecipeDatabase(newRecipe) {
     const duplicateRecipe = await getUserCreatedRecipe(newRecipe2.id);
     if (duplicateRecipe !== null) {
       await putUserCreatedRecipe(newRecipe2);
-    } else { // overwrite duplicate recipes
+    } else {
+      // overwrite duplicate recipes
       // no dulicate must not present in whole database
       const generatedID = await generateKey(newRecipe2.id);
       newRecipe2.id = generatedID;

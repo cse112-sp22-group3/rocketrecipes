@@ -1,4 +1,3 @@
-/* eslint-disable no-eval */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-alert */
 /* eslint-disable import/extensions */

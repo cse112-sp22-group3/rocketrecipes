@@ -1,6 +1,7 @@
 # Rocket Recipes
 
 [![CI](https://github.com/cse112-sp22-group3/rocketrecipes/actions/workflows/main.yml/badge.svg)](https://github.com/cse112-sp22-group3/rocketrecipes/actions/workflows/main.yml)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/c9b964d3-ad39-4f23-96ab-5c170e163398/deploy-status)](https://app.netlify.com/sites/rocketrecipesv2/deploys)
 
 ### Prepare for trouble, make it double! (servings)
 

@@ -1,28 +1,70 @@
-// eslint-disable-next-line import/extensions
-import { getAllRecipes } from './utils.js';
+/* eslint-disable import/extensions */
+/* eslint-disable no-return-await */
+/* eslint-disable no-await-in-loop */
+import { getAllRecipeID, readRecipe } from './utils.js';
 
-let allRecipes = {};
+let allRecipeIDS = {};
 
-function createRecommendedRecipes() {
-  // fetch data for recommended recipes
-  // manually fetching for now until the backend functions are done
-  // fetch div for recommended recipes
+async function createRecommendedRecipes() {
   const recommendedRecipeContainer = document.getElementById('recommendedRecipeContainer');
 
   const numRecipes = 8;
-  const randomNumber = Math.floor(Math.random() * (allRecipes.length - numRecipes - 1));
+  const randomNumber = Math.floor(Math.random() * (allRecipeIDS.length - numRecipes - 1));
 
-  for (let i = 0; i < numRecipes; i += 1) {
-    const recipeCard = document.createElement('recipe-card');
-    recipeCard.data = allRecipes[randomNumber + i];
+  // integrate user preferences
+  const userPreferences = JSON.parse(localStorage.getItem('user-preferences'));
+  let numAdded = 0;
+  if (userPreferences != null && userPreferences.length > 0) {
+    const index = Math.floor(Math.random() * allRecipeIDS.length - 1);
+    for (let i = index; i < allRecipeIDS.length && numAdded < 8; i += 1) {
+      const recipe = await readRecipe(allRecipeIDS[i]);
+      if (userPreferences.some((preference) => recipe[`${preference}`])) {
+        const recipeCard = document.createElement('recipe-card');
+        recipeCard.data = recipe;
+        recommendedRecipeContainer.appendChild(recipeCard);
+        numAdded += 1;
+      }
+    }
 
-    recommendedRecipeContainer.appendChild(recipeCard);
+    for (let i = 0; i < index && i < allRecipeIDS.length && numAdded < 8; i += 1) {
+      const recipe = await readRecipe(allRecipeIDS[i]);
+
+      if (userPreferences.some((preference) => recipe[`${preference}`])) {
+        const recipeCard = document.createElement('recipe-card');
+        recipeCard.data = recipe;
+        recommendedRecipeContainer.appendChild(recipeCard);
+        numAdded += 1;
+      }
+    }
+  }
+  if (numAdded < numRecipes) {
+    for (let i = 0; numAdded < numRecipes; i += 1) {
+      const recipeCard = document.createElement('recipe-card');
+      recipeCard.data = await readRecipe(allRecipeIDS[randomNumber + i]);
+
+      recommendedRecipeContainer.appendChild(recipeCard);
+      numAdded += 1;
+    }
   }
 }
 
 async function init() {
-  allRecipes = await getAllRecipes();
-  createRecommendedRecipes();
+  allRecipeIDS = await getAllRecipeID();
+
+  await createRecommendedRecipes();
 }
+
+// test function for event-listener when closing the window
+// async function close() {
+//     let response = await syncFavoriteWithDatabase();
+//     flushFavoriteRecipes();
+//     localStorage.removeItem(LOCAL_STORAGE_USER_KEY);
+// }
+
+// const beforeUnloadListener = (event) => {
+//     event.preventDefault();
+// };
+
+// addEventListener('beforeunload', beforeUnloadListener);
 
 window.addEventListener('DOMContentLoaded', init);

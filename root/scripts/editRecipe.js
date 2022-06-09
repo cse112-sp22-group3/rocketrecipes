@@ -1,14 +1,38 @@
 /* eslint-disable import/extensions */
-import {
-  getAllRecipes, readRecipe, updateRecipe, validateForm, trimRecipe,
-} from './utils.js';
 /* eslint-disable prefer-destructuring */
+import {
+  readRecipe,
+  updateRecipe,
+  validateForm,
+  trimRecipe,
+  purifyDOM,
+  whitespaceTrimmer,
+} from './utils.js';
 // const crypto = require('crypto');
 
 // const createRecipe = document.querySelector(document.getElementById('Create'));
 // const deleteRecipe = document.querySelector(document.getElementById('Delete'));
 let i = 1; // instructions counter
 let ingCount = 1; // Ingredient Counter
+
+// Error popup
+const errPopup = document.getElementById('errDialog');
+const errPrompt = document.createElement('form');
+const errHeader = document.createElement('h3');
+const errMsg = document.createElement('p');
+const errButt = document.createElement('button');
+errHeader.innerText = 'Oh no, there\'s an error!';
+errButt.innerHTML = 'Okay';
+errPrompt.setAttribute('method', 'dialog');
+errHeader.setAttribute('id', 'errHeader');
+errMsg.setAttribute('id', 'errMsg');
+errButt.setAttribute('id', 'errButt');
+errButt.setAttribute('class', 'buttons');
+
+errPrompt.appendChild(errHeader);
+errPrompt.appendChild(errMsg);
+errPrompt.appendChild(errButt);
+errPopup.appendChild(errPrompt);
 
 function addStep() {
   const instructions = document.querySelector('.instructions');
@@ -103,7 +127,6 @@ async function fillRecipePage(recipeId) {
     stepVal.value = recipe.steps[k - 1].step;
   }
 
-  document.getElementById('cheap').checked = recipe.cheap;
   document.getElementById('vegetarian').checked = recipe.vegetarian;
   document.getElementById('vegan').checked = recipe.vegan;
   document.getElementById('glutenFree').checked = recipe.glutenFree;
@@ -131,14 +154,15 @@ async function init() {
   const deleteButton = document.getElementById('Delete');
   deleteButton.addEventListener('click', deleteStep);
 
-  await getAllRecipes();
+  // await getAllRecipes();
+
   document.getElementById('edit-button').addEventListener('click', async () => {
     const userGenRecipe = {};
-    userGenRecipe.id = recipeId; // crypto.randomBytes(16).toString('hex');
-    userGenRecipe.title = document.getElementById('name').value;
-    userGenRecipe.readyInMinutes = document.getElementsByClassName('amount')[1].value;
-    userGenRecipe.servings = document.getElementsByClassName('amount')[0].value;
-    userGenRecipe.image = document.getElementById('image').value;
+    userGenRecipe.id = recipeId;
+    userGenRecipe.title = whitespaceTrimmer(purifyDOM(document.getElementById('name').value));
+    userGenRecipe.readyInMinutes = parseInt(whitespaceTrimmer(document.getElementsByClassName('amount')[1].value), 10);
+    userGenRecipe.servings = parseInt(whitespaceTrimmer(document.getElementsByClassName('amount')[0].value), 10);
+    userGenRecipe.image = purifyDOM(document.getElementById('image').value);
     userGenRecipe.uploader = 'From the User';
 
     // Need to add tags to CreateRecipe.html so that the user can manually select which tags
@@ -146,7 +170,6 @@ async function init() {
     userGenRecipe.isFromInternet = false;
     userGenRecipe.vegetarian = document.getElementById('vegetarian').checked;
     userGenRecipe.vegan = document.getElementById('vegan').checked;
-    userGenRecipe.cheap = document.getElementById('cheap').checked;
     userGenRecipe.glutenFree = document.getElementById('glutenFree').checked;
     userGenRecipe.dairyFree = document.getElementById('dairyFree').checked;
     userGenRecipe.quickEat = document.getElementById('quickEat').checked;
@@ -156,21 +179,21 @@ async function init() {
     let numIngredients = 0;
     for (let j = 0; j < document.getElementsByClassName('Ingre').length; j += 1) {
       const ingredientInfo = {};
-      ingredientInfo.name = document.getElementsByClassName('Ingredient')[j].value;
-      ingredientInfo.amount = document.getElementsByClassName('Ingre')[j].value;
-      ingredientInfo.unit = document.getElementsByClassName('unit')[j].value;
+      ingredientInfo.name = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('Ingredient')[j].value));
+      ingredientInfo.amount = parseInt(document.getElementsByClassName('Ingre')[j].value, 10);
+      ingredientInfo.unit = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('unit')[j].value));
       userGenRecipe.ingredients.push(ingredientInfo);
       numIngredients += 1;
     }
 
     userGenRecipe.fiveIngredientsOrLess = numIngredients <= 5;
-    userGenRecipe.summary = document.getElementsByClassName('descrip')[0].value;
+    userGenRecipe.summary = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('descrip')[0].value));
 
     userGenRecipe.steps = [];
     for (let k = 0; k < document.getElementsByClassName('step').length; k += 1) {
       const currStep = {};
       currStep.number = k;
-      currStep.step = document.getElementsByClassName('step')[k].value;
+      currStep.step = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('step')[k].value));
       userGenRecipe.steps.push(currStep);
     }
 
@@ -178,13 +201,12 @@ async function init() {
     const formValidateObject = validateForm(userGenRecipe);
     if (formValidateObject.valid) {
       const trimmedRecipe = trimRecipe(userGenRecipe);
-      await updateRecipe(trimmedRecipe);
-      window.location = `${window.location.origin}/root/html/RecipePage.html?id=${trimmedRecipe.id}`;
+      const response = await updateRecipe(trimmedRecipe);
+      window.location = `${window.location.origin}/root/html/RecipePage.html?id=${response.id}`;
     } else {
       // eslint-disable-next-line no-alert
-      alert(
-        `Your recipe was not updated due to invalid inputs. \n\nError message: ${formValidateObject.errorMessage}`,
-      );
+      errMsg.innerText = formValidateObject.errorMessage;
+      errPopup.showModal();
     }
   });
 }

@@ -14,7 +14,6 @@ beforeAll(async () => {
     }
 
 });
-
 describe('navigate through pages', () => {
     beforeAll(async () => {
         await page.goto(`http://${rootUrl}/root/html/index.html`);
@@ -24,40 +23,27 @@ describe('navigate through pages', () => {
         await expect(page.title()).resolves.toMatch('Home');
     });
 
-    it('home page header should be Rocket Recipes', async () => {
-        await page.waitForSelector('body > main > div > h1');
-        const header = await page.evaluate( () => document.querySelector('body > main > div > h1').textContent);
-        expect(header).toBe('Rocket Recipes');
-    });
-
     it('home page should have 8 recommended recipes', async () => {
-        await page.waitForSelector('recipe-card');
+        await page.waitForSelector('#recommendedRecipeContainer > recipe-card:nth-child(8)');
         const recipes = await page.$$('recipe-card');
         expect(recipes.length).toBe(8);
     });
 
     it('navigate to Account page', async () => {
-        const accLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#account"));
-        await accLink.click();
+        await page.goto(`http://${rootUrl}/root/html/generalAccount.html`);
     });
 
     it('account page should be titled My Account', async () => {
-        await page.waitForNavigation();
+        await page.waitForSelector('#myaccount');
         await expect(page.title()).resolves.toMatch('My Account');
     });
 
-    it('account page header should be My Account', async () => {
-        const header = await page.evaluate( () => document.querySelector('#myaccount').textContent);
-        expect(header).toBe('My Account');
-    });
-
     it('navigate to Create Recipe page', async () => {
-        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#create"));
-        await searchLink.click();
+        await page.goto(`http://${rootUrl}/root/html/CreateRecipe.html`);
     });
 
     it('create recipe page should be titled Create Recipe', async () => {
-        await page.waitForNavigation();
+        await page.waitForSelector('#header');
         await expect(page.title()).resolves.toMatch('Create Recipe');
     });
 
@@ -66,13 +52,12 @@ describe('navigate through pages', () => {
         expect(header).toBe('Create your recipe:');
     });
 
-    it('navigate to Search page', async () => {
-        const searchLink = await page.evaluateHandle( () => document.querySelector("body > header > custom-navbar").shadowRoot.querySelector("#search"));
-        await searchLink.click();
+    it('navigate to Search page via empty search', async () => {
+        await page.goto(`http://${rootUrl}/root/html/searchpage.html?searchQuery=`);
     });
 
     it('search page should be titled Search', async () => {
-        await page.waitForNavigation();
+        await page.waitForSelector('.title');
         await expect(page.title()).resolves.toMatch('Search');
     });
 
@@ -87,26 +72,6 @@ describe('navigate through pages', () => {
     });
 
     it('navigate to search results', async () => {
-        const form = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#ss"));
-        await form.type('deviled eggs');
-
-        const but = await page.evaluateHandle( () => document.querySelector("body > main > div > div.bar > custom-searchbar").shadowRoot.querySelector("#search-bar-form > button"));
-        await but.click();
-    });
-
-    it('navigate to Recipe page', async () => {
-        await page.waitForSelector('recipe-card');
-
-        const recipes = await page.$$('recipe-card');
-        expect(recipes.length).toBe(11);
-
-        const card = await page.evaluateHandle( () => document.querySelector("#page1 > recipe-card:nth-child(1)"));
-        await card.click();
-    });
-
-    it('recipe page should be titled the recipe title', async () => {
-        await page.waitForSelector('recipe-card');
-        const title = await page.evaluate( () => document.querySelector('#recipe-title').textContent);
-        await expect(page.title()).resolves.toMatch(title);
+        await page.goto(`http://${rootUrl}/root/html/searchpage.html?searchQuery=deviled%20eggs`);
     });
 })

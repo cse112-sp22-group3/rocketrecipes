@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+* {
+  font-family: inherit;
+}
+
 @media only screen and (max-width: 700px) {
   .foodList {
     justify-content: center;
@@ -48,18 +54,44 @@
     margin-bottom: 2%;
   }   
 }
-main {
-    margin: 5% 32px 5% 0;
+main {  
+    margin: 250px 32px 5% 0;
+}
+.accountTest {
+  text-align: center;
 }
 #myaccount {
     margin-left: 10%;
     text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+}
+#mysurvey { 
+  margin-left: 2%;
+  text-align: left;
+  display: inline-block;
+  vertical-align: middle;
+}
+.survey-btn {
+  width: 150px;
+  height: 35px;
+  font-size: 16;
+  border-radius: 2px;
+  border-color: #f24e67;
+  border-style: solid;
+  color: #f24e67;
+  border-width: 1px;
+}
+.survey-btn:hover {
+  background-color: #cf4257;
+  color: white;
 }
 #myrecipes {
     margin-left: 10%;
     text-align: left;
     margin-bottom: 2%;
 }
+
 span {
   margin-top: center;
 }
@@ -124,7 +156,7 @@ span {
     width: 130px;
     height: 40px;
     border-radius: 10px;
-    background-color: pink;
+    background-color: #f24e67;
     font-size: 15px;
 }
 .FavoriteFood div {

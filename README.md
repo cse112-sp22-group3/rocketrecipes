@@ -7,6 +7,8 @@
 
 This is Team Rocket's (Team 3) new & improved project repository for Rocket Recipes, a web application that allows users to search and create recipes for their own personal culinary escapades.
 
+The link to our private video is [here](https://youtu.be/CF0yS2-96SM). The link to our public video is [here](https://youtu.be/xtlqCfVHH5s).
+
 ---
 
 ## Features

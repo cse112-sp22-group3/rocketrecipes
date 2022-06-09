@@ -182,9 +182,7 @@ async function init() {
       const ingredientInfo = {};
       ingredientInfo.name = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('Ingredient')[j].value));
       ingredientInfo.amount = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('Ingre')[j].value));
-      try {
-        ingredientInfo.amount = eval(ingredientInfo.amount);
-      } catch (err) {
+      if (parseFloat(ingredientInfo.amount) === ingredientInfo.amount) {
         ingredientInfo.amount = parseFloat(ingredientInfo.amount);
       }
       ingredientInfo.unit = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('unit')[j].value));

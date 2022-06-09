@@ -160,12 +160,14 @@ async function init() {
     for (let j = 0; j < document.getElementsByClassName('Ingre').length; j += 1) {
       const ingredientInfo = {};
       ingredientInfo.name = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('Ingredient')[j].value));
-      ingredientInfo.amount = parseInt(document.getElementsByClassName('Ingre')[j].value, 10);
+      ingredientInfo.amount = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('Ingre')[j].value));
+      if (parseFloat(ingredientInfo.amount) === ingredientInfo.amount) {
+        ingredientInfo.amount = parseFloat(ingredientInfo.amount);
+      }
       ingredientInfo.unit = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('unit')[j].value));
       userGenRecipe.ingredients.push(ingredientInfo);
       numIngredients += 1;
     }
-    // console.log(userGenRecipe.ingredients);
 
     userGenRecipe.fiveIngredientsOrLess = numIngredients <= 5;
     userGenRecipe.summary = whitespaceTrimmer(purifyDOM(document.getElementsByClassName('descrip')[0].value));

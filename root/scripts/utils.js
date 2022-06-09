@@ -365,6 +365,9 @@ export function validateForm(recipe) {
     if (!ingredient.amount || ingredient.amount === '' || Number.isNaN(ingredient.amount)) {
       return { valid: false, errorMessage: `Ingredient ${index + 1} amount is not valid` };
     }
+    if (parseFloat(ingredient.amount) !== Number(ingredient.amount)) {
+      return { valid: false, errorMessage: `Ingredient ${index + 1} amount is not valid` };
+    }
     if (!ingredient.name || ingredient.name.length === 0 || /\d/.test(ingredient.name)) {
       return { valid: false, errorMessage: `Ingredient ${index + 1} name is not valid` };
     }

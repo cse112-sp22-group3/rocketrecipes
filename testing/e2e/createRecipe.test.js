@@ -76,7 +76,7 @@ describe('create own recipe', () => {
     });
 
     it('should direct to recipe page', async () => {
-        await page.waitForSelector('recipe-card');
+        await page.waitForTimeout(3000);
         const header = await page.evaluate( () => document.querySelector('#recipe-title').textContent);
         expect(header).toBe('Recipe Name Example');
     });

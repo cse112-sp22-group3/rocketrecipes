@@ -1,4 +1,3 @@
-/* eslint-disable no-eval */
 /* eslint-disable import/extensions */
 /* eslint-disable prefer-destructuring */
 import {
